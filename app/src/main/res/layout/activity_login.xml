@@ -51,6 +51,7 @@
             android:textSize="30sp" />
 
         <LinearLayout
+            android:id="@+id/btn_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/editPassword"
@@ -75,6 +76,13 @@
                 android:text="@string/sign_up" />
 
         </LinearLayout>
+
+        <ImageView
+            android:layout_below="@+id/btn_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:contentDescription="tree_image"
+            android:src="@drawable/christmas_tree_256"/>
 
     </RelativeLayout>
 
