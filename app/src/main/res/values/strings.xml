@@ -8,4 +8,5 @@
     <string name="sign_up">Sing up</string>
 
     <string name="congrats">Merry Christmas and happy New Year!</string>
+    <string name="required_name">Enter your name, please (required!)</string>
 </resources>

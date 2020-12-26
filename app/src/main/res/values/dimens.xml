@@ -1,4 +1,5 @@
 <resources>
     <dimen name="main_margin">15dp</dimen>
     <dimen name="small_margin">6dp</dimen>
+    <dimen name="big_margin">40dp</dimen>
 </resources>
