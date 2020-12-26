@@ -1,11 +1,11 @@
 <resources>
-    <string name="app_name">Новогодняя ёлка</string>
+    <string name="app_name">Christmas Tree</string>
 
-    <string name="password">Пароль</string>
-    <string name="login">Логин</string>
-    <string name="email">Почта</string>
-    <string name="sign_in">Войти</string>
-    <string name="sign_up">Регистрация</string>
+    <string name="password">Password</string>
+    <string name="login">Login</string>
+    <string name="email">Email</string>
+    <string name="sign_in">Sign in</string>
+    <string name="sign_up">Sing up</string>
 
-    <string name="congrats">С рождеством и Новым годом!</string>
+    <string name="congrats">Merry Christmas and happy New Year!</string>
 </resources>
