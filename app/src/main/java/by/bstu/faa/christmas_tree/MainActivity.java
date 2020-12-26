@@ -39,7 +39,6 @@ public class MainActivity extends AppCompatActivity {
         myDialog.setView(view);
 
         myDialog.setPositiveButton("OK", (dialog, which) -> {
-            // TODO Auto-generated method stub
             user_name = entered_name.getText().toString();
 
             Toast.makeText(MainActivity.this, "Your name is " + user_name,  Toast.LENGTH_SHORT).show();
