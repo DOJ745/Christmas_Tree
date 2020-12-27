@@ -12,5 +12,7 @@
     <string name="grow_tree">Grow your tree!</string>
 
     <string name="user_score">Score: </string>
-    <string name="tree_level">Tree: </string>
+    <string name="tree_level">Tree level: </string>
+
+    <string name="test_text">test text 123</string>
 </resources>
