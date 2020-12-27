@@ -11,8 +11,11 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
 import by.bstu.faa.christmas_tree.DB.DB_Helper;
 import by.bstu.faa.christmas_tree.DB.DB_Operations;
+import by.bstu.faa.christmas_tree.model.QuestionDialog;
 import by.bstu.faa.christmas_tree.model.UserInfo;
 
 public class MainActivity extends AppCompatActivity {
@@ -29,10 +32,10 @@ public class MainActivity extends AppCompatActivity {
         dbHelper = new DB_Helper(getApplicationContext());
         mainDB = dbHelper.getReadableDatabase();
 
-        showDialog();
+        //showNameDialog();
     }
 
-    private void showDialog() {
+    private void showNameDialog() {
         AlertDialog.Builder myDialog = new AlertDialog.Builder(this);
 
         View view = getLayoutInflater().inflate(R.layout.dialog, null);
@@ -70,15 +73,31 @@ public class MainActivity extends AppCompatActivity {
         myDialog.show();
     }
 
+    private void showQuestionDialog() {
+
+
+    }
+
     public void answerQuestion(View view){
         /*Toast.makeText(
                 MainActivity.this,
                 "Hello " + "'" + current_user.getName() + "'",
                 Toast.LENGTH_SHORT).show();*/
 
+        /*
         Toast.makeText(
                 MainActivity.this,
                 "Test queries",
-                Toast.LENGTH_SHORT).show();
+                Toast.LENGTH_SHORT).show();*/
+
+        /*
+        QuestionDialog dialog = new QuestionDialog();
+        Bundle args = new Bundle();
+        //args.putString("phone", selectedPhone);
+        //dialog.setArguments(args);
+        dialog.show(getSupportFragmentManager(), "custom");*/
+
+        //Toast.makeText(this, DB_Operations.Queries.getRandomTheme(mainDB), Toast.LENGTH_LONG).show();
+        DB_Operations.Queries.getRandomQuestion(mainDB);
     }
 }

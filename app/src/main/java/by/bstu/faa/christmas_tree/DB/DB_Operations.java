@@ -1,7 +1,13 @@
 package by.bstu.faa.christmas_tree.DB;
 
 import android.content.ContentValues;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class DB_Operations {
     public static class MainOperations {
@@ -108,8 +114,47 @@ public class DB_Operations {
             rowId = db.insert("Answers", null, contentValues);
         }
 
-        public static void getRandomQuestion() {
+        public static String getRandomTheme(SQLiteDatabase db) {
 
+            String themeName = "";
+            int themeId = randomNumber(1, 3);
+            Cursor textCursor = db.rawQuery(
+                    "select Name from Themes where ID = " + themeId, null);
+
+            if(textCursor.moveToFirst()){
+                do{
+                    themeName = textCursor.getString(0);
+                }while (textCursor.moveToNext());
+            }
+            textCursor.close();
+            Log.d("QUERIES", themeName);
+            return themeName;
+        }
+
+        public static void getRandomQuestion(SQLiteDatabase db) {
+
+            Map<Integer, String> themeQuestions = new HashMap<>();
+
+            int themeId = 1;//randomNumber(1, 3);
+
+            Cursor textCursor = db.rawQuery(
+                    "select Q_Text, ID from Questions where Theme_ID = " + themeId, null);
+            if(textCursor.moveToFirst()){
+                do{
+                    themeQuestions.put(textCursor.getInt(1), textCursor.getString(0));
+                }while (textCursor.moveToNext());
+            }
+
+            int questionNumber = randomNumber(0, 2);
+            String value = themeQuestions.get(questionNumber);
+            //Log.d("QUERIES", value);
+            textCursor.close();
+        }
+
+        private static int randomNumber(int min, int max)
+        {
+            max -= min;
+            return (int) (Math.random() * ++max) + min;
         }
     }
 }
