@@ -8,8 +8,8 @@ public class DB_Operations {
 
         public static void createAllTables(SQLiteDatabase db) {
             createThemesTable(db);
-            createAnswersTable(db);
             createQuestionsTable(db);
+            createAnswersTable(db);
         }
 
         public static void upgradeAllTables(SQLiteDatabase db) {
@@ -26,6 +26,8 @@ public class DB_Operations {
                     "ID INTEGER NOT NULL,\n" +
                     "Name TEXT NOT NULL,\n" +
                     "constraint ID_pk PRIMARY KEY(ID))");
+
+            Queries.insertThemes(db);
         }
 
         public static void createQuestionsTable(SQLiteDatabase db) {
@@ -35,6 +37,8 @@ public class DB_Operations {
                     "Q_Text TEXT NOT NULL,\n" +
                     "FOREIGN KEY(Theme_ID) REFERENCES Themes(ID) on delete cascade,\n" +
                     "constraint ID_pk PRIMARY KEY(ID))");
+
+            Queries.insertQuestions(db);
         }
 
         public static void createAnswersTable(SQLiteDatabase db) {
@@ -47,6 +51,8 @@ public class DB_Operations {
                     "Trueness INTEGER NOT NULL CHECK(Trueness = 0  OR Trueness = 1),\n" +
                     "FOREIGN KEY(Q_ID) REFERENCES Questions(ID) on delete cascade,\n" +
                     "constraint ID_pk PRIMARY KEY(ID))");
+
+            Queries.insertAnswers(db);
         }
     }
 

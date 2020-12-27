@@ -80,9 +80,5 @@ public class MainActivity extends AppCompatActivity {
                 MainActivity.this,
                 "Test queries",
                 Toast.LENGTH_SHORT).show();
-
-        DB_Operations.Queries.insertThemes(mainDB);
-        DB_Operations.Queries.insertQuestions(mainDB);
-        DB_Operations.Queries.insertAnswers(mainDB);
     }
 }
