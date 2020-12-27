@@ -191,7 +191,6 @@ public class DB_Operations {
 
             randomQuestion.setQuestionTheme(queryResult.get(0).getThemeName());
             randomQuestion.setQuestionText(queryResult.get(0).getQ_text());
-
             Map<String, Integer> variants = new HashMap<>();
 
             for(int i = 0; i < queryResult.size(); i++){
@@ -203,7 +202,8 @@ public class DB_Operations {
             for (QueryContainer elem: queryResult) {
                 Log.d("QUERIES", elem.toString());
             }
-            Log.d("QUERIES", randomQuestion.toString());
+            Log.d("QUERIES", randomQuestion.getQuestionText() + "---" +
+                    randomQuestion.getQuestionTheme());
 
             return randomQuestion;
         }

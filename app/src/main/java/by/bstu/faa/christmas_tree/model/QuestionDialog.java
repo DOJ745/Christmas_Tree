@@ -24,9 +24,8 @@ public class QuestionDialog extends DialogFragment {
                                 "Любимое имя кота: "
                                         + answerVariants[item],
                                 Toast.LENGTH_SHORT).show())
-                .setPositiveButton("OK", (dialog, id) -> {
-                })
-                .setNegativeButton("Отмена", (dialog, id) -> {
+                .setPositiveButton("Answer", (dialog, id) -> {
+
                 });
 
         return builder.create();
