@@ -71,11 +71,18 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void answerQuestion(View view){
-        Toast.makeText(
+        /*Toast.makeText(
                 MainActivity.this,
                 "Hello " + "'" + current_user.getName() + "'",
+                Toast.LENGTH_SHORT).show();*/
+
+        Toast.makeText(
+                MainActivity.this,
+                "Test queries",
                 Toast.LENGTH_SHORT).show();
 
         DB_Operations.Queries.insertThemes(mainDB);
+        DB_Operations.Queries.insertQuestions(mainDB);
+        DB_Operations.Queries.insertAnswers(mainDB);
     }
 }

@@ -53,15 +53,53 @@ public class DB_Operations {
     public static class Queries {
 
         public static void insertThemes(SQLiteDatabase db) {
+
             ContentValues contentValues = new ContentValues();
             long rowId;
 
-            contentValues.put("Name", "test1");
+            contentValues.put("Name", "Новый год в Беларуси");
             rowId = db.insert("Themes", null, contentValues);
-            contentValues.put("Name", "test2");
+            contentValues.put("Name", "Новый год в США");
             rowId = db.insert("Themes", null, contentValues);
-            contentValues.put("Name", "test3");
+            contentValues.put("Name", "Новый год в Японии");
             rowId = db.insert("Themes", null, contentValues);
+        }
+
+        public static void insertQuestions(SQLiteDatabase db) {
+            ContentValues contentValues = new ContentValues();
+            long rowId;
+
+            contentValues.put("Theme_ID", 1);
+            contentValues.put("Q_Text", "В языческие времена белорусы отмечали наступление Нового года…");
+            rowId = db.insert("Questions", null, contentValues);
+
+            contentValues.put("Theme_ID", 1);
+            contentValues.put("Q_Text", "В каком году Новый год в Беларуси стал официальным праздником?");
+            rowId = db.insert("Questions", null, contentValues);
+
+            contentValues.put("Theme_ID", 1);
+            contentValues.put("Q_Text", "Кто приносит подарки под ёлку в Беларуси?");
+            rowId = db.insert("Questions", null, contentValues);
+        }
+
+        public static void insertAnswers(SQLiteDatabase db) {
+            ContentValues contentValues = new ContentValues();
+            long rowId;
+
+            contentValues.put("Q_ID", 1);
+            contentValues.put("A_Text", "1 сентября");
+            contentValues.put("Trueness", 1);
+            rowId = db.insert("Answers", null, contentValues);
+
+            contentValues.put("Q_ID", 1);
+            contentValues.put("A_Text", "29 декабря");
+            contentValues.put("Trueness", 0);
+            rowId = db.insert("Answers", null, contentValues);
+
+            contentValues.put("Q_ID", 1);
+            contentValues.put("A_Text", "1 ноября");
+            contentValues.put("Trueness", 0);
+            rowId = db.insert("Answers", null, contentValues);
         }
 
         public static void getRandomQuestion() {
