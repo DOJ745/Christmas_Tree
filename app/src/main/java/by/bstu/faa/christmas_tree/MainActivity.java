@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import by.bstu.faa.christmas_tree.DB.DB_Helper;
+import by.bstu.faa.christmas_tree.DB.DB_Operations;
 import by.bstu.faa.christmas_tree.model.UserInfo;
 
 public class MainActivity extends AppCompatActivity {
@@ -74,5 +75,7 @@ public class MainActivity extends AppCompatActivity {
                 MainActivity.this,
                 "Hello " + "'" + current_user.getName() + "'",
                 Toast.LENGTH_SHORT).show();
+
+        DB_Operations.Queries.insertThemes(mainDB);
     }
 }

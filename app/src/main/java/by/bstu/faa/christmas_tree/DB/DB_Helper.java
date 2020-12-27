@@ -33,6 +33,7 @@ public class DB_Helper extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
 
+        DB_Operations.MainOperations.upgradeAllTables(sqLiteDatabase);
     }
 
     @Override

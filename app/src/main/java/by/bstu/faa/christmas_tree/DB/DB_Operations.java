@@ -1,5 +1,6 @@
 package by.bstu.faa.christmas_tree.DB;
 
+import android.content.ContentValues;
 import android.database.sqlite.SQLiteDatabase;
 
 public class DB_Operations {
@@ -46,6 +47,25 @@ public class DB_Operations {
                     "Trueness INTEGER NOT NULL CHECK(Trueness = 0  OR Trueness = 1),\n" +
                     "FOREIGN KEY(Q_ID) REFERENCES Questions(ID) on delete cascade,\n" +
                     "constraint ID_pk PRIMARY KEY(ID))");
+        }
+    }
+
+    public static class Queries {
+
+        public static void insertThemes(SQLiteDatabase db) {
+            ContentValues contentValues = new ContentValues();
+            long rowId;
+
+            contentValues.put("Name", "test1");
+            rowId = db.insert("Themes", null, contentValues);
+            contentValues.put("Name", "test2");
+            rowId = db.insert("Themes", null, contentValues);
+            contentValues.put("Name", "test3");
+            rowId = db.insert("Themes", null, contentValues);
+        }
+
+        public static void getRandomQuestion() {
+
         }
     }
 }
