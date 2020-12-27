@@ -8,5 +8,9 @@
     <string name="sign_up">Sing up</string>
 
     <string name="congrats">Merry Christmas and happy New Year!</string>
-    <string name="required_name">Enter your name, please (required!)</string>
+    <string name="required_name">Enter your name, please</string>
+    <string name="grow_tree">Grow your tree!</string>
+
+    <string name="user_score">Score: </string>
+    <string name="tree_level">Tree: </string>
 </resources>

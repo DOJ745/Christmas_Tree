@@ -14,8 +14,8 @@ import by.bstu.faa.christmas_tree.model.UserInfo;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static String user_name = "";
-    private static UserInfo current_user = new UserInfo();
+    //private static String user_name = "";
+    private static final UserInfo current_user = new UserInfo();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,10 +54,19 @@ public class MainActivity extends AppCompatActivity {
         myDialog.setView(view);
 
         myDialog.setPositiveButton("OK", (dialog, which) -> {
-            user_name = entered_name.getText().toString();
-
-            Toast.makeText(MainActivity.this, "Hello " + user_name,  Toast.LENGTH_SHORT).show();
+            current_user.setName(entered_name.getText().toString());
+            Toast.makeText(
+                    MainActivity.this,
+                    "Hello " + "'" + current_user.getName() + "'",
+                    Toast.LENGTH_SHORT).show();
         });
         myDialog.show();
+    }
+
+    public void answerQuestion(View view){
+        Toast.makeText(
+                MainActivity.this,
+                "Hello " + "'" + current_user.getName() + "'",
+                Toast.LENGTH_SHORT).show();
     }
 }
