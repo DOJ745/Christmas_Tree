@@ -3,10 +3,13 @@ package by.bstu.faa.christmas_tree.DB;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+
+import by.bstu.faa.christmas_tree.model.QueryContainer;
 
 public class DB_Operations {
     public static class MainOperations {
@@ -136,6 +139,7 @@ public class DB_Operations {
             String value = themeQuestions.get(questionID);*/
 
             int themeId = 1;//randomNumber(1, 3);
+            ArrayList<QueryContainer> queryResult = new ArrayList<>();
             Cursor queryCursor = db.rawQuery(
                     "select Themes.Name as 'theme',\n" +
                             "Questions.ID as 'q_id',\n" +
@@ -152,10 +156,22 @@ public class DB_Operations {
 
             if(queryCursor.moveToFirst()){
                 do{
-                    //themeQuestions.put(textCursor.getInt(1), textCursor.getString(0));
+                    QueryContainer container = new QueryContainer();
+                    container.setThemeName(queryCursor.getString(0));
+                    container.setQ_id(queryCursor.getInt(1));
+                    container.setQ_text(queryCursor.getString(2));
+                    container.setA_id(queryCursor.getInt(3));
+                    container.setA_text(queryCursor.getString(4));
+                    container.setTrueness(queryCursor.getInt(5));
+
+                    queryResult.add(container);
                 }while (queryCursor.moveToNext());
             }
             queryCursor.close();
+
+            for (QueryContainer elem: queryResult) {
+                Log.d("QUERIES", elem.toString());
+            }
         }
 
         private static int randomNumber(int min, int max)
