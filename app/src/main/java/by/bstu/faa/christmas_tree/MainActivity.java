@@ -28,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
     DB_Helper dbHelper;
     SQLiteDatabase mainDB;
     private static final UserInfo current_user = new UserInfo();
+    private static final String TAG = "MainActivity";
     private static int answerResult = 0;
 
     @Override
@@ -79,25 +80,26 @@ public class MainActivity extends AppCompatActivity {
         myDialog.show();
     }
 
-    private void showQuestionDialog() { }
-
     public void answerQuestion(View view) {
 
         QuestionContainer currentQ = DB_Operations.Queries.getRandomQuestion(mainDB);
         ArrayList<String> answer_variants = new ArrayList<>();
         ArrayList<Integer> answer_trueness = new ArrayList<>();
 
-        AtomicInteger isTrue = new AtomicInteger();
+        //AtomicInteger isTrue = new AtomicInteger();
 
         AlertDialog.Builder answerDialog = new AlertDialog.Builder(this);
         View answerView = getLayoutInflater().inflate(R.layout.question_dialog, null);
+        answerDialog.setView(answerView);
 
         TextView questionText = answerView.findViewById(R.id.question_text);
         TextView questionTheme = answerView.findViewById(R.id.question_theme);
+        TextView chosenAnswer = answerView.findViewById(R.id.chosen_answer);
 
         Button variant1 = answerView.findViewById(R.id.variant1);
         Button variant2 = answerView.findViewById(R.id.variant2);
         Button variant3 = answerView.findViewById(R.id.variant3);
+        Button answer_btn = answerView.findViewById(R.id.answer_btn);
 
         questionTheme.setText("Тема - " + currentQ.getQuestionTheme());
         questionText.setText(currentQ.getQuestionText());
@@ -113,35 +115,31 @@ public class MainActivity extends AppCompatActivity {
 
         variant1.setOnClickListener(v -> {
             answerResult = answer_trueness.get(0);
+            chosenAnswer.setText("Выбран 1 вариант");
             Toast.makeText(this, "Result - " + answerResult, Toast.LENGTH_LONG).show();
         });
 
         variant2.setOnClickListener(v -> {
             answerResult = answer_trueness.get(1);
+            chosenAnswer.setText("Выбран 2 вариант");
             Toast.makeText(this, "Result - " + answerResult, Toast.LENGTH_LONG).show();
         });
 
         variant3.setOnClickListener(v -> {
             answerResult = answer_trueness.get(2);
+            chosenAnswer.setText("Выбран 3 вариант");
             Toast.makeText(this, "Result - " + answerResult, Toast.LENGTH_LONG).show();
         });
 
-        answerDialog.setView(answerView);
+        answer_btn.setOnClickListener(v -> {
+            if(answerResult == 1){
+                Toast.makeText(this, "YAY - " + answerResult, Toast.LENGTH_LONG).show();
+            }
+            else{
+                Toast.makeText(this, "OOF - " + answerResult, Toast.LENGTH_LONG).show();
+            }
+        });
 
         answerDialog.show();
-
-        if(answerResult == 1) {
-            Log.d("MainActivity", String.valueOf(answerResult));
-        }
-
-        /*
-        QuestionDialog dialog = new QuestionDialog();
-        Bundle args = new Bundle();
-        //args.putString("phone", selectedPhone);
-        //dialog.setArguments(args);
-        dialog.show(getSupportFragmentManager(), "custom");*/
-
-        //Toast.makeText(this, DB_Operations.Queries.getRandomTheme(mainDB), Toast.LENGTH_LONG).show();
-        //DB_Operations.Queries.getRandomQuestion(mainDB);
     }
 }

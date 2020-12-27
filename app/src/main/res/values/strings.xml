@@ -6,6 +6,7 @@
     <string name="email">Email</string>
     <string name="sign_in">Sign in</string>
     <string name="sign_up">Sing up</string>
+    <string name="answer">Ответить</string>
 
     <string name="congrats">Merry Christmas and happy New Year!</string>
     <string name="required_name">Enter your name, please</string>

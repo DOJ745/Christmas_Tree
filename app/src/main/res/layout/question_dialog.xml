@@ -39,4 +39,19 @@
         android:layout_height="wrap_content"
         style="@style/VariantsButtons"/>
 
+    <TextView
+        android:id="@+id/chosen_answer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="17sp"/>
+
+    <Button
+        android:id="@+id/answer_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/answer"
+        style="@style/VariantsButtons"/>
+
 </LinearLayout>
