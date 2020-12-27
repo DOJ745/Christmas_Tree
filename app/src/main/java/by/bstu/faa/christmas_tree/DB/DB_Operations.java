@@ -3,7 +3,6 @@ package by.bstu.faa.christmas_tree.DB;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -114,27 +113,11 @@ public class DB_Operations {
             rowId = db.insert("Answers", null, contentValues);
         }
 
-        public static String getRandomTheme(SQLiteDatabase db) {
-
-            String themeName = "";
-            int themeId = randomNumber(1, 3);
-            Cursor textCursor = db.rawQuery(
-                    "select Name from Themes where ID = " + themeId, null);
-
-            if(textCursor.moveToFirst()){
-                do{
-                    themeName = textCursor.getString(0);
-                }while (textCursor.moveToNext());
-            }
-            textCursor.close();
-            Log.d("QUERIES", themeName);
-            return themeName;
-        }
-
         public static void getRandomQuestion(SQLiteDatabase db) {
 
+            /*
             Map<Integer, String> themeQuestions = new HashMap<>();
-
+            String themeName = "";
             int themeId = 1;//randomNumber(1, 3);
 
             Cursor textCursor = db.rawQuery(
@@ -144,11 +127,35 @@ public class DB_Operations {
                     themeQuestions.put(textCursor.getInt(1), textCursor.getString(0));
                 }while (textCursor.moveToNext());
             }
-
-            int questionNumber = randomNumber(0, 2);
-            String value = themeQuestions.get(questionNumber);
-            //Log.d("QUERIES", value);
             textCursor.close();
+            int questionID = randomNumber(0, 2);
+
+            Cursor answersCursor = db.rawQuery(
+                    "select ID, A_Text, Trueness from Answers where Q_ID = " + questionID,
+                    null);
+            String value = themeQuestions.get(questionID);*/
+
+            int themeId = 1;//randomNumber(1, 3);
+            Cursor queryCursor = db.rawQuery(
+                    "select Themes.Name as 'theme',\n" +
+                            "Questions.ID as 'q_id',\n" +
+                            "Questions.Q_Text,\n" +
+                            "Answers.ID as 'answer_id', \n" +
+                            "Answers.A_Text, \n" +
+                            "Answers.Trueness\n" +
+                            "\n" +
+                            "from Answers\n" +
+                            "inner join Questions on Answers.Q_ID = Questions.ID\n" +
+                            "inner join Themes on Questions.Theme_ID = Themes.ID\n" +
+                            "where Theme_ID = " + themeId, null
+            );
+
+            if(queryCursor.moveToFirst()){
+                do{
+                    //themeQuestions.put(textCursor.getInt(1), textCursor.getString(0));
+                }while (queryCursor.moveToNext());
+            }
+            queryCursor.close();
         }
 
         private static int randomNumber(int min, int max)
