@@ -114,31 +114,48 @@ public class DB_Operations {
             contentValues.put("A_Text", "1 ноября");
             contentValues.put("Trueness", 0);
             rowId = db.insert("Answers", null, contentValues);
+
+            /*
+            contentValues.put("Q_ID", 2);
+            contentValues.put("A_Text", "1 сентября");
+            contentValues.put("Trueness", 1);
+            rowId = db.insert("Answers", null, contentValues);
+
+            contentValues.put("Q_ID", 2);
+            contentValues.put("A_Text", "29 декабря");
+            contentValues.put("Trueness", 0);
+            rowId = db.insert("Answers", null, contentValues);
+
+            contentValues.put("Q_ID", 2);
+            contentValues.put("A_Text", "1 ноября");
+            contentValues.put("Trueness", 0);
+            rowId = db.insert("Answers", null, contentValues);
+
+            contentValues.put("Q_ID", 3);
+            contentValues.put("A_Text", "1 сентября");
+            contentValues.put("Trueness", 1);
+            rowId = db.insert("Answers", null, contentValues);
+
+            contentValues.put("Q_ID", 3);
+            contentValues.put("A_Text", "29 декабря");
+            contentValues.put("Trueness", 0);
+            rowId = db.insert("Answers", null, contentValues);
+
+            contentValues.put("Q_ID", 3);
+            contentValues.put("A_Text", "1 ноября");
+            contentValues.put("Trueness", 0);
+            rowId = db.insert("Answers", null, contentValues);*/
         }
 
         public static void getRandomQuestion(SQLiteDatabase db) {
 
-            /*
-            Map<Integer, String> themeQuestions = new HashMap<>();
-            String themeName = "";
-            int themeId = 1;//randomNumber(1, 3);
+            int themeId = randomNumber(1, 3);
+            int questionId = 0;
 
-            Cursor textCursor = db.rawQuery(
-                    "select Q_Text, ID from Questions where Theme_ID = " + themeId, null);
-            if(textCursor.moveToFirst()){
-                do{
-                    themeQuestions.put(textCursor.getInt(1), textCursor.getString(0));
-                }while (textCursor.moveToNext());
-            }
-            textCursor.close();
-            int questionID = randomNumber(0, 2);
+            if(themeId == 1) { questionId = randomNumber(1, 5); }
+            if(themeId == 2) { questionId = randomNumber(6, 10); }
+            if(themeId == 3) { questionId = randomNumber(11, 15); }
 
-            Cursor answersCursor = db.rawQuery(
-                    "select ID, A_Text, Trueness from Answers where Q_ID = " + questionID,
-                    null);
-            String value = themeQuestions.get(questionID);*/
-
-            int themeId = 1;//randomNumber(1, 3);
             ArrayList<QueryContainer> queryResult = new ArrayList<>();
             Cursor queryCursor = db.rawQuery(
                     "select Themes.Name as 'theme',\n" +
@@ -151,7 +168,7 @@ public class DB_Operations {
                             "from Answers\n" +
                             "inner join Questions on Answers.Q_ID = Questions.ID\n" +
                             "inner join Themes on Questions.Theme_ID = Themes.ID\n" +
-                            "where Theme_ID = " + themeId, null
+                            "where Theme_ID = " + themeId + " AND Questions.ID = " + questionId, null
             );
 
             if(queryCursor.moveToFirst()){
