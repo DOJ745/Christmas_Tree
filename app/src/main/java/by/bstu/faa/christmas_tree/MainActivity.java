@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -15,11 +16,11 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import by.bstu.faa.christmas_tree.DB.DB_Helper;
 import by.bstu.faa.christmas_tree.DB.DB_Operations;
 import by.bstu.faa.christmas_tree.model.QuestionContainer;
-import by.bstu.faa.christmas_tree.model.QuestionDialog;
 import by.bstu.faa.christmas_tree.model.UserInfo;
 
 public class MainActivity extends AppCompatActivity {
@@ -27,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
     DB_Helper dbHelper;
     SQLiteDatabase mainDB;
     private static final UserInfo current_user = new UserInfo();
+    private static int answerResult = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,6 +87,8 @@ public class MainActivity extends AppCompatActivity {
         ArrayList<String> answer_variants = new ArrayList<>();
         ArrayList<Integer> answer_trueness = new ArrayList<>();
 
+        AtomicInteger isTrue = new AtomicInteger();
+
         AlertDialog.Builder answerDialog = new AlertDialog.Builder(this);
         View answerView = getLayoutInflater().inflate(R.layout.question_dialog, null);
 
@@ -107,9 +111,28 @@ public class MainActivity extends AppCompatActivity {
         variant2.setText(answer_variants.get(1));
         variant3.setText(answer_variants.get(2));
 
+        variant1.setOnClickListener(v -> {
+            answerResult = answer_trueness.get(0);
+            Toast.makeText(this, "Result - " + answerResult, Toast.LENGTH_LONG).show();
+        });
+
+        variant2.setOnClickListener(v -> {
+            answerResult = answer_trueness.get(1);
+            Toast.makeText(this, "Result - " + answerResult, Toast.LENGTH_LONG).show();
+        });
+
+        variant3.setOnClickListener(v -> {
+            answerResult = answer_trueness.get(2);
+            Toast.makeText(this, "Result - " + answerResult, Toast.LENGTH_LONG).show();
+        });
+
         answerDialog.setView(answerView);
 
         answerDialog.show();
+
+        if(answerResult == 1) {
+            Log.d("MainActivity", String.valueOf(answerResult));
+        }
 
         /*
         QuestionDialog dialog = new QuestionDialog();
