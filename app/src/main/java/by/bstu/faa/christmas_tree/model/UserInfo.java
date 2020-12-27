@@ -3,18 +3,21 @@ package by.bstu.faa.christmas_tree.model;
 import java.io.Serializable;
 
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
-@NoArgsConstructor
 public class UserInfo implements Serializable {
 
     private String id;
     private String name;
     private int treeLevel;
     private int score;
+
+    public UserInfo() {
+        this.treeLevel = 0;
+        this.score = 0;
+    }
 
     public void addLevel() { this.treeLevel += 1; }
     public void reduceLevel() {
@@ -23,7 +26,6 @@ public class UserInfo implements Serializable {
     }
 
     public void addPoints() { this.score += 10; }
-
     public void reducePoints() {
         if(this.score - 5 < 0) { this.score = 0; }
         else this.score -= 5;

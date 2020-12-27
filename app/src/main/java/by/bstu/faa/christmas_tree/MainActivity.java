@@ -3,6 +3,7 @@ package by.bstu.faa.christmas_tree;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -10,17 +11,22 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import by.bstu.faa.christmas_tree.DB.DB_Helper;
 import by.bstu.faa.christmas_tree.model.UserInfo;
 
 public class MainActivity extends AppCompatActivity {
 
-    //private static String user_name = "";
+    DB_Helper dbHelper;
+    SQLiteDatabase mainDB;
     private static final UserInfo current_user = new UserInfo();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        dbHelper = new DB_Helper(getApplicationContext());
+        mainDB = dbHelper.getReadableDatabase();
 
         showDialog();
     }
