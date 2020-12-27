@@ -13,36 +13,20 @@ public class QuestionDialog extends DialogFragment {
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
 
-        final String[] catNamesArray = {"Васька", "Рыжик", "Мурзик"};
+        final String[] answerVariants = {"Васька", "Рыжик", "Мурзик"};
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle("Выберите любимое имя кота")
                 // добавляем переключатели
-                .setSingleChoiceItems(catNamesArray, -1,
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog,
-                                                int item) {
-                                Toast.makeText(
-                                        getActivity(),
-                                        "Любимое имя кота: "
-                                                + catNamesArray[item],
-                                        Toast.LENGTH_SHORT).show();
-                            }
-                        })
-                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int id) {
-                        // User clicked OK, so save the mSelectedItems results somewhere
-                        // or return them to the component that opened the dialog
-
-                    }
+                .setSingleChoiceItems(answerVariants, -1,
+                        (dialog, item) -> Toast.makeText(
+                                getActivity(),
+                                "Любимое имя кота: "
+                                        + answerVariants[item],
+                                Toast.LENGTH_SHORT).show())
+                .setPositiveButton("OK", (dialog, id) -> {
                 })
-                .setNegativeButton("Отмена", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int id) {
-
-                    }
+                .setNegativeButton("Отмена", (dialog, id) -> {
                 });
 
         return builder.create();

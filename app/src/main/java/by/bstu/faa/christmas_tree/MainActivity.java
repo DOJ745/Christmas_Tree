@@ -98,6 +98,6 @@ public class MainActivity extends AppCompatActivity {
         dialog.show(getSupportFragmentManager(), "custom");*/
 
         //Toast.makeText(this, DB_Operations.Queries.getRandomTheme(mainDB), Toast.LENGTH_LONG).show();
-        DB_Operations.Queries.getRandomQuestion(mainDB);
+        //DB_Operations.Queries.getRandomQuestion(mainDB);
     }
 }

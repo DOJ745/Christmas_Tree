@@ -10,6 +10,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import by.bstu.faa.christmas_tree.model.QueryContainer;
+import by.bstu.faa.christmas_tree.model.QuestionContainer;
 
 public class DB_Operations {
     public static class MainOperations {
@@ -147,7 +148,7 @@ public class DB_Operations {
             rowId = db.insert("Answers", null, contentValues);*/
         }
 
-        public static void getRandomQuestion(SQLiteDatabase db) {
+        public static QuestionContainer getRandomQuestion(SQLiteDatabase db) {
 
             int themeId = randomNumber(1, 3);
             int questionId = 0;
@@ -186,9 +187,25 @@ public class DB_Operations {
             }
             queryCursor.close();
 
+            QuestionContainer randomQuestion = new QuestionContainer();
+
+            randomQuestion.setQuestionTheme(queryResult.get(0).getThemeName());
+            randomQuestion.setQuestionText(queryResult.get(0).getQ_text());
+
+            Map<String, Integer> variants = new HashMap<>();
+
+            for(int i = 0; i < queryResult.size(); i++){
+                variants.put(queryResult.get(i).getA_text(), queryResult.get(i).getTrueness());
+            }
+
+            randomQuestion.setVariants(variants);
+
             for (QueryContainer elem: queryResult) {
                 Log.d("QUERIES", elem.toString());
             }
+            Log.d("QUERIES", randomQuestion.toString());
+
+            return randomQuestion;
         }
 
         private static int randomNumber(int min, int max)
