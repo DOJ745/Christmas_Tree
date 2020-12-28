@@ -32,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
     private static final UserInfo current_user = new UserInfo();
     private static final String TAG = "MainActivity";
     private static int answerResult = 0;
+    private static int attempt_count = 2;
 
     TextView userScore;
     TextView treeLevel;
@@ -103,12 +104,34 @@ public class MainActivity extends AppCompatActivity {
         View answerView = getLayoutInflater().inflate(R.layout.question_dialog, null);
         answerDialogBuilder.setView(answerView);
 
+        Dialog answerQuestionDialog = answerDialogBuilder.create();
 
         TextView questionText = answerView.findViewById(R.id.question_text);
         TextView questionTheme = answerView.findViewById(R.id.question_theme);
         TextView chosenAnswer = answerView.findViewById(R.id.chosen_answer);
 
         TextView timerCountdown = answerView.findViewById(R.id.countdown);
+
+        CountDownTimer answerTimer = new CountDownTimer(20000, 1000) {
+            public void onTick(long millisUntilFinished) {
+                timerCountdown.setText("Осталось: " + millisUntilFinished / 1000);
+            }
+            public void onFinish() {
+                timerCountdown.setText("Время вышло!");
+                answerQuestionDialog.dismiss();
+            }
+        }.start();
+
+        /*
+        CountDownTimer doneTimer = new CountDownTimer(5000, 1000) {
+            public void onTick(long millisUntilFinished) {
+                //timerCountdown.setText("Осталось: " + millisUntilFinished / 1000);
+            }
+            public void onFinish() {
+                //timerCountdown.setText("Время вышло!");
+                //answerQuestionDialog.dismiss();
+            }
+        };*/
 
         Button variant1 = answerView.findViewById(R.id.variant1);
         Button variant2 = answerView.findViewById(R.id.variant2);
@@ -146,6 +169,8 @@ public class MainActivity extends AppCompatActivity {
 
             if(answerResult == 1) {
 
+                answerTimer.cancel();
+                //doneTimer.start();
                 AlertDialog.Builder correct_builder = new AlertDialog.Builder(this);
                 View correctAnswerView = getLayoutInflater().inflate(R.layout.correct_answer_dialog, null);
                 correct_builder.setView(correctAnswerView);
@@ -153,13 +178,24 @@ public class MainActivity extends AppCompatActivity {
                 Button close_btn = correctAnswerView.findViewById(R.id.close_btn);
 
                 final Dialog correctAnswerDialog = correct_builder.create();
-                close_btn.setOnClickListener(vn -> correctAnswerDialog.dismiss());
+
+                close_btn.setOnClickListener(new View.OnClickListener() {
+                    public void onClick(View v) {
+                        answerQuestionDialog.dismiss();
+                        correctAnswerDialog.dismiss();
+                    }
+                });
+
+                //close_btn.setOnClickListener(vn -> correctAnswerDialog.dismiss() );
+                //close_btn.setOnClickListener(vnt ->);
                 correctAnswerDialog.show();
                 correctUserAnswer();
             }
             else if(chosenAnswer.getText().toString().equals("")) { chosenAnswer.setText("Вы не выбрали ответ!"); }
             else {
 
+                answerTimer.cancel();
+                //doneTimer.start();
                 AlertDialog.Builder wrong_builder = new AlertDialog.Builder(this);
                 View wrongAnswerView = getLayoutInflater().inflate(R.layout.wrong_answer_dialog, null);
                 wrong_builder.setView(wrongAnswerView);
@@ -176,18 +212,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        Dialog answerQuestionDialog = answerDialogBuilder.create();
         answerQuestionDialog.show();
-        new CountDownTimer(20000, 1000) {
-            public void onTick(long millisUntilFinished) {
-                timerCountdown.setText("Осталось: " + millisUntilFinished / 1000);
-            }
-            public void onFinish() {
-                timerCountdown.setText("Время вышло!");
-                answerQuestionDialog.dismiss();
-            }
-        }.start();
-
     }
 
     public void correctUserAnswer() {

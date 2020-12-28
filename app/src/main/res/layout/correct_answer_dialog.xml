@@ -5,6 +5,15 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
+    <!--
+    <TextView
+        android:id="@+id/correct_countdown"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/christmas_green"
+        android:textAlignment="center"
+        android:textSize="18sp"/> -->
+
     <TextView
         android:id="@+id/congrats_correct"
         android:layout_width="match_parent"
