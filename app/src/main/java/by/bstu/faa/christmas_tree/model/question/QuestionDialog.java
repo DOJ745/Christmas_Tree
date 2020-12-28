@@ -19,19 +19,18 @@ import by.bstu.faa.christmas_tree.DB.DB_Operations;
 import by.bstu.faa.christmas_tree.R;
 
 public class QuestionDialog extends DialogFragment {
-    /*
+
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
 
         QuestionContainer currentQ = (QuestionContainer) getArguments().getSerializable("QUESTION");
         final int[] answerResult = { getArguments().getInt("ANSWER_RESULT") };
-        //QuestionContainer currentQ = DB_Operations.Queries.getRandomQuestion(mainDB);
         ArrayList<String> answer_variants = new ArrayList<>();
         ArrayList<Integer> answer_trueness = new ArrayList<>();
 
         //AtomicInteger isTrue = new AtomicInteger();
 
-        AlertDialog.Builder answerDialog = new AlertDialog.Builder(getContext());
+        AlertDialog.Builder answerDialog = new AlertDialog.Builder(getActivity());
         View answerView = getLayoutInflater().inflate(R.layout.question_dialog, null);
         answerDialog.setView(answerView);
 
@@ -77,13 +76,13 @@ public class QuestionDialog extends DialogFragment {
 
         answer_btn.setOnClickListener(v -> {
             if(answerResult[0] == 1){
-                Toast.makeText(getContext(), "YAY - " + 1, Toast.LENGTH_LONG).show();
+                //Toast.makeText(getContext(), "YAY - " + 1, Toast.LENGTH_LONG).show();
             }
             else if(chosenAnswer.getText().toString().equals("")) {
-                Toast.makeText(getContext(), "Вы не выбрали ответ!", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getContext(), "Вы не выбрали ответ!", Toast.LENGTH_SHORT).show();
             }
             else{
-                Toast.makeText(getContext(), "OOF - " + 0, Toast.LENGTH_LONG).show();
+                //Toast.makeText(getContext(), "OOF - " + 0, Toast.LENGTH_LONG).show();
             }
         });
 
@@ -97,5 +96,5 @@ public class QuestionDialog extends DialogFragment {
         }.start();
 
         return answerDialog.create();
-    }*/
+    }
 }

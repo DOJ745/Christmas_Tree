@@ -3,6 +3,8 @@ package by.bstu.faa.christmas_tree;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -19,6 +21,7 @@ import java.util.Map;
 
 import by.bstu.faa.christmas_tree.DB.DB_Helper;
 import by.bstu.faa.christmas_tree.DB.DB_Operations;
+import by.bstu.faa.christmas_tree.model.answer.CorrectAnswer;
 import by.bstu.faa.christmas_tree.model.question.QuestionContainer;
 import by.bstu.faa.christmas_tree.model.UserInfo;
 import by.bstu.faa.christmas_tree.model.question.QuestionDialog;
@@ -27,9 +30,13 @@ public class MainActivity extends AppCompatActivity {
 
     DB_Helper dbHelper;
     SQLiteDatabase mainDB;
+
     private static final UserInfo current_user = new UserInfo();
     private static final String TAG = "MainActivity";
     private static int answerResult = 0;
+
+    TextView userScore;
+    TextView treeLevel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
 
         dbHelper = new DB_Helper(getApplicationContext());
         mainDB = dbHelper.getReadableDatabase();
+        initViews();
 
         //showNameDialog();
     }
@@ -90,7 +98,6 @@ public class MainActivity extends AppCompatActivity {
         questionDialog.setArguments(args);
         questionDialog.show(getSupportFragmentManager(), "custom");*/
 
-
         QuestionContainer currentQ = DB_Operations.Queries.getRandomQuestion(mainDB);
         ArrayList<String> answer_variants = new ArrayList<>();
         ArrayList<Integer> answer_trueness = new ArrayList<>();
@@ -102,7 +109,17 @@ public class MainActivity extends AppCompatActivity {
         TextView questionText = answerView.findViewById(R.id.question_text);
         TextView questionTheme = answerView.findViewById(R.id.question_theme);
         TextView chosenAnswer = answerView.findViewById(R.id.chosen_answer);
+
         TextView timerCountdown = answerView.findViewById(R.id.countdown);
+
+        new CountDownTimer(20000, 1000) {
+            // Действие в интервал времени
+            public void onTick(long millisUntilFinished) {
+                timerCountdown.setText("Осталось: " + millisUntilFinished / 1000);
+            }
+            // Запуск действия после завершения отсчета
+            public void onFinish() { timerCountdown.setText("Время вышло!"); }
+        }.start();
 
         Button variant1 = answerView.findViewById(R.id.variant1);
         Button variant2 = answerView.findViewById(R.id.variant2);
@@ -124,50 +141,60 @@ public class MainActivity extends AppCompatActivity {
         variant1.setOnClickListener(v -> {
             answerResult = answer_trueness.get(0);
             chosenAnswer.setText("Выбран 1 вариант");
-            //Toast.makeText(this, "Result - " + answerResult, Toast.LENGTH_LONG).show();
         });
 
         variant2.setOnClickListener(v -> {
             answerResult = answer_trueness.get(1);
             chosenAnswer.setText("Выбран 2 вариант");
-            //Toast.makeText(this, "Result - " + answerResult, Toast.LENGTH_LONG).show();
         });
 
         variant3.setOnClickListener(v -> {
             answerResult = answer_trueness.get(2);
             chosenAnswer.setText("Выбран 3 вариант");
-            //Toast.makeText(this, "Result - " + answerResult, Toast.LENGTH_LONG).show();
         });
 
         answer_btn.setOnClickListener(v -> {
-            if(answerResult == 1){
-                Toast.makeText(this, "YAY - " + answerResult, Toast.LENGTH_LONG).show();
+
+            if(answerResult == 1) {
+
+                AlertDialog.Builder correct_builder = new AlertDialog.Builder(this);
+                View correctAnswerView = getLayoutInflater().inflate(R.layout.correct_answer_dialog, null);
+                correct_builder.setView(correctAnswerView);
+
+                Button close_btn = correctAnswerView.findViewById(R.id.close_btn);
+
+                final Dialog correctAnswerDialog = correct_builder.create();
+                close_btn.setOnClickListener(vn -> correctAnswerDialog.dismiss());
+                correctAnswerDialog.show();
+                correctUserAnswer();
             }
-            else if(chosenAnswer.getText().toString().equals("")) {
-                Toast.makeText(this, "Вы не выбрали ответ!", Toast.LENGTH_SHORT).show();
-            }
+            else if(chosenAnswer.getText().toString().equals("")) { chosenAnswer.setText("Вы не выбрали ответ!"); }
             else{
                 Toast.makeText(this, "OOF - " + answerResult, Toast.LENGTH_LONG).show();
             }
         });
 
-        new CountDownTimer(20000, 1000) {
-            // Действие в интервал времени
-            public void onTick(long millisUntilFinished) {
-                timerCountdown.setText("Осталось: " + millisUntilFinished / 1000);
-            }
-            // Запуск действия после завершения отсчета
-            public void onFinish() { timerCountdown.setText("Время вышло!"); }
-        }.start();
-
         answerDialog.show();
     }
 
-    public void correctAnswer() {
-
+    public void correctUserAnswer() {
+        current_user.addLevel();
+        current_user.addPoints();
+        updateViews();
     }
 
     public void wrongAnswer() {
 
+    }
+
+    private void initViews() {
+        userScore = findViewById(R.id.user_score);
+        treeLevel = findViewById(R.id.tree_level);
+    }
+
+    private void updateViews() {
+        //switch ()
+        userScore.setText(userScore.getText().toString() + " " + current_user.getScore());
+        treeLevel.setText(treeLevel.getText().toString() + " " + current_user.getTreeLevel());
     }
 }
