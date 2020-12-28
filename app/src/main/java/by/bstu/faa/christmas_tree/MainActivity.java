@@ -4,9 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.database.sqlite.SQLiteDatabase;
-import android.media.Image;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.text.Editable;
@@ -23,10 +21,8 @@ import java.util.Map;
 
 import by.bstu.faa.christmas_tree.DB.DB_Helper;
 import by.bstu.faa.christmas_tree.DB.DB_Operations;
-import by.bstu.faa.christmas_tree.model.answer.CorrectAnswer;
 import by.bstu.faa.christmas_tree.model.question.QuestionContainer;
 import by.bstu.faa.christmas_tree.model.UserInfo;
-import by.bstu.faa.christmas_tree.model.question.QuestionDialog;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -50,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
         mainDB = dbHelper.getReadableDatabase();
         initViews();
 
-        //showNameDialog();
+        showNameDialog();
     }
 
     private void showNameDialog() {
@@ -78,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         myDialog.setTitle("Ho-ho-ho");
-        myDialog.setIcon(R.drawable.christmas_bauble_32);
+        myDialog.setIcon(R.drawable.ic_christmas_bauble);
         myDialog.setView(view);
 
         myDialog.setPositiveButton("OK", (dialog, which) -> {
@@ -200,7 +196,7 @@ public class MainActivity extends AppCompatActivity {
                 break;
 
             case 2:
-                userTree.setImageResource(R.drawable.ic_tree_level_2);
+                userTree.setImageResource(R.drawable.ic_tree_level_3);
                 break;
 
             case 3:
