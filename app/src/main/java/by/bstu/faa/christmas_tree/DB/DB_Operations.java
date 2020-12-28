@@ -9,8 +9,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import by.bstu.faa.christmas_tree.model.QueryContainer;
-import by.bstu.faa.christmas_tree.model.QuestionContainer;
+import by.bstu.faa.christmas_tree.model.query.QueryContainer;
+import by.bstu.faa.christmas_tree.model.question.QuestionContainer;
 
 public class DB_Operations {
     public static class MainOperations {

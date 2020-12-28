@@ -5,9 +5,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.AlertDialog;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -16,11 +16,10 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicInteger;
 
 import by.bstu.faa.christmas_tree.DB.DB_Helper;
 import by.bstu.faa.christmas_tree.DB.DB_Operations;
-import by.bstu.faa.christmas_tree.model.QuestionContainer;
+import by.bstu.faa.christmas_tree.model.question.QuestionContainer;
 import by.bstu.faa.christmas_tree.model.UserInfo;
 
 public class MainActivity extends AppCompatActivity {
@@ -95,6 +94,7 @@ public class MainActivity extends AppCompatActivity {
         TextView questionText = answerView.findViewById(R.id.question_text);
         TextView questionTheme = answerView.findViewById(R.id.question_theme);
         TextView chosenAnswer = answerView.findViewById(R.id.chosen_answer);
+        TextView timerCountdown = answerView.findViewById(R.id.countdown);
 
         Button variant1 = answerView.findViewById(R.id.variant1);
         Button variant2 = answerView.findViewById(R.id.variant2);
@@ -116,19 +116,19 @@ public class MainActivity extends AppCompatActivity {
         variant1.setOnClickListener(v -> {
             answerResult = answer_trueness.get(0);
             chosenAnswer.setText("Выбран 1 вариант");
-            Toast.makeText(this, "Result - " + answerResult, Toast.LENGTH_LONG).show();
+            //Toast.makeText(this, "Result - " + answerResult, Toast.LENGTH_LONG).show();
         });
 
         variant2.setOnClickListener(v -> {
             answerResult = answer_trueness.get(1);
             chosenAnswer.setText("Выбран 2 вариант");
-            Toast.makeText(this, "Result - " + answerResult, Toast.LENGTH_LONG).show();
+            //Toast.makeText(this, "Result - " + answerResult, Toast.LENGTH_LONG).show();
         });
 
         variant3.setOnClickListener(v -> {
             answerResult = answer_trueness.get(2);
             chosenAnswer.setText("Выбран 3 вариант");
-            Toast.makeText(this, "Result - " + answerResult, Toast.LENGTH_LONG).show();
+            //Toast.makeText(this, "Result - " + answerResult, Toast.LENGTH_LONG).show();
         });
 
         answer_btn.setOnClickListener(v -> {
@@ -139,6 +139,18 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(this, "OOF - " + answerResult, Toast.LENGTH_LONG).show();
             }
         });
+
+        new CountDownTimer(20000, 1000) {
+            // Действие в интервал времени
+            public void onTick(long millisUntilFinished) {
+                timerCountdown.setText("Осталось: "
+                        + millisUntilFinished / 1000);
+            }
+            // Запуск действия после завершения отсчета
+            public void onFinish() {
+                timerCountdown.setText("Время вышло!");
+            }
+        }.start();
 
         answerDialog.show();
     }

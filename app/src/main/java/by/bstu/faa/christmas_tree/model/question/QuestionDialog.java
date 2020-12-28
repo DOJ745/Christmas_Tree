@@ -1,4 +1,4 @@
-package by.bstu.faa.christmas_tree.model;
+package by.bstu.faa.christmas_tree.model.question;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
