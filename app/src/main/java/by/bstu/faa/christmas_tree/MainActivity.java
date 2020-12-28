@@ -46,7 +46,13 @@ public class MainActivity extends AppCompatActivity {
         mainDB = dbHelper.getReadableDatabase();
         initViews();
 
-        showNameDialog();
+        //showNameDialog();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mainDB.close();
     }
 
     private void showNameDialog() {
@@ -93,24 +99,16 @@ public class MainActivity extends AppCompatActivity {
         ArrayList<String> answer_variants = new ArrayList<>();
         ArrayList<Integer> answer_trueness = new ArrayList<>();
 
-        AlertDialog.Builder answerDialog = new AlertDialog.Builder(this);
+        AlertDialog.Builder answerDialogBuilder = new AlertDialog.Builder(this);
         View answerView = getLayoutInflater().inflate(R.layout.question_dialog, null);
-        answerDialog.setView(answerView);
+        answerDialogBuilder.setView(answerView);
+
 
         TextView questionText = answerView.findViewById(R.id.question_text);
         TextView questionTheme = answerView.findViewById(R.id.question_theme);
         TextView chosenAnswer = answerView.findViewById(R.id.chosen_answer);
 
         TextView timerCountdown = answerView.findViewById(R.id.countdown);
-
-        new CountDownTimer(20000, 1000) {
-            // Действие в интервал времени
-            public void onTick(long millisUntilFinished) {
-                timerCountdown.setText("Осталось: " + millisUntilFinished / 1000);
-            }
-            // Запуск действия после завершения отсчета
-            public void onFinish() { timerCountdown.setText("Время вышло!"); }
-        }.start();
 
         Button variant1 = answerView.findViewById(R.id.variant1);
         Button variant2 = answerView.findViewById(R.id.variant2);
@@ -160,12 +158,36 @@ public class MainActivity extends AppCompatActivity {
                 correctUserAnswer();
             }
             else if(chosenAnswer.getText().toString().equals("")) { chosenAnswer.setText("Вы не выбрали ответ!"); }
-            else{
-                Toast.makeText(this, "OOF - " + answerResult, Toast.LENGTH_LONG).show();
+            else {
+
+                AlertDialog.Builder wrong_builder = new AlertDialog.Builder(this);
+                View wrongAnswerView = getLayoutInflater().inflate(R.layout.wrong_answer_dialog, null);
+                wrong_builder.setView(wrongAnswerView);
+
+                Button again_btn = wrongAnswerView.findViewById(R.id.again_btn);
+                Button close_btn = wrongAnswerView.findViewById(R.id.close_btn);
+
+                final Dialog wrongAnswerDialog = wrong_builder.create();
+                close_btn.setOnClickListener(vn -> wrongAnswerDialog.dismiss());
+                again_btn.setOnClickListener(this::answerQuestion);
+
+                wrongAnswerDialog.show();
+                wrongUserAnswer();
             }
         });
 
-        answerDialog.show();
+        Dialog answerQuestionDialog = answerDialogBuilder.create();
+        answerQuestionDialog.show();
+        new CountDownTimer(20000, 1000) {
+            public void onTick(long millisUntilFinished) {
+                timerCountdown.setText("Осталось: " + millisUntilFinished / 1000);
+            }
+            public void onFinish() {
+                timerCountdown.setText("Время вышло!");
+                answerQuestionDialog.dismiss();
+            }
+        }.start();
+
     }
 
     public void correctUserAnswer() {
@@ -174,8 +196,10 @@ public class MainActivity extends AppCompatActivity {
         updateViews();
     }
 
-    public void wrongAnswer() {
-
+    public void wrongUserAnswer() {
+        current_user.reduceLevel();
+        current_user.reducePoints();
+        updateViews();
     }
 
     private void initViews() {
@@ -186,36 +210,21 @@ public class MainActivity extends AppCompatActivity {
 
     private void updateViews() {
         switch (current_user.getTreeLevel()){
-
-            case 0:
-                userTree.setImageResource(R.drawable.ic_tree_level_0);
+            case 0: userTree.setImageResource(R.drawable.ic_tree_level_0);
                 break;
-
-            case 1:
-                userTree.setImageResource(R.drawable.ic_tree_level_1);
+            case 1: userTree.setImageResource(R.drawable.ic_tree_level_1);
                 break;
-
-            case 2:
-                userTree.setImageResource(R.drawable.ic_tree_level_3);
+            case 2: userTree.setImageResource(R.drawable.ic_tree_level_2);
                 break;
-
-            case 3:
+            case 3: userTree.setImageResource(R.drawable.ic_tree_level_3);
                 break;
-
-            case 4:
+            case 4: userTree.setImageResource(R.drawable.ic_tree_level_4);
                 break;
-
-            case 5:
+            case 5: userTree.setImageResource(R.drawable.ic_tree_level_5);
                 break;
         }
 
         userScore.setText("Score: " + current_user.getScore());
         treeLevel.setText("Tree: " + current_user.getTreeLevel());
-    }
-
-    private int randomNumber(int min, int max)
-    {
-        max -= min;
-        return (int) (Math.random() * ++max) + min;
     }
 }

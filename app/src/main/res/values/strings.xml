@@ -8,7 +8,9 @@
     <string name="sign_up">Sing up</string>
     <string name="answer">Ответить</string>
     <string name="close">Закрыть</string>
-    <string name="correct_answer"></string>
+
+    <string name="try_answer">Ещё разок</string>
+    <string name="choose_answer">Выберите ответ</string>
 
     <string name="congrats">Merry Christmas and happy New Year!</string>
     <string name="required_name">Enter your name, please</string>

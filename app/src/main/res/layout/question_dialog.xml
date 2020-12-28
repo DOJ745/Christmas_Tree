@@ -53,6 +53,7 @@
         android:layout_height="wrap_content"
         android:textAlignment="center"
         android:textColor="@color/black"
+        android:text="@string/choose_answer"
         android:textSize="17sp"/>
 
     <Button
