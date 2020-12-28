@@ -129,26 +129,22 @@ public class MainActivity extends AppCompatActivity {
             answer_trueness.add(item.getValue());
         }
 
-        int randomOrder1 = randomNumber(0, 2);
-        int randomOrder2 = randomNumber(0, 2);
-        int randomOrder3 = randomNumber(0, 2);
-
-        variant1.setText(answer_variants.get(randomOrder1));
-        variant2.setText(answer_variants.get(randomOrder2));
-        variant3.setText(answer_variants.get(randomOrder3));
+        variant1.setText(answer_variants.get(0));
+        variant2.setText(answer_variants.get(1));
+        variant3.setText(answer_variants.get(2));
 
         variant1.setOnClickListener(v -> {
-            answerResult = answer_trueness.get(randomOrder1);
+            answerResult = answer_trueness.get(0);
             chosenAnswer.setText("Выбран 1 вариант");
         });
 
         variant2.setOnClickListener(v -> {
-            answerResult = answer_trueness.get(randomOrder2);
+            answerResult = answer_trueness.get(1);
             chosenAnswer.setText("Выбран 2 вариант");
         });
 
         variant3.setOnClickListener(v -> {
-            answerResult = answer_trueness.get(randomOrder3);
+            answerResult = answer_trueness.get(2);
             chosenAnswer.setText("Выбран 3 вариант");
         });
 
