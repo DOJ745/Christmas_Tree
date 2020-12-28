@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -34,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
     private static final UserInfo current_user = new UserInfo();
     private static final String TAG = "MainActivity";
     private static int answerResult = 0;
-    private static int attempt_count = 2;
+    private static int attempt_count = 3;
 
     TextView userScore;
     TextView treeLevel;
@@ -98,6 +99,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void answerQuestion(View view) {
+
+        attempt_count--;
 
         QuestionContainer currentQ = DB_Operations.Queries.getRandomQuestion(mainDB);
         ArrayList<String> answer_variants = new ArrayList<>();
@@ -197,7 +200,13 @@ public class MainActivity extends AppCompatActivity {
                     wrongAnswerDialog.dismiss();
                 });
 
-                again_btn.setOnClickListener(this::answerQuestion);
+                if(attempt_count > 0)
+                    again_btn.setOnClickListener(this::answerQuestion);
+                else
+                {
+                    again_btn.setText("Попытки кончились...");
+                    again_btn.setEnabled(false);
+                }
 
                 wrongAnswerDialog.show();
                 wrongUserAnswer();
