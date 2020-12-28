@@ -16,7 +16,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Map;
 
 import by.bstu.faa.christmas_tree.DB.DB_Helper;
@@ -37,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
     TextView userScore;
     TextView treeLevel;
     ImageView userTree;
+    Button growTreeButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -173,6 +176,8 @@ public class MainActivity extends AppCompatActivity {
                 });
                 correctAnswerDialog.show();
                 correctUserAnswer();
+
+                startBlockBtnTimer(30);
             }
             else if(chosenAnswer.getText().toString().equals("")) { chosenAnswer.setText("Вы не выбрали ответ!"); }
 
@@ -196,19 +201,20 @@ public class MainActivity extends AppCompatActivity {
 
                 wrongAnswerDialog.show();
                 wrongUserAnswer();
+                startBlockBtnTimer(30);
             }
         });
 
         answerQuestionDialog.show();
     }
 
-    public void correctUserAnswer() {
+    private void correctUserAnswer() {
         current_user.addLevel();
         current_user.addPoints();
         updateViews();
     }
 
-    public void wrongUserAnswer() {
+    private void wrongUserAnswer() {
         current_user.reduceLevel();
         current_user.reducePoints();
         updateViews();
@@ -218,6 +224,7 @@ public class MainActivity extends AppCompatActivity {
         userScore = findViewById(R.id.user_score);
         treeLevel = findViewById(R.id.tree_level);
         userTree = findViewById(R.id.user_tree);
+        growTreeButton = findViewById(R.id.grow_btn);
     }
 
     private void updateViews() {
@@ -238,5 +245,19 @@ public class MainActivity extends AppCompatActivity {
 
         userScore.setText("Score: " + current_user.getScore());
         treeLevel.setText("Tree: " + current_user.getTreeLevel());
+    }
+
+    private void startBlockBtnTimer(int sec) {
+
+        new CountDownTimer(sec * 1000, 1000) {
+            public void onTick(long millisUntilFinished) {
+                growTreeButton.setEnabled(false);
+                growTreeButton.setText("Wait little bit...");
+            }
+            public void onFinish() {
+                growTreeButton.setText("Grow your tree!");
+                growTreeButton.setEnabled(true);
+            }
+        }.start();
     }
 }
