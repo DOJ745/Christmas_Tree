@@ -20,7 +20,6 @@ import java.util.Map;
 
 import by.bstu.faa.christmas_tree.DB.DB_Helper;
 import by.bstu.faa.christmas_tree.DB.DB_Operations;
-import by.bstu.faa.christmas_tree.model.TutorialDialog;
 import by.bstu.faa.christmas_tree.model.question.QuestionContainer;
 import by.bstu.faa.christmas_tree.model.UserInfo;
 
@@ -188,7 +187,12 @@ public class MainActivity extends AppCompatActivity {
 
                 startBlockBtnTimer(30);
             }
-            else if(chosenAnswer.getText().toString().equals("")) { chosenAnswer.setText("Вы не выбрали ответ!"); }
+            else if(chosenAnswer.getText().toString().equals(""))
+            {
+                chosenAnswer.setText("Вы не выбрали ответ!");
+                wrongUserAnswer();
+                startBlockBtnTimer(30);
+            }
 
             else {
                 answerTimer.cancel();
@@ -229,12 +233,9 @@ public class MainActivity extends AppCompatActivity {
         View tutorial_view = getLayoutInflater().inflate(R.layout.tutorial_dialog, null);
         builder.setView(tutorial_view);
         Dialog tutorialDialog = builder.create();
-
         Button close_btn = tutorial_view.findViewById(R.id.close_btn);
 
-        close_btn.setOnClickListener(v1 -> {
-            tutorialDialog.dismiss();
-        });
+        close_btn.setOnClickListener(v1 -> tutorialDialog.dismiss());
 
         tutorialDialog.show();
     }
