@@ -20,6 +20,7 @@ import java.util.Map;
 
 import by.bstu.faa.christmas_tree.DB.DB_Helper;
 import by.bstu.faa.christmas_tree.DB.DB_Operations;
+import by.bstu.faa.christmas_tree.model.TutorialDialog;
 import by.bstu.faa.christmas_tree.model.question.QuestionContainer;
 import by.bstu.faa.christmas_tree.model.UserInfo;
 
@@ -123,7 +124,7 @@ public class MainActivity extends AppCompatActivity {
 
         TextView timerCountdown = answerView.findViewById(R.id.countdown);
 
-        CountDownTimer answerTimer = new CountDownTimer(20000, 1000) {
+        CountDownTimer answerTimer = new CountDownTimer(30000, 1000) {
             public void onTick(long millisUntilFinished) {
                 timerCountdown.setText("Осталось: " + millisUntilFinished / 1000);
             }
@@ -220,6 +221,22 @@ public class MainActivity extends AppCompatActivity {
         });
 
         answerQuestionDialog.show();
+    }
+
+    public void howToPlay(View view) {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        View tutorial_view = getLayoutInflater().inflate(R.layout.tutorial_dialog, null);
+        builder.setView(tutorial_view);
+        Dialog tutorialDialog = builder.create();
+
+        Button close_btn = tutorial_view.findViewById(R.id.close_btn);
+
+        close_btn.setOnClickListener(v1 -> {
+            tutorialDialog.dismiss();
+        });
+
+        tutorialDialog.show();
     }
 
     private void correctUserAnswer() {
