@@ -2,6 +2,7 @@ package by.bstu.faa.christmas_tree;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.database.sqlite.SQLiteDatabase;
@@ -16,15 +17,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Map;
 
 import by.bstu.faa.christmas_tree.DB.DB_Helper;
 import by.bstu.faa.christmas_tree.DB.DB_Operations;
 import by.bstu.faa.christmas_tree.model.question.QuestionContainer;
 import by.bstu.faa.christmas_tree.model.UserInfo;
+
 
 public class MainActivity extends AppCompatActivity {
 
