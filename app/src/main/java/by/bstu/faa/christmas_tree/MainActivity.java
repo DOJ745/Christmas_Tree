@@ -135,6 +135,9 @@ public class MainActivity extends AppCompatActivity {
             if(answerResult == 1){
                 Toast.makeText(this, "YAY - " + answerResult, Toast.LENGTH_LONG).show();
             }
+            else if(chosenAnswer.getText().toString().equals("")) {
+                Toast.makeText(this, "Вы не выбрали ответ!", Toast.LENGTH_SHORT).show();
+            }
             else{
                 Toast.makeText(this, "OOF - " + answerResult, Toast.LENGTH_LONG).show();
             }
@@ -143,15 +146,20 @@ public class MainActivity extends AppCompatActivity {
         new CountDownTimer(20000, 1000) {
             // Действие в интервал времени
             public void onTick(long millisUntilFinished) {
-                timerCountdown.setText("Осталось: "
-                        + millisUntilFinished / 1000);
+                timerCountdown.setText("Осталось: " + millisUntilFinished / 1000);
             }
             // Запуск действия после завершения отсчета
-            public void onFinish() {
-                timerCountdown.setText("Время вышло!");
-            }
+            public void onFinish() { timerCountdown.setText("Время вышло!"); }
         }.start();
 
         answerDialog.show();
+    }
+
+    public void correctAnswer() {
+
+    }
+
+    public void wrongAnswer() {
+
     }
 }
