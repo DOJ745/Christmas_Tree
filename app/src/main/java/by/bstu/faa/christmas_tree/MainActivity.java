@@ -21,6 +21,7 @@ import by.bstu.faa.christmas_tree.DB.DB_Helper;
 import by.bstu.faa.christmas_tree.DB.DB_Operations;
 import by.bstu.faa.christmas_tree.model.question.QuestionContainer;
 import by.bstu.faa.christmas_tree.model.UserInfo;
+import by.bstu.faa.christmas_tree.model.question.QuestionDialog;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -81,11 +82,18 @@ public class MainActivity extends AppCompatActivity {
 
     public void answerQuestion(View view) {
 
+        /*
+        QuestionDialog questionDialog = new QuestionDialog();
+        Bundle args = new Bundle();
+        args.putInt("ANSWER_RESULT", answerResult);
+        args.putSerializable("QUESTION", DB_Operations.Queries.getRandomQuestion(mainDB));
+        questionDialog.setArguments(args);
+        questionDialog.show(getSupportFragmentManager(), "custom");*/
+
+
         QuestionContainer currentQ = DB_Operations.Queries.getRandomQuestion(mainDB);
         ArrayList<String> answer_variants = new ArrayList<>();
         ArrayList<Integer> answer_trueness = new ArrayList<>();
-
-        //AtomicInteger isTrue = new AtomicInteger();
 
         AlertDialog.Builder answerDialog = new AlertDialog.Builder(this);
         View answerView = getLayoutInflater().inflate(R.layout.question_dialog, null);
