@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".MainActivity">
 
     <pl.droidsonroids.gif.GifImageView
@@ -67,7 +68,7 @@
         <ImageView
             android:id="@+id/user_tree"
             android:layout_width="match_parent"
-            android:layout_height="410dp"
+            android:layout_height="320dp"
             android:layout_below="@id/tree_level"
             android:layout_centerInParent="true"
             android:contentDescription="@string/image_descr"

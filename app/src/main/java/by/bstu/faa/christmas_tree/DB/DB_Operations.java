@@ -20,6 +20,7 @@ public class DB_Operations {
             createThemesTable(db);
             createQuestionsTable(db);
             createAnswersTable(db);
+            createUsersTable(db);
         }
 
         public static void upgradeAllTables(SQLiteDatabase db) {
@@ -48,6 +49,8 @@ public class DB_Operations {
                     "Tree_Level INTEGER not null,\n" +
                     "Score INTEGER not null,\n" +
                     "constraint ID_pk primary key(ID))");
+
+            Queries.insertDefaultUser(db);
         }
 
         public static void createQuestionsTable(SQLiteDatabase db) {
@@ -107,6 +110,8 @@ public class DB_Operations {
             ContentValues contentValues = new ContentValues();
             long rowId;
 
+                // ТЕМА 1
+
             contentValues.put("Theme_ID", 1);
             contentValues.put("Q_Text", "В языческие времена белорусы отмечали наступление Нового года…");
             rowId = db.insert("Questions", null, contentValues);
@@ -117,6 +122,58 @@ public class DB_Operations {
 
             contentValues.put("Theme_ID", 1);
             contentValues.put("Q_Text", "Кто приносит подарки под ёлку в Беларуси?");
+            rowId = db.insert("Questions", null, contentValues);
+
+            contentValues.put("Theme_ID", 1);
+            contentValues.put("Q_Text", "В каком месте находится резиденция Деда Мороза в Беларуси?");
+            rowId = db.insert("Questions", null, contentValues);
+
+            contentValues.put("Theme_ID", 1);
+            contentValues.put("Q_Text", "Какой принцип обычно истолковывают во время Нового года в Беларуси?");
+            rowId = db.insert("Questions", null, contentValues);
+
+                // ТЕМА 2
+
+            contentValues.put("Theme_ID", 2);
+            contentValues.put("Q_Text", "Новый год в США отмечают…");
+            rowId = db.insert("Questions", null, contentValues);
+
+            contentValues.put("Theme_ID", 2);
+            contentValues.put("Q_Text", "Что не принято делать на Новый год в США?");
+            rowId = db.insert("Questions", null, contentValues);
+
+            contentValues.put("Theme_ID", 2);
+            contentValues.put("Q_Text", "Традиционный новогодний атрибут в США это…");
+            rowId = db.insert("Questions", null, contentValues);
+
+            contentValues.put("Theme_ID", 2);
+            contentValues.put("Q_Text", "Когда в США начинаются и заканчиваются новогодние каникулы?");
+            rowId = db.insert("Questions", null, contentValues);
+
+            contentValues.put("Theme_ID", 2);
+            contentValues.put("Q_Text", "Какие парады проводятся во время Нового года в США?");
+            rowId = db.insert("Questions", null, contentValues);
+
+                // ТЕМА 3
+
+            contentValues.put("Theme_ID", 3);
+            contentValues.put("Q_Text", "Кто является главным волшебником в Новый год в Японии?");
+            rowId = db.insert("Questions", null, contentValues);
+
+            contentValues.put("Theme_ID", 3);
+            contentValues.put("Q_Text", "Какую новогоднюю традицию соблюдают дети в Японии?");
+            rowId = db.insert("Questions", null, contentValues);
+
+            contentValues.put("Theme_ID", 3);
+            contentValues.put("Q_Text", "Как японцы называют новогоднюю ёлку?");
+            rowId = db.insert("Questions", null, contentValues);
+
+            contentValues.put("Theme_ID", 3);
+            contentValues.put("Q_Text", "Сколько раз бьют в колокола в канун Нового года в Японии?");
+            rowId = db.insert("Questions", null, contentValues);
+
+            contentValues.put("Theme_ID", 3);
+            contentValues.put("Q_Text", "В последние дни уходящего года японцы дома делают…");
             rowId = db.insert("Questions", null, contentValues);
         }
 
@@ -139,36 +196,233 @@ public class DB_Operations {
             contentValues.put("Trueness", 0);
             rowId = db.insert("Answers", null, contentValues);
 
-            /*
-            contentValues.put("Q_ID", 2);
-            contentValues.put("A_Text", "1 сентября");
-            contentValues.put("Trueness", 1);
-            rowId = db.insert("Answers", null, contentValues);
 
             contentValues.put("Q_ID", 2);
-            contentValues.put("A_Text", "29 декабря");
+            contentValues.put("A_Text", "1956");
             contentValues.put("Trueness", 0);
             rowId = db.insert("Answers", null, contentValues);
 
             contentValues.put("Q_ID", 2);
-            contentValues.put("A_Text", "1 ноября");
+            contentValues.put("A_Text", "1922");
             contentValues.put("Trueness", 0);
             rowId = db.insert("Answers", null, contentValues);
 
-            contentValues.put("Q_ID", 3);
-            contentValues.put("A_Text", "1 сентября");
+            contentValues.put("Q_ID", 2);
+            contentValues.put("A_Text", "1948");
             contentValues.put("Trueness", 1);
             rowId = db.insert("Answers", null, contentValues);
 
             contentValues.put("Q_ID", 3);
-            contentValues.put("A_Text", "29 декабря");
+            contentValues.put("A_Text", "Бабайка");
             contentValues.put("Trueness", 0);
             rowId = db.insert("Answers", null, contentValues);
 
             contentValues.put("Q_ID", 3);
-            contentValues.put("A_Text", "1 ноября");
+            contentValues.put("A_Text", "Вайнахтсман");
             contentValues.put("Trueness", 0);
-            rowId = db.insert("Answers", null, contentValues);*/
+            rowId = db.insert("Answers", null, contentValues);
+
+            contentValues.put("Q_ID", 3);
+            contentValues.put("A_Text", "Дед Мороз");
+            contentValues.put("Trueness", 1);
+            rowId = db.insert("Answers", null, contentValues);
+
+
+            contentValues.put("Q_ID", 4);
+            contentValues.put("A_Text", "В Бобруйске");
+            contentValues.put("Trueness", 0);
+            rowId = db.insert("Answers", null, contentValues);
+
+            contentValues.put("Q_ID", 4);
+            contentValues.put("A_Text", "В Беловежской Пуще");
+            contentValues.put("Trueness", 1);
+            rowId = db.insert("Answers", null, contentValues);
+
+            contentValues.put("Q_ID", 4);
+            contentValues.put("A_Text", "В Гомеле");
+            contentValues.put("Trueness", 0);
+            rowId = db.insert("Answers", null, contentValues);
+
+
+            contentValues.put("Q_ID", 5);
+            contentValues.put("A_Text", "Как Новый год встретишь, так его и проведёшь");
+            contentValues.put("Trueness", 1);
+            rowId = db.insert("Answers", null, contentValues);
+
+            contentValues.put("Q_ID", 5);
+            contentValues.put("A_Text", "Как Новый год встретишь, так и старый вернётся");
+            contentValues.put("Trueness", 0);
+            rowId = db.insert("Answers", null, contentValues);
+
+            contentValues.put("Q_ID", 5);
+            contentValues.put("A_Text", "Как Новый год встретишь, так и оставшиеся проведёшь");
+            contentValues.put("Trueness", 0);
+            rowId = db.insert("Answers", null, contentValues);
+
+
+            contentValues.put("Q_ID", 6);
+            contentValues.put("A_Text", "В кругу семьи и близких");
+            contentValues.put("Trueness", 0);
+            rowId = db.insert("Answers", null, contentValues);
+
+            contentValues.put("Q_ID", 6);
+            contentValues.put("A_Text", "В публичных местах (на вечеринках, карнавалах)");
+            contentValues.put("Trueness", 1);
+            rowId = db.insert("Answers", null, contentValues);
+
+            contentValues.put("Q_ID", 6);
+            contentValues.put("A_Text", "В гордом одиночестве");
+            contentValues.put("Trueness", 0);
+            rowId = db.insert("Answers", null, contentValues);
+
+
+            contentValues.put("Q_ID", 7);
+            contentValues.put("A_Text", "Веселиться");
+            contentValues.put("Trueness", 0);
+            rowId = db.insert("Answers", null, contentValues);
+
+            contentValues.put("Q_ID", 7);
+            contentValues.put("A_Text", "Находиться в семейном кругу");
+            contentValues.put("Trueness", 0);
+            rowId = db.insert("Answers", null, contentValues);
+
+            contentValues.put("Q_ID", 7);
+            contentValues.put("A_Text", "Дарить подарки");
+            contentValues.put("Trueness", 1);
+            rowId = db.insert("Answers", null, contentValues);
+
+
+
+            contentValues.put("Q_ID", 8);
+            contentValues.put("A_Text", "Бэби (растёт и стареет в течении года)");
+            contentValues.put("Trueness", 1);
+            rowId = db.insert("Answers", null, contentValues);
+
+            contentValues.put("Q_ID", 8);
+            contentValues.put("A_Text", "Грузовик с Coca-Cola");
+            contentValues.put("Trueness", 0);
+            rowId = db.insert("Answers", null, contentValues);
+
+            contentValues.put("Q_ID", 8);
+            contentValues.put("A_Text", "Ёлка на Тайм-Сквер");
+            contentValues.put("Trueness", 0);
+            rowId = db.insert("Answers", null, contentValues);
+
+
+            contentValues.put("Q_ID", 9);
+            contentValues.put("A_Text", "С 23 декабря до 5 января");
+            contentValues.put("Trueness", 0);
+            rowId = db.insert("Answers", null, contentValues);
+
+            contentValues.put("Q_ID", 9);
+            contentValues.put("A_Text", "С 23 декабря до 7 января");
+            contentValues.put("Trueness", 0);
+            rowId = db.insert("Answers", null, contentValues);
+
+            contentValues.put("Q_ID", 9);
+            contentValues.put("A_Text", "С 23 декабря до 3 января");
+            contentValues.put("Trueness", 1);
+            rowId = db.insert("Answers", null, contentValues);
+
+
+            contentValues.put("Q_ID", 10);
+            contentValues.put("A_Text", "Парад Санта-Клаусов и Парад Краусов");
+            contentValues.put("Trueness", 0);
+            rowId = db.insert("Answers", null, contentValues);
+
+            contentValues.put("Q_ID", 10);
+            contentValues.put("A_Text", "Парад Роз и Парад Санта-Клаусов");
+            contentValues.put("Trueness", 0);
+            rowId = db.insert("Answers", null, contentValues);
+
+            contentValues.put("Q_ID", 10);
+            contentValues.put("A_Text", "Парад Роз и Парад Пантомимы");
+            contentValues.put("Trueness", 1);
+            rowId = db.insert("Answers", null, contentValues);
+
+
+            contentValues.put("Q_ID", 11);
+            contentValues.put("A_Text", "Ширане-сан");
+            contentValues.put("Trueness", 0);
+            rowId = db.insert("Answers", null, contentValues);
+
+            contentValues.put("Q_ID", 11);
+            contentValues.put("A_Text", "Санта-Клаус");
+            contentValues.put("Trueness", 0);
+            rowId = db.insert("Answers", null, contentValues);
+
+            contentValues.put("Q_ID", 11);
+            contentValues.put("A_Text", "Одзи-сан(Сегацу-сан)");
+            contentValues.put("Trueness", 1);
+            rowId = db.insert("Answers", null, contentValues);
+
+
+
+            contentValues.put("Q_ID", 12);
+            contentValues.put("A_Text", "Пишут письмо и отправляют его Одзи-сану");
+            contentValues.put("Trueness", 0);
+            rowId = db.insert("Answers", null, contentValues);
+
+            contentValues.put("Q_ID", 12);
+            contentValues.put("A_Text", "Прячутся под стол в канун праздника и загадывают там желания там громко, как только они могут");
+            contentValues.put("Trueness", 0);
+            rowId = db.insert("Answers", null, contentValues);
+
+            contentValues.put("Q_ID", 12);
+            contentValues.put("A_Text", "Рисуют на бумаге свою мечту и перед сном кладут рисунок под подушку");
+            contentValues.put("Trueness", 1);
+            rowId = db.insert("Answers", null, contentValues);
+
+
+
+            contentValues.put("Q_ID", 13);
+            contentValues.put("A_Text", "Кадомацу");
+            contentValues.put("Trueness", 1);
+            rowId = db.insert("Answers", null, contentValues);
+
+            contentValues.put("Q_ID", 13);
+            contentValues.put("A_Text", "Саримацу");
+            contentValues.put("Trueness", 0);
+            rowId = db.insert("Answers", null, contentValues);
+
+            contentValues.put("Q_ID", 13);
+            contentValues.put("A_Text", "Лидарё");
+            contentValues.put("Trueness", 0);
+            rowId = db.insert("Answers", null, contentValues);
+
+
+
+            contentValues.put("Q_ID", 14);
+            contentValues.put("A_Text", "108");
+            contentValues.put("Trueness", 1);
+            rowId = db.insert("Answers", null, contentValues);
+
+            contentValues.put("Q_ID", 14);
+            contentValues.put("A_Text", "12");
+            contentValues.put("Trueness", 0);
+            rowId = db.insert("Answers", null, contentValues);
+
+            contentValues.put("Q_ID", 14);
+            contentValues.put("A_Text", "24");
+            contentValues.put("Trueness", 0);
+            rowId = db.insert("Answers", null, contentValues);
+
+
+
+            contentValues.put("Q_ID", 15);
+            contentValues.put("A_Text", "Алтарь с Одзи-саном");
+            contentValues.put("Trueness", 0);
+            rowId = db.insert("Answers", null, contentValues);
+
+            contentValues.put("Q_ID", 15);
+            contentValues.put("A_Text", "Генеральную уборку с выбрасыванием хлама");
+            contentValues.put("Trueness", 1);
+            rowId = db.insert("Answers", null, contentValues);
+
+            contentValues.put("Q_ID", 15);
+            contentValues.put("A_Text", "Свитки с пожеланиями для близких");
+            contentValues.put("Trueness", 0);
+            rowId = db.insert("Answers", null, contentValues);
         }
 
         public static void updateUser(SQLiteDatabase db, UserInfo user){
