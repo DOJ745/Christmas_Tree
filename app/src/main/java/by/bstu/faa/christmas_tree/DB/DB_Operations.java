@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import by.bstu.faa.christmas_tree.model.UserInfo;
 import by.bstu.faa.christmas_tree.model.query.QueryContainer;
 import by.bstu.faa.christmas_tree.model.question.QuestionContainer;
 
@@ -39,6 +40,16 @@ public class DB_Operations {
             Queries.insertThemes(db);
         }
 
+        public static void createUsersTable(SQLiteDatabase db) {
+
+            db.execSQL("create table Users (\n" +
+                    "ID INTEGER not null,\n" +
+                    "Nickname TEXT,\n" +
+                    "Tree_Level INTEGER not null,\n" +
+                    "Score INTEGER not null,\n" +
+                    "constraint ID_pk primary key(ID))");
+        }
+
         public static void createQuestionsTable(SQLiteDatabase db) {
             db.execSQL("CREATE TABLE Questions (\n" +
                     "Theme_ID INTEGER NOT NULL,\n" +
@@ -66,6 +77,18 @@ public class DB_Operations {
     }
 
     public static class Queries {
+
+        public static void insertDefaultUser(SQLiteDatabase db) {
+
+            ContentValues contentValues = new ContentValues();
+            long rowId;
+
+            contentValues.put("Nickname", "player");
+            contentValues.put("Tree_Level", 0);
+            contentValues.put("Score", 0);
+
+            rowId = db.insert("Users", null, contentValues);
+        }
 
         public static void insertThemes(SQLiteDatabase db) {
 
@@ -146,6 +169,27 @@ public class DB_Operations {
             contentValues.put("A_Text", "1 ноября");
             contentValues.put("Trueness", 0);
             rowId = db.insert("Answers", null, contentValues);*/
+        }
+
+        public static void updateUser(SQLiteDatabase db, UserInfo user){
+            db.execSQL("update Users set Nickname = '" + user.getName() + "'" +
+                    ", Tree_Level = " + user.getTreeLevel() + ", Score = " +
+                    user.getScore() + " where ID = 1");
+        }
+
+        public static UserInfo getUser(SQLiteDatabase db){
+            UserInfo defaultUser = new UserInfo();
+            Cursor queryCursor = db.rawQuery("select * from Users",null);
+            if(queryCursor.moveToFirst()){
+                do{
+                    defaultUser.setName(queryCursor.getString(1));
+                    defaultUser.setTreeLevel(queryCursor.getInt(2));
+                    defaultUser.setScore(queryCursor.getInt(3));
+                }while (queryCursor.moveToNext());
+            }
+            queryCursor.close();
+
+            return defaultUser;
         }
 
         public static QuestionContainer getRandomQuestion(SQLiteDatabase db) {

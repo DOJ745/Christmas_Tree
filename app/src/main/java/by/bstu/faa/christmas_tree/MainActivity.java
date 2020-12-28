@@ -2,7 +2,6 @@ package by.bstu.faa.christmas_tree;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.database.sqlite.SQLiteDatabase;
@@ -10,13 +9,11 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -32,12 +29,13 @@ public class MainActivity extends AppCompatActivity {
     DB_Helper dbHelper;
     SQLiteDatabase mainDB;
 
-    private static final UserInfo current_user = new UserInfo();
+    private static UserInfo current_user = new UserInfo();
     private static final String TAG = "MainActivity";
     private static int answerResult = 0;
     private static int attempt_count = 3;
 
     TextView userScore;
+    TextView userName;
     TextView treeLevel;
     ImageView userTree;
     Button growTreeButton;
@@ -51,12 +49,23 @@ public class MainActivity extends AppCompatActivity {
         mainDB = dbHelper.getReadableDatabase();
         initViews();
 
-        //showNameDialog();
+        current_user = DB_Operations.Queries.getUser(mainDB);
+        userName.setText("Hello, " + current_user.getName());
+        if(current_user.getName().equals("player"))
+            showNameDialog();
+    }
+
+    @Override
+    protected void onStart(){
+        super.onStart();
+        updateViews();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        DB_Operations.Queries.updateUser(mainDB, current_user);
+        attempt_count = 3;
         mainDB.close();
     }
 
@@ -68,12 +77,11 @@ public class MainActivity extends AppCompatActivity {
 
         entered_name.setError("Required field!");
         entered_name.addTextChangedListener(new TextWatcher() {
+
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) { }
-
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) { }
-
             @Override
             public void afterTextChanged(Editable editable) {
                 if (entered_name.getText().length() != 0) {
@@ -90,10 +98,7 @@ public class MainActivity extends AppCompatActivity {
 
         myDialog.setPositiveButton("OK", (dialog, which) -> {
             current_user.setName(entered_name.getText().toString());
-            Toast.makeText(
-                    MainActivity.this,
-                    "Hello " + "'" + current_user.getName() + "'",
-                    Toast.LENGTH_SHORT).show();
+            DB_Operations.Queries.updateUser(mainDB, current_user);
         });
         myDialog.show();
     }
@@ -220,16 +225,19 @@ public class MainActivity extends AppCompatActivity {
     private void correctUserAnswer() {
         current_user.addLevel();
         current_user.addPoints();
+        DB_Operations.Queries.updateUser(mainDB, current_user);
         updateViews();
     }
 
     private void wrongUserAnswer() {
         current_user.reduceLevel();
         current_user.reducePoints();
+        DB_Operations.Queries.updateUser(mainDB, current_user);
         updateViews();
     }
 
     private void initViews() {
+        userName = findViewById(R.id.user_name);
         userScore = findViewById(R.id.user_score);
         treeLevel = findViewById(R.id.tree_level);
         userTree = findViewById(R.id.user_tree);
