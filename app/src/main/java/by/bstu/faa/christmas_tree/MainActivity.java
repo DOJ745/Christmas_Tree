@@ -6,6 +6,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.database.sqlite.SQLiteDatabase;
+import android.media.Image;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.text.Editable;
@@ -13,6 +14,7 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -37,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
 
     TextView userScore;
     TextView treeLevel;
+    ImageView userTree;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,14 +93,6 @@ public class MainActivity extends AppCompatActivity {
 
     public void answerQuestion(View view) {
 
-        /*
-        QuestionDialog questionDialog = new QuestionDialog();
-        Bundle args = new Bundle();
-        args.putInt("ANSWER_RESULT", answerResult);
-        args.putSerializable("QUESTION", DB_Operations.Queries.getRandomQuestion(mainDB));
-        questionDialog.setArguments(args);
-        questionDialog.show(getSupportFragmentManager(), "custom");*/
-
         QuestionContainer currentQ = DB_Operations.Queries.getRandomQuestion(mainDB);
         ArrayList<String> answer_variants = new ArrayList<>();
         ArrayList<Integer> answer_trueness = new ArrayList<>();
@@ -134,22 +129,26 @@ public class MainActivity extends AppCompatActivity {
             answer_trueness.add(item.getValue());
         }
 
-        variant1.setText(answer_variants.get(0));
-        variant2.setText(answer_variants.get(1));
-        variant3.setText(answer_variants.get(2));
+        int randomOrder1 = randomNumber(0, 2);
+        int randomOrder2 = randomNumber(0, 2);
+        int randomOrder3 = randomNumber(0, 2);
+
+        variant1.setText(answer_variants.get(randomOrder1));
+        variant2.setText(answer_variants.get(randomOrder2));
+        variant3.setText(answer_variants.get(randomOrder3));
 
         variant1.setOnClickListener(v -> {
-            answerResult = answer_trueness.get(0);
+            answerResult = answer_trueness.get(randomOrder1);
             chosenAnswer.setText("Выбран 1 вариант");
         });
 
         variant2.setOnClickListener(v -> {
-            answerResult = answer_trueness.get(1);
+            answerResult = answer_trueness.get(randomOrder2);
             chosenAnswer.setText("Выбран 2 вариант");
         });
 
         variant3.setOnClickListener(v -> {
-            answerResult = answer_trueness.get(2);
+            answerResult = answer_trueness.get(randomOrder3);
             chosenAnswer.setText("Выбран 3 вариант");
         });
 
@@ -190,11 +189,41 @@ public class MainActivity extends AppCompatActivity {
     private void initViews() {
         userScore = findViewById(R.id.user_score);
         treeLevel = findViewById(R.id.tree_level);
+        userTree = findViewById(R.id.user_tree);
     }
 
     private void updateViews() {
-        //switch ()
-        userScore.setText(userScore.getText().toString() + " " + current_user.getScore());
-        treeLevel.setText(treeLevel.getText().toString() + " " + current_user.getTreeLevel());
+        switch (current_user.getTreeLevel()){
+
+            case 0:
+                userTree.setImageResource(R.drawable.ic_tree_level_0);
+                break;
+
+            case 1:
+                userTree.setImageResource(R.drawable.ic_tree_level_1);
+                break;
+
+            case 2:
+                userTree.setImageResource(R.drawable.ic_tree_level_2);
+                break;
+
+            case 3:
+                break;
+
+            case 4:
+                break;
+
+            case 5:
+                break;
+        }
+
+        userScore.setText("Score: " + current_user.getScore());
+        treeLevel.setText("Tree: " + current_user.getTreeLevel());
+    }
+
+    private int randomNumber(int min, int max)
+    {
+        max -= min;
+        return (int) (Math.random() * ++max) + min;
     }
 }

@@ -71,7 +71,7 @@
             android:layout_below="@id/tree_level"
             android:layout_centerInParent="true"
             android:contentDescription="@string/image_descr"
-            android:src="@drawable/ic_christmas_tree" />
+            android:src="@drawable/ic_tree_level_0" />
 
         <Button
             android:id="@+id/grow_btn"
