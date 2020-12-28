@@ -122,17 +122,6 @@ public class MainActivity extends AppCompatActivity {
             }
         }.start();
 
-        /*
-        CountDownTimer doneTimer = new CountDownTimer(5000, 1000) {
-            public void onTick(long millisUntilFinished) {
-                //timerCountdown.setText("Осталось: " + millisUntilFinished / 1000);
-            }
-            public void onFinish() {
-                //timerCountdown.setText("Время вышло!");
-                //answerQuestionDialog.dismiss();
-            }
-        };*/
-
         Button variant1 = answerView.findViewById(R.id.variant1);
         Button variant2 = answerView.findViewById(R.id.variant2);
         Button variant3 = answerView.findViewById(R.id.variant3);
@@ -170,7 +159,6 @@ public class MainActivity extends AppCompatActivity {
             if(answerResult == 1) {
 
                 answerTimer.cancel();
-                //doneTimer.start();
                 AlertDialog.Builder correct_builder = new AlertDialog.Builder(this);
                 View correctAnswerView = getLayoutInflater().inflate(R.layout.correct_answer_dialog, null);
                 correct_builder.setView(correctAnswerView);
@@ -179,23 +167,17 @@ public class MainActivity extends AppCompatActivity {
 
                 final Dialog correctAnswerDialog = correct_builder.create();
 
-                close_btn.setOnClickListener(new View.OnClickListener() {
-                    public void onClick(View v) {
-                        answerQuestionDialog.dismiss();
-                        correctAnswerDialog.dismiss();
-                    }
+                close_btn.setOnClickListener(v1 -> {
+                    answerQuestionDialog.dismiss();
+                    correctAnswerDialog.dismiss();
                 });
-
-                //close_btn.setOnClickListener(vn -> correctAnswerDialog.dismiss() );
-                //close_btn.setOnClickListener(vnt ->);
                 correctAnswerDialog.show();
                 correctUserAnswer();
             }
             else if(chosenAnswer.getText().toString().equals("")) { chosenAnswer.setText("Вы не выбрали ответ!"); }
-            else {
 
+            else {
                 answerTimer.cancel();
-                //doneTimer.start();
                 AlertDialog.Builder wrong_builder = new AlertDialog.Builder(this);
                 View wrongAnswerView = getLayoutInflater().inflate(R.layout.wrong_answer_dialog, null);
                 wrong_builder.setView(wrongAnswerView);
@@ -204,7 +186,12 @@ public class MainActivity extends AppCompatActivity {
                 Button close_btn = wrongAnswerView.findViewById(R.id.close_btn);
 
                 final Dialog wrongAnswerDialog = wrong_builder.create();
-                close_btn.setOnClickListener(vn -> wrongAnswerDialog.dismiss());
+
+                close_btn.setOnClickListener(v2 -> {
+                    answerQuestionDialog.dismiss();
+                    wrongAnswerDialog.dismiss();
+                });
+
                 again_btn.setOnClickListener(this::answerQuestion);
 
                 wrongAnswerDialog.show();
