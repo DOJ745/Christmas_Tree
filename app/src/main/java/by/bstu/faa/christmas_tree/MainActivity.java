@@ -105,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void answerQuestion(View view) {
 
-        attempt_count--;
+
 
         QuestionContainer currentQ = DB_Operations.Queries.getRandomQuestion(mainDB);
         ArrayList<String> answer_variants = new ArrayList<>();
@@ -196,6 +196,7 @@ public class MainActivity extends AppCompatActivity {
 
             else {
                 answerTimer.cancel();
+                attempt_count--;
                 AlertDialog.Builder wrong_builder = new AlertDialog.Builder(this);
                 View wrongAnswerView = getLayoutInflater().inflate(R.layout.wrong_answer_dialog, null);
                 wrong_builder.setView(wrongAnswerView);
