@@ -36,6 +36,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     private void createAccount(String email, String password) {
+
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, task -> {
                     if (task.isSuccessful()) {
@@ -54,6 +55,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     private void signIn(String email, String password) {
+
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, task -> {
                     if (task.isSuccessful()) {
@@ -72,6 +74,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     private void initViews() {
+
         editEmail = findViewById(R.id.editEmail);
         editPassword = findViewById(R.id.editPassword);
         findViewById(R.id.button_sign_in).setOnClickListener(this);

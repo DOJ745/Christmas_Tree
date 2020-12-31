@@ -15,7 +15,7 @@ public class UserInfo implements Serializable {
     private int score;
 
     public UserInfo() {
-        this.name = "";
+        this.name = "player";
         this.treeLevel = 0;
         this.score = 0;
     }
