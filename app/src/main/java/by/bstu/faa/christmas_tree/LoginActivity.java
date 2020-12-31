@@ -90,7 +90,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             else if (view.getId() == R.id.button_reg) {
                 createAccount(editEmail.getText().toString(),editPassword.getText().toString());
             }
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
         }
     }

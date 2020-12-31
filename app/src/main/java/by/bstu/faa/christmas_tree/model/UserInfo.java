@@ -20,14 +20,16 @@ public class UserInfo implements Serializable {
         this.score = 0;
     }
 
-    public void addLevel() { this.treeLevel += 1; }
-    public void reduceLevel() {
-        if(this.treeLevel - 1 < 0) { this.treeLevel = 0; }
-        else this.treeLevel -= 1;
+    public void correctAnswer() {
+        this.treeLevel += 1;
+        this.score += 10;
     }
 
-    public void addPoints() { this.score += 10; }
-    public void reducePoints() {
+    public void wrongAnswer() {
+
+        if(this.treeLevel - 1 < 0) { this.treeLevel = 0; }
+        else this.treeLevel -= 1;
+
         if(this.score - 5 < 0) { this.score = 0; }
         else this.score -= 5;
     }

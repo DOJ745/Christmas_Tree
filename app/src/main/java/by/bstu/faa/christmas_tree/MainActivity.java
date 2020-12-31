@@ -239,15 +239,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void correctUserAnswer() {
-        current_user.addLevel();
-        current_user.addPoints();
+        current_user.correctAnswer();
         DB_Operations.Queries.updateUser(mainDB, current_user);
         updateViews();
     }
 
     private void wrongUserAnswer() {
-        current_user.reduceLevel();
-        current_user.reducePoints();
+        current_user.wrongAnswer();
         attempt_count--;
         DB_Operations.Queries.updateUser(mainDB, current_user);
         updateViews();
