@@ -105,8 +105,6 @@ public class MainActivity extends AppCompatActivity {
 
     public void answerQuestion(View view) {
 
-        attempt_count--;
-
         QuestionContainer currentQ = DB_Operations.Queries.getRandomQuestion(mainDB);
         ArrayList<String> answer_variants = new ArrayList<>();
         ArrayList<Integer> answer_trueness = new ArrayList<>();
@@ -187,7 +185,7 @@ public class MainActivity extends AppCompatActivity {
 
                 startBlockBtnTimer(30);
             }
-            else if(chosenAnswer.getText().toString().equals(""))
+            else if(chosenAnswer.getText().toString().equals("Выберите ответ"))
             {
                 chosenAnswer.setText("Вы не выбрали ответ!");
                 wrongUserAnswer();
@@ -250,6 +248,7 @@ public class MainActivity extends AppCompatActivity {
     private void wrongUserAnswer() {
         current_user.reduceLevel();
         current_user.reducePoints();
+        attempt_count--;
         DB_Operations.Queries.updateUser(mainDB, current_user);
         updateViews();
     }
