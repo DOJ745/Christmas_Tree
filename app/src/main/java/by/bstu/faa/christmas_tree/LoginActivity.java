@@ -102,10 +102,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private void updateUI(FirebaseUser user) {
         if(user != null) {
             Intent intent = new Intent(this, MainActivity.class);
-            //intent.putExtra("USER_ID", user.getUid());
-            UserInfo loggedUser = new UserInfo();
-            loggedUser.setId(user.getUid());
-            intent.putExtra("LOGGED_USER", loggedUser);
+            intent.putExtra("USER_ID", user.getUid());
+            //UserInfo loggedUser = new UserInfo();
+            //loggedUser.setId(user.getUid());
+            //intent.putExtra("LOGGED_USER", loggedUser);
             startActivity(intent);
             finish();
         }

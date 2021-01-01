@@ -9,13 +9,12 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
+import com.google.firebase.database.Query;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -63,16 +62,25 @@ public class MainActivity extends AppCompatActivity {
         initViews();
 
         if(userUid != null) {
-            FirebaseManager.getInstance().callOnUserInfoById(userUid, this::showUser);
             current_user.setId(userUid);
+            FirebaseManager.getInstance().addToDb(current_user);
+            FirebaseManager.getInstance().callOnUserInfoById(userUid, this::showUser);
             DB_Operations.Queries.insertUser(mainDB, current_user);
         }
+        Query query = dbReference.child(userUid);
+        updateInfoByQuery(query);
 
-        //current_user = DB_Operations.Queries.getUser(mainDB);
+        //current_user = (UserInfo) getIntent().getSerializableExtra("LOGGED_USER");
+
+        /*f(current_user.getName() != null){
+            //FirebaseManager.getInstance().callOnUserInfoById(current_user.getId(), this::showUser);
+            DB_Operations.Queries.insertUser(mainDB, current_user);
+        }*/
+
         if(current_user.getName().equals("player"))
             showNameDialog();
         else {
-            try {
+            /*try {
                 FirebaseManager.getInstance().addToDb(current_user);
                 Toast.makeText(this, "UserInfo saved successfully", Toast.LENGTH_SHORT).show();
                 finish();
@@ -80,14 +88,8 @@ public class MainActivity extends AppCompatActivity {
             catch (Exception e) {
                 Log.e(TAG, "SaveUserInfo: ", e);
                 Toast.makeText(this, "Error!", Toast.LENGTH_SHORT).show();
-            }
+            }*/
         }
-
-
-
-
-        //else{ userName.setText("Hello, " + current_user.getName()); }
-
     }
 
     @Override
@@ -324,6 +326,7 @@ public class MainActivity extends AppCompatActivity {
                 break;*/
         }
 
+        userName.setText("Hello, " + current_user.getName());
         userScore.setText("Score: " + current_user.getScore());
         treeLevel.setText("Tree: " + current_user.getTreeLevel());
     }
@@ -332,6 +335,27 @@ public class MainActivity extends AppCompatActivity {
         userName.setText("Hello, " + userInfo.getName());
         userScore.setText("Score: " + userInfo.getScore());
         treeLevel.setText("Tree: " + userInfo.getTreeLevel());
+
+        switch (userInfo.getTreeLevel()) {
+            case 0:
+                userTree.setImageResource(R.drawable.ic_tree_level_0);
+                break;
+            case 1:
+                userTree.setImageResource(R.drawable.ic_tree_level_1);
+                break;
+            case 2:
+                userTree.setImageResource(R.drawable.ic_tree_level_2);
+                break;
+            case 3:
+                userTree.setImageResource(R.drawable.ic_tree_level_3);
+                break;
+            case 4:
+                userTree.setImageResource(R.drawable.ic_tree_level_4);
+                break;
+            case 5:
+                userTree.setImageResource(R.drawable.ic_tree_level_5);
+                break;
+        }
     }
 
     private void startBlockBtnTimer(int sec) {
@@ -346,5 +370,17 @@ public class MainActivity extends AppCompatActivity {
                 growTreeButton.setEnabled(true);
             }
         }.start();
+    }
+
+
+
+    private void updateInfoByQuery(Query query) {
+
+    }
+
+    @Override
+    public void onBackPressed() {
+        finishAffinity();
+        super.onBackPressed();
     }
 }
