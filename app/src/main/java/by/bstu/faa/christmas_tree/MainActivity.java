@@ -9,12 +9,14 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.text.Editable;
 import android.text.TextWatcher;
-import com.google.firebase.database.Query;
+
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -58,17 +60,18 @@ public class MainActivity extends AppCompatActivity {
 
         userUid = getIntent().getStringExtra("USER_ID");
         dbReference = FirebaseDatabase.getInstance().getReference();
+        //DatabaseReference testRef = dbReference.child(userUid);
 
         initViews();
 
-        if(userUid != null) {
-            current_user.setId(userUid);
-            FirebaseManager.getInstance().addToDb(current_user);
+       if(userUid != null) {
+            //FirebaseManager.getInstance().addToDb(current_user);
             FirebaseManager.getInstance().callOnUserInfoById(userUid, this::showUser);
+            current_user.setId(userUid);
             DB_Operations.Queries.insertUser(mainDB, current_user);
         }
-        Query query = dbReference.child(userUid);
-        updateInfoByQuery(query);
+        //Query query = dbReference.child(userUid);
+        //updateInfoByQuery(query);
 
         //current_user = (UserInfo) getIntent().getSerializableExtra("LOGGED_USER");
 
@@ -220,15 +223,17 @@ public class MainActivity extends AppCompatActivity {
                     answerQuestionDialog.dismiss();
                     correctAnswerDialog.dismiss();
                 });
-                correctAnswerDialog.show();
-                correctUserAnswer();
 
+                try { correctAnswerDialog.show(); }
+                catch (Exception e) { correctAnswerDialog.dismiss(); }
+
+                correctUserAnswer();
                 startBlockBtnTimer(30);
             }
             else if(chosenAnswer.getText().toString().equals("Выберите ответ"))
             {
                 chosenAnswer.setText("Вы не выбрали ответ!");
-                //wrongUserAnswer();
+                wrongUserAnswer();
                 //startBlockBtnTimer(30);
             }
 
@@ -256,13 +261,22 @@ public class MainActivity extends AppCompatActivity {
                     again_btn.setEnabled(false);
                 }
 
-                wrongAnswerDialog.show();
+                try { wrongAnswerDialog.show(); }
+                catch (Exception e) { wrongAnswerDialog.dismiss(); }
+
                 wrongUserAnswer();
                 startBlockBtnTimer(30);
             }
         });
 
-        answerQuestionDialog.show();
+        try{ answerQuestionDialog.show(); }
+        catch (Exception e) { answerQuestionDialog.dismiss(); }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
     }
 
     public void howToPlay(View view) {
@@ -282,6 +296,18 @@ public class MainActivity extends AppCompatActivity {
         current_user.correctAnswer();
         DB_Operations.Queries.updateUser(mainDB, current_user);
         updateViews();
+
+        try {
+
+            UserInfo updatedUser = current_user;
+            FirebaseManager.getInstance().update(updatedUser, (error, ref) -> {
+                Toast.makeText(this, "User updated successfully", Toast.LENGTH_SHORT).show();
+            });
+        }
+        catch (Exception e) {
+            Log.e(TAG, "updateUser: ", e);
+            Toast.makeText(this, "Error!", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void wrongUserAnswer() {
@@ -332,6 +358,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void showUser(UserInfo userInfo) {
+
         userName.setText("Hello, " + userInfo.getName());
         userScore.setText("Score: " + userInfo.getScore());
         treeLevel.setText("Tree: " + userInfo.getTreeLevel());
@@ -372,11 +399,6 @@ public class MainActivity extends AppCompatActivity {
         }.start();
     }
 
-
-
-    private void updateInfoByQuery(Query query) {
-
-    }
 
     @Override
     public void onBackPressed() {

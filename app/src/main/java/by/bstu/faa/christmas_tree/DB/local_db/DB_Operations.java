@@ -433,7 +433,7 @@ public class DB_Operations {
         public static void updateUser(SQLiteDatabase db, UserInfo user){
             db.execSQL("update Users set Nickname = '" + user.getName() + "'" +
                     ", Tree_Level = " + user.getTreeLevel() + ", Score = " +
-                    user.getScore() + " where ID = 1");
+                    user.getScore() + " where ID like '" + user.getId() + "'");
         }
 
         public static UserInfo getUser(SQLiteDatabase db){
