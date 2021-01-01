@@ -1,4 +1,4 @@
-package by.bstu.faa.christmas_tree.DB;
+package by.bstu.faa.christmas_tree.DB.local_db;
 
 import android.content.Context;
 import android.database.DatabaseErrorHandler;

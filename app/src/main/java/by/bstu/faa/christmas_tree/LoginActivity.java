@@ -44,9 +44,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         Log.d(TAG, "Create user with Email: success!");
                         FirebaseUser user = mAuth.getCurrentUser();
                         updateUI(user);
-                    } else {
+                    }
+                    else {
                         // If sign in fails, display a message to the user.
-                        Log.w(TAG, "Create user with Email: failure!", task.getException());
+                        Log.d(TAG, "Create user with Email: failure!", task.getException());
                         Toast.makeText(LoginActivity.this, "Authentication failed!",
                                 Toast.LENGTH_SHORT).show();
                         updateUI(null);
@@ -63,7 +64,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         Log.d(TAG, "Sign in with Email: success!");
                         FirebaseUser user = mAuth.getCurrentUser();
                         updateUI(user);
-                    } else {
+                    }
+                    else {
                         // If sign in fails, display a message to the user.
                         Log.w(TAG, "Sign in with Email: failure!", task.getException());
                         Toast.makeText(LoginActivity.this, "Authentication failed.",
@@ -74,7 +76,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     private void initViews() {
-
         editEmail = findViewById(R.id.editEmail);
         editPassword = findViewById(R.id.editPassword);
         findViewById(R.id.button_sign_in).setOnClickListener(this);
@@ -88,7 +89,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 signIn(editEmail.getText().toString(), editPassword.getText().toString());
             }
             else if (view.getId() == R.id.button_reg) {
-                createAccount(editEmail.getText().toString(),editPassword.getText().toString());
+                createAccount(editEmail.getText().toString(), editPassword.getText().toString());
             }
         }
         catch (Exception e) {
@@ -99,7 +100,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private void updateUI(FirebaseUser user) {
         if(user != null) {
             Intent intent = new Intent(this, MainActivity.class);
-            intent.putExtra("USER", user.getUid());
+            intent.putExtra("USER_ID", user.getUid());
             startActivity(intent);
             finish();
         }

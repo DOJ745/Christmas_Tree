@@ -9,30 +9,39 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 import java.util.Map;
 
-import by.bstu.faa.christmas_tree.DB.DB_Helper;
-import by.bstu.faa.christmas_tree.DB.DB_Operations;
+import by.bstu.faa.christmas_tree.DB.firebase_db.FirebaseManager;
+import by.bstu.faa.christmas_tree.DB.local_db.DB_Helper;
+import by.bstu.faa.christmas_tree.DB.local_db.DB_Operations;
 import by.bstu.faa.christmas_tree.model.question.QuestionContainer;
 import by.bstu.faa.christmas_tree.model.UserInfo;
 
 
 public class MainActivity extends AppCompatActivity {
 
-    DB_Helper dbHelper;
-    SQLiteDatabase mainDB;
+    private DB_Helper dbHelper;
+    private SQLiteDatabase mainDB;
 
     private static UserInfo current_user = new UserInfo();
     private static final String TAG = "MainActivity";
     private static int answerResult = 0;
     private static int attempt_count = 3;
+
+    private String userUid;
+    private DatabaseReference dbReference;
 
     TextView userScore;
     TextView userName;
@@ -47,12 +56,28 @@ public class MainActivity extends AppCompatActivity {
 
         dbHelper = new DB_Helper(getApplicationContext());
         mainDB = dbHelper.getReadableDatabase();
+
+        userUid = getIntent().getStringExtra("USER_ID");
+        dbReference = FirebaseDatabase.getInstance().getReference();
+
         initViews();
 
-        current_user = DB_Operations.Queries.getUser(mainDB);
-        userName.setText("Hello, " + current_user.getName());
         if(current_user.getName().equals("player"))
             showNameDialog();
+        //current_user = DB_Operations.Queries.getUser(mainDB);
+        try {
+            FirebaseManager.getInstance().addToDb(current_user);
+            Toast.makeText(this, "Recipe saved successfully", Toast.LENGTH_SHORT).show();
+            finish();
+        }
+        catch (Exception e) {
+            Log.e(TAG, "saveUserInfo: ", e);
+            Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show();
+        }
+
+
+        //else{ userName.setText("Hello, " + current_user.getName()); }
+
     }
 
     @Override
@@ -86,7 +111,8 @@ public class MainActivity extends AppCompatActivity {
             public void afterTextChanged(Editable editable) {
                 if (entered_name.getText().length() != 0) {
                     entered_name.setError(null);
-                } else {
+                }
+                else {
                     entered_name.setError("Required!");
                 }
             }
@@ -97,6 +123,7 @@ public class MainActivity extends AppCompatActivity {
         myDialog.setView(view);
 
         myDialog.setPositiveButton("OK", (dialog, which) -> {
+
             current_user.setName(entered_name.getText().toString());
             DB_Operations.Queries.updateUser(mainDB, current_user);
         });
@@ -127,6 +154,7 @@ public class MainActivity extends AppCompatActivity {
             }
             public void onFinish() {
                 timerCountdown.setText("Время вышло!");
+                wrongUserAnswer();
                 answerQuestionDialog.dismiss();
             }
         }.start();
@@ -188,8 +216,8 @@ public class MainActivity extends AppCompatActivity {
             else if(chosenAnswer.getText().toString().equals("Выберите ответ"))
             {
                 chosenAnswer.setText("Вы не выбрали ответ!");
-                wrongUserAnswer();
-                startBlockBtnTimer(30);
+                //wrongUserAnswer();
+                //startBlockBtnTimer(30);
             }
 
             else {
@@ -273,6 +301,17 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case 5: userTree.setImageResource(R.drawable.ic_tree_level_5);
                 break;
+                /*
+            case 6: userTree.setImageResource(R.drawable.ic_tree_level_6);
+                break;
+            case 7: userTree.setImageResource(R.drawable.ic_tree_level_7);
+                break;
+            case 8: userTree.setImageResource(R.drawable.ic_tree_level_8);
+                break;
+            case 9: userTree.setImageResource(R.drawable.ic_tree_level_9);
+                break;
+            case 10: userTree.setImageResource(R.drawable.ic_tree_level_10);
+                break;*/
         }
 
         userScore.setText("Score: " + current_user.getScore());

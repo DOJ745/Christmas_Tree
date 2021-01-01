@@ -9,7 +9,8 @@
         android:roundIcon="@drawable/ic_round_tree_icon"
         android:supportsRtl="true"
         android:theme="@style/Theme.Christmas_Tree">
-        <activity android:name=".MainActivity">
+
+        <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -17,7 +18,8 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".LoginActivity"/>
+        <activity android:name=".MainActivity"/>
+
     </application>
 
 </manifest>

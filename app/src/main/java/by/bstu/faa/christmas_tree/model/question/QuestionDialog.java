@@ -2,20 +2,17 @@ package by.bstu.faa.christmas_tree.model.question;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.fragment.app.DialogFragment;
 
 import java.util.ArrayList;
 import java.util.Map;
 
-import by.bstu.faa.christmas_tree.DB.DB_Operations;
 import by.bstu.faa.christmas_tree.R;
 
 public class QuestionDialog extends DialogFragment {

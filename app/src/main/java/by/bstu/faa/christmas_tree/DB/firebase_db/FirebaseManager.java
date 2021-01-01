@@ -18,19 +18,18 @@ import by.bstu.faa.christmas_tree.model.UserInfo;
 public class FirebaseManager {
 
     private static FirebaseManager instance;
-    private final DatabaseReference databaseReference;
+    private final DatabaseReference dbRef;
     private final FirebaseUser currentUser;
 
     private FirebaseManager() {
 
-        databaseReference = FirebaseDatabase.getInstance().getReference();
+        dbRef = FirebaseDatabase.getInstance().getReference();
         currentUser = FirebaseAuth.getInstance().getCurrentUser();
     }
 
     public void callOnUserInfoById(String userInfoId, Consumer<UserInfo> userInfoConsumer) {
 
-        databaseReference.child(currentUser.getUid()).child(userInfoId)
-                .addListenerForSingleValueEvent(new ValueEventListener() {
+        dbRef.child(currentUser.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         UserInfo userInfo = snapshot.getValue(UserInfo.class);
@@ -44,26 +43,21 @@ public class FirebaseManager {
                 });
     }
 
-    public void appendToList(UserInfo userInfo) {
-
-        DatabaseReference add = databaseReference.child(currentUser.getUid()).push();
-        userInfo.setId(add.getKey());
-        add.setValue(userInfo);
+    public void addToDb(UserInfo userInfo) {
+        DatabaseReference addUserInfo = dbRef.child(currentUser.getUid()).push();
+        userInfo.setId(addUserInfo.getKey());
+        addUserInfo.setValue(userInfo);
     }
 
     public void update(UserInfo userInfo, DatabaseReference.CompletionListener completionListener) {
 
-        DatabaseReference userInfoReference =
-                databaseReference.child(currentUser.getUid())
-                        .child(userInfo.getId());
+        DatabaseReference userInfoReference = dbRef.child(currentUser.getUid());
         userInfoReference.setValue(userInfo, completionListener);
     }
 
     public void delete(String userInfoId, DatabaseReference.CompletionListener completionListener) {
 
-        databaseReference.child(currentUser.getUid())
-                .child(userInfoId)
-                .removeValue(completionListener);
+        dbRef.child(currentUser.getUid()).removeValue(completionListener);
     }
 
     public static FirebaseManager getInstance() {
