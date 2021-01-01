@@ -44,13 +44,13 @@ public class DB_Operations {
         public static void createUsersTable(SQLiteDatabase db) {
 
             db.execSQL("create table Users (\n" +
-                    "ID INTEGER not null,\n" +
+                    "ID TEXT not null,\n" +
                     "Nickname TEXT,\n" +
                     "Tree_Level INTEGER not null,\n" +
                     "Score INTEGER not null,\n" +
                     "constraint ID_pk primary key(ID))");
 
-            Queries.insertDefaultUser(db);
+            //Queries.insertDefaultUser(db);
         }
 
         public static void createQuestionsTable(SQLiteDatabase db) {
@@ -85,14 +85,15 @@ public class DB_Operations {
 
     public static class Queries {
 
-        public static void insertDefaultUser(SQLiteDatabase db) {
+        public static void insertUser(SQLiteDatabase db, UserInfo user) {
 
             ContentValues contentValues = new ContentValues();
             long rowId;
 
-            contentValues.put("Nickname", "player");
-            contentValues.put("Tree_Level", 0);
-            contentValues.put("Score", 0);
+            contentValues.put("ID", user.getId());
+            contentValues.put("Nickname", user.getName());
+            contentValues.put("Tree_Level", user.getTreeLevel());
+            contentValues.put("Score", user.getScore());
 
             rowId = db.insert("Users", null, contentValues);
         }

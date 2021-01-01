@@ -62,18 +62,28 @@ public class MainActivity extends AppCompatActivity {
 
         initViews();
 
+        if(userUid != null) {
+            FirebaseManager.getInstance().callOnUserInfoById(userUid, this::showUser);
+            current_user.setId(userUid);
+            DB_Operations.Queries.insertUser(mainDB, current_user);
+        }
+
+        //current_user = DB_Operations.Queries.getUser(mainDB);
         if(current_user.getName().equals("player"))
             showNameDialog();
-        //current_user = DB_Operations.Queries.getUser(mainDB);
-        try {
-            FirebaseManager.getInstance().addToDb(current_user);
-            Toast.makeText(this, "Recipe saved successfully", Toast.LENGTH_SHORT).show();
-            finish();
+        else {
+            try {
+                FirebaseManager.getInstance().addToDb(current_user);
+                Toast.makeText(this, "UserInfo saved successfully", Toast.LENGTH_SHORT).show();
+                finish();
+            }
+            catch (Exception e) {
+                Log.e(TAG, "SaveUserInfo: ", e);
+                Toast.makeText(this, "Error!", Toast.LENGTH_SHORT).show();
+            }
         }
-        catch (Exception e) {
-            Log.e(TAG, "saveUserInfo: ", e);
-            Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show();
-        }
+
+
 
 
         //else{ userName.setText("Hello, " + current_user.getName()); }
@@ -316,6 +326,12 @@ public class MainActivity extends AppCompatActivity {
 
         userScore.setText("Score: " + current_user.getScore());
         treeLevel.setText("Tree: " + current_user.getTreeLevel());
+    }
+
+    private void showUser(UserInfo userInfo) {
+        userName.setText("Hello, " + userInfo.getName());
+        userScore.setText("Score: " + userInfo.getScore());
+        treeLevel.setText("Tree: " + userInfo.getTreeLevel());
     }
 
     private void startBlockBtnTimer(int sec) {
