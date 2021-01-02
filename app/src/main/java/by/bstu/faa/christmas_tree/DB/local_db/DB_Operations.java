@@ -602,9 +602,27 @@ public class DB_Operations {
             return answerList;
         }
 
-        /*public static ArrayList<UserInfo> getTableUser(SQLiteDatabase db){
+        public static ArrayList<UserInfo> getTableUser(SQLiteDatabase db){
 
-        }*/
+            ArrayList<UserInfo> userList = new ArrayList<>();
+            Cursor queryCursor = db.rawQuery(
+                    "select * from Users",
+                    null);
+
+            if(queryCursor.moveToFirst()){
+                do {
+                    UserInfo user = new UserInfo();
+                    user.setId(queryCursor.getString(0));
+                    user.setName(queryCursor.getString(1));
+                    user.setTreeLevel(queryCursor.getInt(2));
+                    user.setScore(queryCursor.getInt(3));
+
+                    userList.add(user);
+                }while (queryCursor.moveToNext());
+            }
+            queryCursor.close();
+            return userList;
+        }
 
         private static int randomNumber(int min, int max)
         {
