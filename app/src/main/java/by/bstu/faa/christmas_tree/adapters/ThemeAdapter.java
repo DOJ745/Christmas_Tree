@@ -35,8 +35,8 @@ public class ThemeAdapter extends RecyclerView.Adapter<ThemeAdapter.ViewHolder> 
 
         TableThemesContainer themeContainer = themes.get(position);
 
-        holder.themeName.setText("ID - " + themeContainer.getThemeName());
-        holder.themeId.setText("Название - " + themeContainer.getThemeId());
+        holder.themeName.setText("Название - " + themeContainer.getThemeName());
+        holder.themeId.setText("ID - " + themeContainer.getThemeId());
     }
 
     @Override
