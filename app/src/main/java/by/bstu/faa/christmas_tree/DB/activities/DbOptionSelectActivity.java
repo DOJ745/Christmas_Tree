@@ -61,6 +61,7 @@ public class DbOptionSelectActivity extends AppCompatActivity {
                 {
                     case "Answers":
                         add_btn.setText("Добавить ответ");
+                        add_btn.setEnabled(true);
                         update_btn.setText("Изменить ответ");
                         delete_btn.setText("Удалить ответ");
                         setListenersButtons("Answers");
@@ -68,6 +69,7 @@ public class DbOptionSelectActivity extends AppCompatActivity {
 
                     case "Questions":
                         add_btn.setText("Добавить вопрос");
+                        add_btn.setEnabled(true);
                         update_btn.setText("Изменить вопрос");
                         delete_btn.setText("Удалить вопрос");
                         setListenersButtons("Questions");
@@ -75,6 +77,7 @@ public class DbOptionSelectActivity extends AppCompatActivity {
 
                     case "Themes":
                         add_btn.setText("Добавить тему");
+                        add_btn.setEnabled(true);
                         update_btn.setText("Изменить тему");
                         delete_btn.setText("Удалить тему");
                         setListenersButtons("Themes");

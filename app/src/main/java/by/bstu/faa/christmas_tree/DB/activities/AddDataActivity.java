@@ -36,7 +36,7 @@ public class AddDataActivity extends AppCompatActivity {
 
         initViews(getIntent().getStringExtra("OPTION"));
     }
-
+    
     private void initViews(String tableName) {
 
         add_data_btn = findViewById(R.id.add_to_db);
