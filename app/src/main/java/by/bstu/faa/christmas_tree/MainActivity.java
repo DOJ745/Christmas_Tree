@@ -324,19 +324,18 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case 4: userTree.setImageResource(R.drawable.ic_tree_level_4);
                 break;
-            case 5: userTree.setImageResource(R.drawable.ic_tree_level_5);
+            case 5: userTree.setImageResource(R.drawable.ic_tree_level_6);
                 break;
-                /*
-            case 6: userTree.setImageResource(R.drawable.ic_tree_level_6);
+            case 6: userTree.setImageResource(R.drawable.ic_tree_level_7);
                 break;
-            case 7: userTree.setImageResource(R.drawable.ic_tree_level_7);
+            case 7: userTree.setImageResource(R.drawable.ic_tree_level_10);
                 break;
             case 8: userTree.setImageResource(R.drawable.ic_tree_level_8);
                 break;
             case 9: userTree.setImageResource(R.drawable.ic_tree_level_9);
                 break;
-            case 10: userTree.setImageResource(R.drawable.ic_tree_level_10);
-                break;*/
+            case 10: userTree.setImageResource(R.drawable.ic_tree_level_5);
+                break;
         }
 
         userName.setText("Hello, " + current_user.getName());
@@ -353,24 +352,28 @@ public class MainActivity extends AppCompatActivity {
             userScore.setText("Score: " + userInfo.getScore());
             treeLevel.setText("Tree: " + userInfo.getTreeLevel());
 
-            switch (userInfo.getTreeLevel()) {
-                case 0:
-                    userTree.setImageResource(R.drawable.ic_tree_level_0);
+            switch (current_user.getTreeLevel()){
+                case 0: userTree.setImageResource(R.drawable.ic_tree_level_0);
                     break;
-                case 1:
-                    userTree.setImageResource(R.drawable.ic_tree_level_1);
+                case 1: userTree.setImageResource(R.drawable.ic_tree_level_1);
                     break;
-                case 2:
-                    userTree.setImageResource(R.drawable.ic_tree_level_2);
+                case 2: userTree.setImageResource(R.drawable.ic_tree_level_2);
                     break;
-                case 3:
-                    userTree.setImageResource(R.drawable.ic_tree_level_3);
+                case 3: userTree.setImageResource(R.drawable.ic_tree_level_3);
                     break;
-                case 4:
-                    userTree.setImageResource(R.drawable.ic_tree_level_4);
+                case 4: userTree.setImageResource(R.drawable.ic_tree_level_4);
                     break;
-                case 5:
-                    userTree.setImageResource(R.drawable.ic_tree_level_5);
+                case 5: userTree.setImageResource(R.drawable.ic_tree_level_6);
+                    break;
+                case 6: userTree.setImageResource(R.drawable.ic_tree_level_7);
+                    break;
+                case 7: userTree.setImageResource(R.drawable.ic_tree_level_10);
+                    break;
+                case 8: userTree.setImageResource(R.drawable.ic_tree_level_8);
+                    break;
+                case 9: userTree.setImageResource(R.drawable.ic_tree_level_9);
+                    break;
+                case 10: userTree.setImageResource(R.drawable.ic_tree_level_5);
                     break;
             }
 
