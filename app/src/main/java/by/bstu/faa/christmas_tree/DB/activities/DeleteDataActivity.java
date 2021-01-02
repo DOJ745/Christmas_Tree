@@ -1,6 +1,7 @@
 package by.bstu.faa.christmas_tree.DB.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -9,9 +10,19 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 import by.bstu.faa.christmas_tree.DB.local_db.DB_Helper;
 import by.bstu.faa.christmas_tree.DB.local_db.DB_Operations;
 import by.bstu.faa.christmas_tree.R;
+import by.bstu.faa.christmas_tree.adapters.AnswerAdapter;
+import by.bstu.faa.christmas_tree.adapters.QuestionAdapter;
+import by.bstu.faa.christmas_tree.adapters.ThemeAdapter;
+import by.bstu.faa.christmas_tree.adapters.UserAdapter;
+import by.bstu.faa.christmas_tree.model.UserInfo;
+import by.bstu.faa.christmas_tree.model.query.TableAnswerContainer;
+import by.bstu.faa.christmas_tree.model.query.TableQuestionContainer;
+import by.bstu.faa.christmas_tree.model.query.TableThemesContainer;
 
 public class DeleteDataActivity extends AppCompatActivity {
 
@@ -22,6 +33,8 @@ public class DeleteDataActivity extends AppCompatActivity {
     EditText enterForeignId;
     EditText enterText;
     EditText enterNumber;
+
+    RecyclerView data_container;
 
     private DB_Helper dbHelper;
     private SQLiteDatabase mainDB;
@@ -39,6 +52,24 @@ public class DeleteDataActivity extends AppCompatActivity {
 
     private void initViews(String tableName) {
 
+        ArrayList<TableThemesContainer> themes_data;
+        themes_data = DB_Operations.Queries.getTableThemes(mainDB);
+
+        ArrayList<TableQuestionContainer> questions_data;
+        questions_data = DB_Operations.Queries.getTableQuestion(mainDB);
+
+        ArrayList<TableAnswerContainer> answers_data;
+        answers_data = DB_Operations.Queries.getTableAnswer(mainDB);
+
+        ArrayList<UserInfo> users_data;
+        users_data = DB_Operations.Queries.getTableUser(mainDB);
+
+        data_container = findViewById(R.id.data_delete_list);
+        ThemeAdapter themeAdapter = new ThemeAdapter(this, themes_data);
+        QuestionAdapter questionAdapter = new QuestionAdapter(this, questions_data);
+        AnswerAdapter answerAdapter = new AnswerAdapter(this, answers_data);
+        UserAdapter userAdapter = new UserAdapter(this, users_data);
+
         delete_data_btn = findViewById(R.id.delete_to_db);
         cancel_btn = findViewById(R.id.back);
         instructionView = findViewById(R.id.instruction);
@@ -55,6 +86,8 @@ public class DeleteDataActivity extends AppCompatActivity {
                 enterForeignId.setVisibility(View.GONE);
                 enterNumber.setVisibility(View.GONE);
                 enterText.setVisibility(View.GONE);
+
+                data_container.setAdapter(themeAdapter);
                 break;
 
             case "Questions":
@@ -62,6 +95,8 @@ public class DeleteDataActivity extends AppCompatActivity {
                 enterNumber.setVisibility(View.GONE);
                 enterText.setVisibility(View.GONE);
                 enterForeignId.setVisibility(View.GONE);
+
+                data_container.setAdapter(answerAdapter);
                 break;
 
             case "Answers":
@@ -69,6 +104,8 @@ public class DeleteDataActivity extends AppCompatActivity {
                 enterNumber.setVisibility(View.GONE);
                 enterText.setVisibility(View.GONE);
                 enterForeignId.setVisibility(View.GONE);
+
+                data_container.setAdapter(questionAdapter);
                 break;
 
             case "Users":
@@ -76,6 +113,8 @@ public class DeleteDataActivity extends AppCompatActivity {
                 enterNumber.setVisibility(View.GONE);
                 enterText.setVisibility(View.GONE);
                 enterForeignId.setVisibility(View.GONE);
+
+                data_container.setAdapter(userAdapter);
                 break;
         }
 

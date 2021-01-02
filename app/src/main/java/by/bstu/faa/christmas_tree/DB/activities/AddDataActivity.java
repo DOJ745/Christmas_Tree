@@ -49,13 +49,13 @@ public class AddDataActivity extends AppCompatActivity {
 
     private void initViews(String tableName) {
 
-        ArrayList<TableThemesContainer> themes_data = new ArrayList<>();
+        ArrayList<TableThemesContainer> themes_data;
         themes_data = DB_Operations.Queries.getTableThemes(mainDB);
 
-        ArrayList<TableQuestionContainer> questions_data = new ArrayList<>();
+        ArrayList<TableQuestionContainer> questions_data;
         questions_data = DB_Operations.Queries.getTableQuestion(mainDB);
 
-        ArrayList<TableAnswerContainer> answers_data = new ArrayList<>();
+        ArrayList<TableAnswerContainer> answers_data;
         answers_data = DB_Operations.Queries.getTableAnswer(mainDB);
 
         add_data_btn = findViewById(R.id.add_to_db);

@@ -17,14 +17,14 @@
     </style>
 
     <style name="MainTextView">
-        <item name="android:textSize">24sp</item>
+        <item name="android:textSize">20sp</item>
         <item name="android:textAlignment">center</item>
         <item name="android:layout_margin">@dimen/tiny_margin</item>
         <item name="android:textColor">@color/christmas_green</item>
     </style>
 
     <style name="InstructionTextView">
-        <item name="android:textSize">20sp</item>
+        <item name="android:textSize">18sp</item>
         <item name="android:textAlignment">center</item>
         <item name="android:layout_margin">@dimen/tiny_margin</item>
         <item name="android:textColor">@color/christmas_green</item>
