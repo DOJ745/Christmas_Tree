@@ -324,17 +324,17 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case 4: userTree.setImageResource(R.drawable.ic_tree_level_4);
                 break;
-            case 5: userTree.setImageResource(R.drawable.ic_tree_level_6);
+            case 5: userTree.setImageResource(R.drawable.ic_tree_level_5);
                 break;
-            case 6: userTree.setImageResource(R.drawable.ic_tree_level_7);
+            case 6: userTree.setImageResource(R.drawable.ic_tree_level_6);
                 break;
-            case 7: userTree.setImageResource(R.drawable.ic_tree_level_10);
+            case 7: userTree.setImageResource(R.drawable.ic_tree_level_7);
                 break;
             case 8: userTree.setImageResource(R.drawable.ic_tree_level_8);
                 break;
             case 9: userTree.setImageResource(R.drawable.ic_tree_level_9);
                 break;
-            case 10: userTree.setImageResource(R.drawable.ic_tree_level_5);
+            case 10: userTree.setImageResource(R.drawable.ic_tree_level_10);
                 break;
         }
 
@@ -363,17 +363,17 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 case 4: userTree.setImageResource(R.drawable.ic_tree_level_4);
                     break;
-                case 5: userTree.setImageResource(R.drawable.ic_tree_level_6);
+                case 5: userTree.setImageResource(R.drawable.ic_tree_level_5);
                     break;
-                case 6: userTree.setImageResource(R.drawable.ic_tree_level_7);
+                case 6: userTree.setImageResource(R.drawable.ic_tree_level_6);
                     break;
-                case 7: userTree.setImageResource(R.drawable.ic_tree_level_10);
+                case 7: userTree.setImageResource(R.drawable.ic_tree_level_7);
                     break;
                 case 8: userTree.setImageResource(R.drawable.ic_tree_level_8);
                     break;
                 case 9: userTree.setImageResource(R.drawable.ic_tree_level_9);
                     break;
-                case 10: userTree.setImageResource(R.drawable.ic_tree_level_5);
+                case 10: userTree.setImageResource(R.drawable.ic_tree_level_10);
                     break;
             }
 
@@ -415,10 +415,18 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void logOut(View view) {
-        Intent intent = new Intent(this, LoginActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        FirebaseAuth.getInstance().signOut();
-        startActivity(intent);
+
+        AlertDialog.Builder warningDialog = new AlertDialog.Builder(this);
+        warningDialog.setTitle("Login out");
+        warningDialog.setIcon(R.drawable.ic_christmas_bauble);
+        warningDialog.setMessage("Are you sure that you want to log out?(App will close)");
+
+        warningDialog.setPositiveButton("Yes", (dialog, which) -> {
+            FirebaseAuth.getInstance().signOut();
+            finishAffinity();
+        });
+        warningDialog.setNegativeButton("No", ((dialog, which) -> {}));
+        warningDialog.show();
     }
 
     private void startBlockBtnTimer(int sec) {

@@ -88,7 +88,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     public void onClick(View view) {
         try {
             if (view.getId() == R.id.button_sign_in) {
-                signIn(editEmail.getText().toString(), editPassword.getText().toString());
+                if(editEmail.getText().toString().equals("adminemail@gmail.com") &&
+                editPassword.getText().toString().equals("admin12345"))
+                {
+
+                }
+                else { signIn(editEmail.getText().toString(), editPassword.getText().toString()); }
             }
             else if (view.getId() == R.id.button_reg) {
                 createAccount(editEmail.getText().toString(), editPassword.getText().toString());
