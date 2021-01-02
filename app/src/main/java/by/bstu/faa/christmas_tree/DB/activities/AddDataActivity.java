@@ -1,14 +1,16 @@
-package by.bstu.faa.christmas_tree;
+package by.bstu.faa.christmas_tree.DB.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
-public class UpdateDataActivity extends AppCompatActivity {
+import by.bstu.faa.christmas_tree.R;
+
+public class AddDataActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_update_data);
+        setContentView(R.layout.activity_add_data);
     }
 }

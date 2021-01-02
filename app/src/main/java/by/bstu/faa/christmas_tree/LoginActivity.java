@@ -12,7 +12,7 @@ import android.widget.Toast;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-import by.bstu.faa.christmas_tree.model.UserInfo;
+import by.bstu.faa.christmas_tree.DB.activities.DbOptionSelectActivity;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 

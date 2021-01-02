@@ -1,8 +1,10 @@
-package by.bstu.faa.christmas_tree;
+package by.bstu.faa.christmas_tree.DB.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import by.bstu.faa.christmas_tree.R;
 
 public class DeleteDataActivity extends AppCompatActivity {
 

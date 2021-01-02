@@ -12,10 +12,10 @@
         android:roundIcon="@drawable/ic_round_tree_icon"
         android:supportsRtl="true"
         android:theme="@style/Theme.Christmas_Tree">
-        <activity android:name=".DeleteDataActivity"></activity>
-        <activity android:name=".UpdateDataActivity" />
-        <activity android:name=".AddDataActivity" />
-        <activity android:name=".DbOptionSelectActivity" />
+        <activity android:name=".DB.activities.DeleteDataActivity"></activity>
+        <activity android:name=".DB.activities.UpdateDataActivity" />
+        <activity android:name=".DB.activities.AddDataActivity" />
+        <activity android:name=".DB.activities.DbOptionSelectActivity" />
         <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

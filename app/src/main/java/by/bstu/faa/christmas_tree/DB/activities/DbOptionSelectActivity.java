@@ -1,4 +1,4 @@
-package by.bstu.faa.christmas_tree;
+package by.bstu.faa.christmas_tree.DB.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -13,6 +13,7 @@ import android.widget.Spinner;
 
 import by.bstu.faa.christmas_tree.DB.local_db.DB_Helper;
 import by.bstu.faa.christmas_tree.DB.local_db.DB_Operations;
+import by.bstu.faa.christmas_tree.R;
 
 public class DbOptionSelectActivity extends AppCompatActivity {
 
@@ -62,18 +63,21 @@ public class DbOptionSelectActivity extends AppCompatActivity {
                         add_btn.setText("Добавить ответ");
                         update_btn.setText("Изменить ответ");
                         delete_btn.setText("Удалить ответ");
+                        setListenersButtons("Answers");
                         break;
 
                     case "Questions":
                         add_btn.setText("Добавить вопрос");
                         update_btn.setText("Изменить вопрос");
                         delete_btn.setText("Удалить вопрос");
+                        setListenersButtons("Questions");
                         break;
 
                     case "Themes":
                         add_btn.setText("Добавить тему");
                         update_btn.setText("Изменить тему");
                         delete_btn.setText("Удалить тему");
+                        setListenersButtons("Themes");
                         break;
 
                     case "Users":
@@ -81,6 +85,7 @@ public class DbOptionSelectActivity extends AppCompatActivity {
                         add_btn.setEnabled(false);
                         update_btn.setText("Изменить пользователя");
                         delete_btn.setText("Удалить пользователя");
+                        setListenersButtons("Users");
                         break;
                 }
 
@@ -94,28 +99,23 @@ public class DbOptionSelectActivity extends AppCompatActivity {
     }
 
     private void setListenersButtons(String tableName) {
-        switch (tableName) {
-            case "Answers":
-                break;
-            case "Questions":
-                break;
-            case "Themes":
-                break;
-            case "Users":
-                break;
-        }
+
         add_btn.setOnClickListener(v -> {
             Intent intent = new Intent(this, AddDataActivity.class);
+            intent.putExtra("OPTION", tableName);
             startActivity(intent);
         });
         update_btn.setOnClickListener(v -> {
             Intent intent = new Intent(this, UpdateDataActivity.class);
+            intent.putExtra("OPTION", tableName);
             startActivity(intent);
         });
         delete_btn.setOnClickListener(v -> {
             Intent intent = new Intent(this, DeleteDataActivity.class);
+            intent.putExtra("OPTION", tableName);
             startActivity(intent);
         });
+
         saveJson_btn.setOnClickListener(v -> {
 
         });
