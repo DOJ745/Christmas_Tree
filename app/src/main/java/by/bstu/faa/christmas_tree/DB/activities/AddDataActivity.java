@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import by.bstu.faa.christmas_tree.DB.local_db.DB_Helper;
 import by.bstu.faa.christmas_tree.DB.local_db.DB_Operations;
 import by.bstu.faa.christmas_tree.R;
+import by.bstu.faa.christmas_tree.adapters.QuestionAdapter;
 import by.bstu.faa.christmas_tree.adapters.ThemeAdapter;
 import by.bstu.faa.christmas_tree.model.query.TableAnswerContainer;
 import by.bstu.faa.christmas_tree.model.query.TableQuestionContainer;
@@ -63,9 +64,7 @@ public class AddDataActivity extends AppCompatActivity {
         data_container = findViewById(R.id.data_add_list);
 
         ThemeAdapter themeAdapter = new ThemeAdapter(this, themes_data);
-
-        // устанавливаем для списка адаптер
-        //recyclerView.setAdapter(adapter);
+        QuestionAdapter questionAdapter = new QuestionAdapter(this, questions_data);
 
         enterId = findViewById(R.id.set_id);
         enterForeignId = findViewById(R.id.set_foreign_id);
@@ -79,6 +78,7 @@ public class AddDataActivity extends AppCompatActivity {
                 enterId.setVisibility(View.GONE);
                 enterForeignId.setVisibility(View.GONE);
                 enterNumber.setVisibility(View.GONE);
+
                 data_container.setAdapter(themeAdapter);
                 break;
 
@@ -86,6 +86,8 @@ public class AddDataActivity extends AppCompatActivity {
                 instructionView.setText(R.string.instruction_table_question_add);
                 enterId.setVisibility(View.GONE);
                 enterNumber.setVisibility(View.GONE);
+
+                data_container.setAdapter(questionAdapter);
                 break;
 
             case "Answers":
