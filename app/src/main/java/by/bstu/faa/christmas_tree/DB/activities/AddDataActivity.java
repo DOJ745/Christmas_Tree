@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import by.bstu.faa.christmas_tree.DB.local_db.DB_Helper;
 import by.bstu.faa.christmas_tree.DB.local_db.DB_Operations;
 import by.bstu.faa.christmas_tree.R;
+import by.bstu.faa.christmas_tree.adapters.AnswerAdapter;
 import by.bstu.faa.christmas_tree.adapters.QuestionAdapter;
 import by.bstu.faa.christmas_tree.adapters.ThemeAdapter;
 import by.bstu.faa.christmas_tree.model.query.TableAnswerContainer;
@@ -65,6 +66,7 @@ public class AddDataActivity extends AppCompatActivity {
 
         ThemeAdapter themeAdapter = new ThemeAdapter(this, themes_data);
         QuestionAdapter questionAdapter = new QuestionAdapter(this, questions_data);
+        AnswerAdapter answerAdapter = new AnswerAdapter(this, answers_data);
 
         enterId = findViewById(R.id.set_id);
         enterForeignId = findViewById(R.id.set_foreign_id);
@@ -93,6 +95,8 @@ public class AddDataActivity extends AppCompatActivity {
             case "Answers":
                 instructionView.setText(R.string.instruction_table_answer_add);
                 enterId.setVisibility(View.GONE);
+
+                data_container.setAdapter(answerAdapter);
                 break;
         }
 
