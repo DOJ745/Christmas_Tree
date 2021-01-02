@@ -60,19 +60,15 @@ public class MainActivity extends AppCompatActivity {
 
         userUid = getIntent().getStringExtra("USER_ID");
         dbReference = FirebaseDatabase.getInstance().getReference();
-        //DatabaseReference testRef = dbReference.child(userUid);
 
         initViews();
 
        if(userUid != null) {
             //FirebaseManager.getInstance().addToDb(current_user);
             FirebaseManager.getInstance().callOnUserInfoById(userUid, this::showUser);
-            current_user.setId(userUid);
-            DB_Operations.Queries.insertUser(mainDB, current_user);
+            //current_user.setId(userUid);
+            //DB_Operations.Queries.insertUser(mainDB, current_user);
         }
-        //Query query = dbReference.child(userUid);
-        //updateInfoByQuery(query);
-
         //current_user = (UserInfo) getIntent().getSerializableExtra("LOGGED_USER");
 
         /*f(current_user.getName() != null){
@@ -80,10 +76,10 @@ public class MainActivity extends AppCompatActivity {
             DB_Operations.Queries.insertUser(mainDB, current_user);
         }*/
 
-        if(current_user.getName().equals("player"))
-            showNameDialog();
-        else {
-            /*try {
+        //if(current_user.getName().equals("player"))
+            //showNameDialog();
+        /*else {
+            try {
                 FirebaseManager.getInstance().addToDb(current_user);
                 Toast.makeText(this, "UserInfo saved successfully", Toast.LENGTH_SHORT).show();
                 finish();
@@ -91,8 +87,8 @@ public class MainActivity extends AppCompatActivity {
             catch (Exception e) {
                 Log.e(TAG, "SaveUserInfo: ", e);
                 Toast.makeText(this, "Error!", Toast.LENGTH_SHORT).show();
-            }*/
-        }
+            }
+        }*/
     }
 
     @Override
@@ -115,6 +111,7 @@ public class MainActivity extends AppCompatActivity {
         View view = getLayoutInflater().inflate(R.layout.dialog, null);
         EditText entered_name = view.findViewById(R.id.edit_name);
 
+        entered_name.setText("player");
         entered_name.setError("Required field!");
         entered_name.addTextChangedListener(new TextWatcher() {
 
@@ -298,11 +295,9 @@ public class MainActivity extends AppCompatActivity {
         updateViews();
 
         try {
-
-            UserInfo updatedUser = current_user;
-            FirebaseManager.getInstance().update(updatedUser, (error, ref) -> {
-                Toast.makeText(this, "User updated successfully", Toast.LENGTH_SHORT).show();
-            });
+            //UserInfo updatedUser = current_user;
+            FirebaseManager.getInstance().update(current_user, (error, ref) ->
+                    Toast.makeText(this, "User updated successfully", Toast.LENGTH_SHORT).show());
         }
         catch (Exception e) {
             Log.e(TAG, "updateUser: ", e);
@@ -311,10 +306,20 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void wrongUserAnswer() {
-        current_user.wrongAnswer();
         attempt_count--;
+        current_user.wrongAnswer();
         DB_Operations.Queries.updateUser(mainDB, current_user);
         updateViews();
+
+        try {
+            //UserInfo updatedUser = current_user;
+            FirebaseManager.getInstance().update(current_user, (error, ref) ->
+                    Toast.makeText(this, "User updated successfully", Toast.LENGTH_SHORT).show());
+        }
+        catch (Exception e) {
+            Log.e(TAG, "updateUser: ", e);
+            Toast.makeText(this, "Error!", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void initViews() {
@@ -359,29 +364,40 @@ public class MainActivity extends AppCompatActivity {
 
     private void showUser(UserInfo userInfo) {
 
-        userName.setText("Hello, " + userInfo.getName());
-        userScore.setText("Score: " + userInfo.getScore());
-        treeLevel.setText("Tree: " + userInfo.getTreeLevel());
+        if(userInfo != null)
+        {
+            Log.d(TAG, userInfo.toString());
+            userName.setText("Hello, " + userInfo.getName());
+            userScore.setText("Score: " + userInfo.getScore());
+            treeLevel.setText("Tree: " + userInfo.getTreeLevel());
 
-        switch (userInfo.getTreeLevel()) {
-            case 0:
-                userTree.setImageResource(R.drawable.ic_tree_level_0);
-                break;
-            case 1:
-                userTree.setImageResource(R.drawable.ic_tree_level_1);
-                break;
-            case 2:
-                userTree.setImageResource(R.drawable.ic_tree_level_2);
-                break;
-            case 3:
-                userTree.setImageResource(R.drawable.ic_tree_level_3);
-                break;
-            case 4:
-                userTree.setImageResource(R.drawable.ic_tree_level_4);
-                break;
-            case 5:
-                userTree.setImageResource(R.drawable.ic_tree_level_5);
-                break;
+            switch (userInfo.getTreeLevel()) {
+                case 0:
+                    userTree.setImageResource(R.drawable.ic_tree_level_0);
+                    break;
+                case 1:
+                    userTree.setImageResource(R.drawable.ic_tree_level_1);
+                    break;
+                case 2:
+                    userTree.setImageResource(R.drawable.ic_tree_level_2);
+                    break;
+                case 3:
+                    userTree.setImageResource(R.drawable.ic_tree_level_3);
+                    break;
+                case 4:
+                    userTree.setImageResource(R.drawable.ic_tree_level_4);
+                    break;
+                case 5:
+                    userTree.setImageResource(R.drawable.ic_tree_level_5);
+                    break;
+            }
+
+            current_user = userInfo;
+        }
+        else {
+            current_user = new UserInfo();
+            current_user.setId(userUid);
+            FirebaseManager.getInstance().addToDb(current_user);
         }
     }
 

@@ -33,4 +33,12 @@ public class UserInfo implements Serializable {
         if(this.score - 5 < 0) { this.score = 0; }
         else this.score -= 5;
     }
+
+    @Override
+    public String toString(){
+        return "ID - " + this.id + "\n" +
+                "Name - " + this.name + "\n" +
+                "Tree level - " + this.treeLevel + "\n" +
+                "Score - " + this.score;
+    }
 }
