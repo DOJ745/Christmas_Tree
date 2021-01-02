@@ -456,6 +456,27 @@ public class DB_Operations {
             else return true;
         }
 
+
+                // ------------------------- INSERT QUERIES -------------------------
+
+        public static void insertTheme(SQLiteDatabase db){}
+        public static void insertQuestion(SQLiteDatabase db){}
+        public static void insertAnswer(SQLiteDatabase db){}
+
+
+                // ------------------------- UPDATE QUERIES -------------------------
+
+        public static void updateTheme(SQLiteDatabase db){}
+        public static void updateQuestion(SQLiteDatabase db){}
+        public static void updateAnswer(SQLiteDatabase db){}
+
+
+                // ------------------------- DELETE QUERIES -------------------------
+
+        public static void deleteTheme(SQLiteDatabase db){}
+        public static void deleteQuestion(SQLiteDatabase db){}
+        public static void deleteAnswer(SQLiteDatabase db){}
+
         public static QuestionContainer getRandomQuestion(SQLiteDatabase db) {
 
             int themeId = randomNumber(1, 3);
