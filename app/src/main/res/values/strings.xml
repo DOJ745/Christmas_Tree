@@ -15,6 +15,13 @@
     <string name="add">Добавить</string>
     <string name="update">Изменить</string>
     <string name="delete">Удалить</string>
+    <string name="back">Назад</string>
+
+    <string name="enter_id">Введите id</string>
+    <string name="enter_foreign_id">Введите id для foreign key</string>
+    <string name="enter_text">Введите текст</string>
+    <string name="enter_number">Введите число</string>
+
     <string name="saveJson">Сохранить таблицу в JSON</string>
 
     <string name="try_answer">Ещё разок</string>
