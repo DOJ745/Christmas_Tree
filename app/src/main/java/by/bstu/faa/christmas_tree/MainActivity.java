@@ -64,30 +64,13 @@ public class MainActivity extends AppCompatActivity {
         initViews();
 
        if(userUid != null) {
-            //FirebaseManager.getInstance().addToDb(current_user);
             FirebaseManager.getInstance().callOnUserInfoById(userUid, this::showUser);
-            //current_user.setId(userUid);
-            //DB_Operations.Queries.insertUser(mainDB, current_user);
         }
         //current_user = (UserInfo) getIntent().getSerializableExtra("LOGGED_USER");
 
         /*f(current_user.getName() != null){
             //FirebaseManager.getInstance().callOnUserInfoById(current_user.getId(), this::showUser);
             DB_Operations.Queries.insertUser(mainDB, current_user);
-        }*/
-
-        //if(current_user.getName().equals("player"))
-            //showNameDialog();
-        /*else {
-            try {
-                FirebaseManager.getInstance().addToDb(current_user);
-                Toast.makeText(this, "UserInfo saved successfully", Toast.LENGTH_SHORT).show();
-                finish();
-            }
-            catch (Exception e) {
-                Log.e(TAG, "SaveUserInfo: ", e);
-                Toast.makeText(this, "Error!", Toast.LENGTH_SHORT).show();
-            }
         }*/
     }
 
@@ -137,6 +120,15 @@ public class MainActivity extends AppCompatActivity {
         myDialog.setPositiveButton("OK", (dialog, which) -> {
 
             current_user.setName(entered_name.getText().toString());
+            try {
+                //UserInfo updatedUser = current_user;
+                FirebaseManager.getInstance().update(current_user, (error, ref) ->
+                        Toast.makeText(this, "User updated successfully", Toast.LENGTH_SHORT).show());
+            }
+            catch (Exception e) {
+                Log.e(TAG, "updateUser: ", e);
+                Toast.makeText(this, "Error!", Toast.LENGTH_SHORT).show();
+            }
             DB_Operations.Queries.updateUser(mainDB, current_user);
         });
         myDialog.show();
@@ -230,7 +222,7 @@ public class MainActivity extends AppCompatActivity {
             else if(chosenAnswer.getText().toString().equals("Выберите ответ"))
             {
                 chosenAnswer.setText("Вы не выбрали ответ!");
-                wrongUserAnswer();
+                //wrongUserAnswer();
                 //startBlockBtnTimer(30);
             }
 
@@ -270,12 +262,6 @@ public class MainActivity extends AppCompatActivity {
         catch (Exception e) { answerQuestionDialog.dismiss(); }
     }
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-
-    }
-
     public void howToPlay(View view) {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -295,7 +281,6 @@ public class MainActivity extends AppCompatActivity {
         updateViews();
 
         try {
-            //UserInfo updatedUser = current_user;
             FirebaseManager.getInstance().update(current_user, (error, ref) ->
                     Toast.makeText(this, "User updated successfully", Toast.LENGTH_SHORT).show());
         }
@@ -312,7 +297,6 @@ public class MainActivity extends AppCompatActivity {
         updateViews();
 
         try {
-            //UserInfo updatedUser = current_user;
             FirebaseManager.getInstance().update(current_user, (error, ref) ->
                     Toast.makeText(this, "User updated successfully", Toast.LENGTH_SHORT).show());
         }
@@ -398,6 +382,8 @@ public class MainActivity extends AppCompatActivity {
             current_user = new UserInfo();
             current_user.setId(userUid);
             FirebaseManager.getInstance().addToDb(current_user);
+            DB_Operations.Queries.insertUser(mainDB, current_user);
+            showNameDialog();
         }
     }
 

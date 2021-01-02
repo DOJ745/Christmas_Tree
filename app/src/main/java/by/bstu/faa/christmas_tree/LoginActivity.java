@@ -103,9 +103,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         if(user != null) {
             Intent intent = new Intent(this, MainActivity.class);
             intent.putExtra("USER_ID", user.getUid());
-            //UserInfo loggedUser = new UserInfo();
-            //loggedUser.setId(user.getUid());
-            //intent.putExtra("LOGGED_USER", loggedUser);
             startActivity(intent);
             finish();
         }
