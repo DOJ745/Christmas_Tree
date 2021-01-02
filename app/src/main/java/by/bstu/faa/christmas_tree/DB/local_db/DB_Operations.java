@@ -514,6 +514,19 @@ public class DB_Operations {
             return randomQuestion;
         }
 
+        public static Map<String, Integer> getRating(SQLiteDatabase db) {
+
+            Map<String, Integer> rating = new HashMap<>();
+            Cursor queryCursor = db.rawQuery("select * from Users order by Score desc", null);
+            if(queryCursor.moveToFirst()){
+                do {
+                    rating.put(queryCursor.getString(1), queryCursor.getInt(3));
+                }while (queryCursor.moveToNext());
+            }
+            queryCursor.close();
+            return rating;
+        }
+
         private static int randomNumber(int min, int max)
         {
             max -= min;

@@ -46,6 +46,7 @@
                 android:layout_alignParentEnd="true"
                 android:layout_toEndOf="@id/user_name"
                 android:contentDescription="@string/image_descr"
+                android:onClick="showRating"
                 android:src="@drawable/ic_trophy" />
 
         </RelativeLayout>

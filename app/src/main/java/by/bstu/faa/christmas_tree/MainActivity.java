@@ -83,6 +83,13 @@ public class MainActivity extends AppCompatActivity {
         mainDB.close();
     }
 
+    @Override
+    public void onBackPressed() {
+        FirebaseAuth.getInstance().signOut();
+        finishAffinity();
+        super.onBackPressed();
+    }
+
     private void showNameDialog() {
 
         AlertDialog.Builder myDialog = new AlertDialog.Builder(this);
@@ -387,6 +394,10 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    public void showRating(View view) {
+
+    }
+
     public void logOut(View view) {
         Intent intent = new Intent(this, LoginActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -406,13 +417,5 @@ public class MainActivity extends AppCompatActivity {
                 growTreeButton.setEnabled(true);
             }
         }.start();
-    }
-
-
-    @Override
-    public void onBackPressed() {
-        FirebaseAuth.getInstance().signOut();
-        finishAffinity();
-        super.onBackPressed();
     }
 }
