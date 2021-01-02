@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -18,6 +19,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -63,15 +65,8 @@ public class MainActivity extends AppCompatActivity {
 
         initViews();
 
-       if(userUid != null) {
-            FirebaseManager.getInstance().callOnUserInfoById(userUid, this::showUser);
-        }
-        //current_user = (UserInfo) getIntent().getSerializableExtra("LOGGED_USER");
-
-        /*f(current_user.getName() != null){
-            //FirebaseManager.getInstance().callOnUserInfoById(current_user.getId(), this::showUser);
-            DB_Operations.Queries.insertUser(mainDB, current_user);
-        }*/
+       if(userUid != null)
+           FirebaseManager.getInstance().callOnUserInfoById(userUid, this::showUser);
     }
 
     @Override
@@ -377,6 +372,11 @@ public class MainActivity extends AppCompatActivity {
             }
 
             current_user = userInfo;
+
+            if(DB_Operations.Queries.checkUser(mainDB, current_user))
+                DB_Operations.Queries.insertUser(mainDB, current_user);
+            else { DB_Operations.Queries.updateUser(mainDB, current_user); }
+
         }
         else {
             current_user = new UserInfo();
@@ -385,6 +385,13 @@ public class MainActivity extends AppCompatActivity {
             DB_Operations.Queries.insertUser(mainDB, current_user);
             showNameDialog();
         }
+    }
+
+    public void logOut(View view) {
+        Intent intent = new Intent(this, LoginActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        FirebaseAuth.getInstance().signOut();
+        startActivity(intent);
     }
 
     private void startBlockBtnTimer(int sec) {
@@ -404,6 +411,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
+        FirebaseAuth.getInstance().signOut();
         finishAffinity();
         super.onBackPressed();
     }

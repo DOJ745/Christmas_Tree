@@ -436,19 +436,22 @@ public class DB_Operations {
                     user.getScore() + " where ID like '" + user.getId() + "'");
         }
 
-        public static UserInfo getUser(SQLiteDatabase db){
-            UserInfo defaultUser = new UserInfo();
-            Cursor queryCursor = db.rawQuery("select * from Users",null);
+        public static boolean checkUser(SQLiteDatabase db, UserInfo user){
+            Cursor queryCursor = db.rawQuery(
+                    "select * from Users where ID like '" + user.getId() + "'",
+                    null);
             if(queryCursor.moveToFirst()){
                 do{
-                    defaultUser.setName(queryCursor.getString(1));
-                    defaultUser.setTreeLevel(queryCursor.getInt(2));
-                    defaultUser.setScore(queryCursor.getInt(3));
+                    user.setId(queryCursor.getString(0));
+                    user.setName(queryCursor.getString(1));
+                    user.setTreeLevel(queryCursor.getInt(2));
+                    user.setScore(queryCursor.getInt(3));
                 }while (queryCursor.moveToNext());
             }
             queryCursor.close();
 
-            return defaultUser;
+            if(user.getId().equals("") || user.getName().equals("")) { return false; }
+            else return true;
         }
 
         public static QuestionContainer getRandomQuestion(SQLiteDatabase db) {

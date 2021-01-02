@@ -84,11 +84,21 @@
             android:onClick="answerQuestion"
             android:text="@string/grow_tree" />
 
+        <Button
+            android:id="@+id/exit_btn"
+            android:layout_margin="@dimen/tiny_margin"
+            android:layout_width="95dp"
+            android:layout_height="75dp"
+            android:text="@string/exit"
+            android:layout_below="@+id/user_tree"
+            android:layout_alignParentLeft="true"
+            android:onClick="logOut"/>
+
         <ImageView
+            android:layout_below="@+id/user_tree"
             android:layout_margin="@dimen/tiny_margin"
             android:layout_width="80dp"
             android:layout_height="80dp"
-            android:layout_below="@+id/user_tree"
             android:layout_alignParentRight="true"
             android:onClick="howToPlay"
             android:src="@drawable/ic_question_mark"/>

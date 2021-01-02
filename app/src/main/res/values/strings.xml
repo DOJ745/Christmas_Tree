@@ -8,6 +8,7 @@
     <string name="sign_up">Sing up</string>
     <string name="answer">Ответить</string>
     <string name="close">Закрыть</string>
+    <string name="exit">Log out</string>
 
     <string name="try_answer">Ещё разок</string>
     <string name="choose_answer">Выберите ответ</string>
