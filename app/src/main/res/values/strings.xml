@@ -10,6 +10,12 @@
     <string name="close">Закрыть</string>
     <string name="exit">Log out</string>
     <string name="rating">Rating</string>
+    <string name="choose_table">Выберите таблицу:</string>
+
+    <string name="add">Добавить</string>
+    <string name="update">Изменить</string>
+    <string name="delete">Удалить</string>
+    <string name="saveJson">Сохранить таблицу в JSON</string>
 
     <string name="try_answer">Ещё разок</string>
     <string name="choose_answer">Выберите ответ</string>

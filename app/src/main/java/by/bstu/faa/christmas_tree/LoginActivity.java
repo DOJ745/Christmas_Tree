@@ -91,7 +91,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 if(editEmail.getText().toString().equals("adminemail@gmail.com") &&
                 editPassword.getText().toString().equals("admin12345"))
                 {
-
+                    Intent intent = new Intent(this, DbOptionSelectActivity.class);
+                    startActivity(intent);
                 }
                 else { signIn(editEmail.getText().toString(), editPassword.getText().toString()); }
             }

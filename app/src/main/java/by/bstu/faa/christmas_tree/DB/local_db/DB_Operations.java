@@ -525,6 +525,20 @@ public class DB_Operations {
             return rating;
         }
 
+        public static ArrayList<String> getTables(SQLiteDatabase db) {
+            ArrayList<String> tableList = new ArrayList<>();
+            Cursor queryCursor = db.rawQuery(
+                    "SELECT name FROM sqlite_master WHERE type='table' ORDER BY name limit 4;",
+                    null);
+            if(queryCursor.moveToFirst()){
+                do {
+                    tableList.add(queryCursor.getString(0));
+                }while (queryCursor.moveToNext());
+            }
+            queryCursor.close();
+            return tableList;
+        }
+
         private static int randomNumber(int min, int max)
         {
             max -= min;
