@@ -469,6 +469,7 @@ public class DB_Operations {
         public static void updateTheme(SQLiteDatabase db){}
         public static void updateQuestion(SQLiteDatabase db){}
         public static void updateAnswer(SQLiteDatabase db){}
+        public static void updateUserData(SQLiteDatabase db){}
 
 
                 // ------------------------- DELETE QUERIES -------------------------
@@ -476,6 +477,7 @@ public class DB_Operations {
         public static void deleteTheme(SQLiteDatabase db){}
         public static void deleteQuestion(SQLiteDatabase db){}
         public static void deleteAnswer(SQLiteDatabase db){}
+        public static void deleteUser(SQLiteDatabase db){}
 
         public static QuestionContainer getRandomQuestion(SQLiteDatabase db) {
 
