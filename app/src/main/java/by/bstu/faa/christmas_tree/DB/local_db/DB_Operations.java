@@ -3,6 +3,7 @@ package by.bstu.faa.christmas_tree.DB.local_db;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.strictmode.SqliteObjectLeakedViolation;
 import android.util.Log;
 
 import java.util.ArrayList;
@@ -11,6 +12,9 @@ import java.util.Map;
 
 import by.bstu.faa.christmas_tree.model.UserInfo;
 import by.bstu.faa.christmas_tree.model.query.QueryContainer;
+import by.bstu.faa.christmas_tree.model.query.TableAnswerContainer;
+import by.bstu.faa.christmas_tree.model.query.TableQuestionContainer;
+import by.bstu.faa.christmas_tree.model.query.TableThemesContainer;
 import by.bstu.faa.christmas_tree.model.question.QuestionContainer;
 
 public class DB_Operations {
@@ -538,6 +542,69 @@ public class DB_Operations {
             queryCursor.close();
             return tableList;
         }
+
+
+
+        public static ArrayList<TableThemesContainer> getTableThemes(SQLiteDatabase db) {
+
+            ArrayList<TableThemesContainer> themeList = new ArrayList<>();
+            Cursor queryCursor = db.rawQuery(
+                    "SELECT * FROM Themes",
+                    null);
+            if(queryCursor.moveToFirst()){
+                do {
+                    TableThemesContainer theme = new TableThemesContainer();
+                    theme.setThemeId(queryCursor.getInt(0));
+                    theme.setThemeName(queryCursor.getString(1));
+                    themeList.add(theme);
+                }while (queryCursor.moveToNext());
+            }
+            queryCursor.close();
+            return themeList;
+        }
+
+        public static ArrayList<TableQuestionContainer> getTableQuestion(SQLiteDatabase db){
+
+            ArrayList<TableQuestionContainer> questionList = new ArrayList<>();
+            Cursor queryCursor = db.rawQuery(
+                    "SELECT * FROM Questions",
+                    null);
+            if(queryCursor.moveToFirst()){
+                do {
+                    TableQuestionContainer question = new TableQuestionContainer();
+                    question.setThemeId(queryCursor.getInt(0));
+                    question.setQuestionId(queryCursor.getInt(1));
+                    question.setQuestionText(queryCursor.getString(2));
+                    questionList.add(question);
+                }while (queryCursor.moveToNext());
+            }
+            queryCursor.close();
+            return questionList;
+        }
+
+        public static ArrayList<TableAnswerContainer> getTableAnswer(SQLiteDatabase db) {
+
+            ArrayList<TableAnswerContainer> answerList = new ArrayList<>();
+            Cursor queryCursor = db.rawQuery(
+                    "SELECT * FROM Answers",
+                    null);
+            if(queryCursor.moveToFirst()){
+                do {
+                    TableAnswerContainer answer = new TableAnswerContainer();
+                    answer.setAnswerId(queryCursor.getInt(0));
+                    answer.setQuestionId(queryCursor.getInt(1));
+                    answer.setAnswerText(queryCursor.getString(2));
+                    answer.setTrueness(queryCursor.getInt(3));
+                    answerList.add(answer);
+                }while (queryCursor.moveToNext());
+            }
+            queryCursor.close();
+            return answerList;
+        }
+
+        /*public static ArrayList<UserInfo> getTableUser(SQLiteDatabase db){
+
+        }*/
 
         private static int randomNumber(int min, int max)
         {
