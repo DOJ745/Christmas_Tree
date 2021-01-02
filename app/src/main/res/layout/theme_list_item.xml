@@ -17,13 +17,13 @@
             android:id="@+id/theme_id_item"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            style="@style/MainTextView"/>
+            style="@style/RecycleItemTextView"/>
 
         <TextView
             android:id="@+id/theme_name_item"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            style="@style/MainTextView"/>
+            style="@style/RecycleItemTextView"/>
 
     </LinearLayout>
 

@@ -30,6 +30,12 @@
         <item name="android:textColor">@color/christmas_green</item>
     </style>
 
+    <style name="RecycleItemTextView">
+        <item name="android:textSize">20sp</item>
+        <item name="android:layout_margin">@dimen/main_margin</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
     <style name="VariantsButtons">
         <item name="android:textAlignment">center</item>
         <item name="android:layout_margin">@dimen/small_margin</item>

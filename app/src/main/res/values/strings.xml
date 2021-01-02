@@ -11,6 +11,7 @@
     <string name="exit">Log out</string>
     <string name="rating">Rating</string>
     <string name="choose_table">Выберите таблицу:</string>
+    <string name="table_data">Данные таблицы</string>
 
     <string name="add">Добавить</string>
     <string name="update">Изменить</string>
