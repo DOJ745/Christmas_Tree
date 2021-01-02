@@ -49,8 +49,6 @@ public class DB_Operations {
                     "Tree_Level INTEGER not null,\n" +
                     "Score INTEGER not null,\n" +
                     "constraint ID_pk primary key(ID))");
-
-            //Queries.insertDefaultUser(db);
         }
 
         public static void createQuestionsTable(SQLiteDatabase db) {

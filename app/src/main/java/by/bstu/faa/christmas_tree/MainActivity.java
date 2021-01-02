@@ -222,11 +222,7 @@ public class MainActivity extends AppCompatActivity {
                 startBlockBtnTimer(30);
             }
             else if(chosenAnswer.getText().toString().equals("Выберите ответ"))
-            {
-                chosenAnswer.setText("Вы не выбрали ответ!");
-                //wrongUserAnswer();
-                //startBlockBtnTimer(30);
-            }
+            { chosenAnswer.setText("Вы не выбрали ответ!"); }
 
             else {
                 answerTimer.cancel();
@@ -396,6 +392,23 @@ public class MainActivity extends AppCompatActivity {
 
     public void showRating(View view) {
 
+        Map<String, Integer> ratingList = DB_Operations.Queries.getRating(mainDB);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        View rating_view = getLayoutInflater().inflate(R.layout.rating_dialog, null);
+        builder.setView(rating_view);
+        Dialog ratingDialog = builder.create();
+
+        Button close_btn = rating_view.findViewById(R.id.close_btn);
+        TextView ratingTable = rating_view.findViewById(R.id.rating_table);
+
+        close_btn.setOnClickListener(v1 -> ratingDialog.dismiss());
+        StringBuilder tableInfo = new StringBuilder();
+        for(Map.Entry<String, Integer> item :ratingList.entrySet()){
+            tableInfo.append("\n" + item.getKey() + " ---------- " + item.getValue() + "\n");
+        }
+
+        ratingTable.setText(tableInfo);
+        ratingDialog.show();
     }
 
     public void logOut(View view) {
