@@ -88,12 +88,10 @@ public class DbOptionSelectActivity extends AppCompatActivity {
                         setListenersButtons("Users");
                         break;
                 }
-
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-            }
+            public void onNothingSelected(AdapterView<?> parent) { }
         };
         tableList.setOnItemSelectedListener(itemSelectedListener);
     }

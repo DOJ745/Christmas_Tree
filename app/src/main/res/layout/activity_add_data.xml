@@ -17,6 +17,13 @@
         app:layout_constraintLeft_toTopOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
+        <TextView
+            android:id="@+id/instruction"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/instruction_table_answer_add"
+            style="@style/InstructionTextView"/>
+
         <EditText
             android:id="@+id/set_id"
             android:hint="@string/enter_id"

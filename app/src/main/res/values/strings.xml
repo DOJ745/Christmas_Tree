@@ -37,6 +37,38 @@
     <string name="test_text">test text 123</string>
     <string name="image_descr">IMAGE</string>
 
+    <string name="instruction_table_answer_add">Работа с таблицей Answers<br/>
+        --- Добавление ---<br/>
+        Обязательно нужно ввести:<br/>
+        1) ID вопроса(foreign key)<br/>
+        2) Текст ответа<br/>
+        3) Правильность ответа<br/></string>
+
+    <string name="instruction_table_answer_update">Работа с таблицей Answers<br/>
+        --- Обновление ---<br/>
+        Обязательно нужно ввести:<br/>
+        1) ID вопроса(foreign key)<br/>
+        2) ID ответа
+        3) Текст ответа<br/>
+        4) Правильность ответа<br/></string>
+
+    <string name="instruction_table_answer_delete">Работа с таблицей Answers<br/>
+        --- Удаление ---<br/>
+        Обязательно нужно ввести:<br/>
+        1) ID ответа<br/></string>
+
+
+    <string name="instruction_table_theme_add"></string>
+    <string name="instruction_table_theme_delete"></string>
+    <string name="instruction_table_theme_update"></string>
+
+    <string name="instruction_table_question_add"></string>
+    <string name="instruction_table_question_update"></string>
+    <string name="instruction_table_question_delete"></string>
+
+    <string name="instruction_table_user_update"></string>
+    <string name="instruction_table_user_delete"></string>
+
     <string name="tutorial_text1">
         С Рождеством и Новым годом!
         А теперь к самому обучению.
