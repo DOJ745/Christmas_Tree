@@ -39,7 +39,7 @@ public class DeleteDataActivity extends AppCompatActivity {
 
     private void initViews(String tableName) {
 
-        delete_data_btn = findViewById(R.id.add_to_db);
+        delete_data_btn = findViewById(R.id.delete_to_db);
         cancel_btn = findViewById(R.id.back);
         instructionView = findViewById(R.id.instruction);
 
@@ -51,19 +51,31 @@ public class DeleteDataActivity extends AppCompatActivity {
         switch (tableName)
         {
             case "Themes":
-                instructionView.setText(R.string.instruction_table_theme_add);
-                enterId.setVisibility(View.GONE);
+                instructionView.setText(R.string.instruction_table_theme_delete);
                 enterForeignId.setVisibility(View.GONE);
                 enterNumber.setVisibility(View.GONE);
+                enterText.setVisibility(View.GONE);
                 break;
+
             case "Questions":
-                instructionView.setText(R.string.instruction_table_question_add);
-                enterId.setVisibility(View.GONE);
+                instructionView.setText(R.string.instruction_table_question_delete);
                 enterNumber.setVisibility(View.GONE);
+                enterText.setVisibility(View.GONE);
+                enterForeignId.setVisibility(View.GONE);
                 break;
+
             case "Answers":
-                instructionView.setText(R.string.instruction_table_answer_add);
-                enterId.setVisibility(View.GONE);
+                instructionView.setText(R.string.instruction_table_answer_delete);
+                enterNumber.setVisibility(View.GONE);
+                enterText.setVisibility(View.GONE);
+                enterForeignId.setVisibility(View.GONE);
+                break;
+
+            case "Users":
+                instructionView.setText(R.string.instruction_table_user_delete);
+                enterNumber.setVisibility(View.GONE);
+                enterText.setVisibility(View.GONE);
+                enterForeignId.setVisibility(View.GONE);
                 break;
         }
 
@@ -74,13 +86,13 @@ public class DeleteDataActivity extends AppCompatActivity {
     private void setAddBtnListener(String tableName) {
         switch (tableName) {
             case "Themes":
-                delete_data_btn.setOnClickListener(v -> DB_Operations.Queries.insertTheme(mainDB));
+                delete_data_btn.setOnClickListener(v -> DB_Operations.Queries.deleteTheme(mainDB));
                 break;
             case "Questions":
-                delete_data_btn.setOnClickListener(v -> DB_Operations.Queries.insertQuestion(mainDB));
+                delete_data_btn.setOnClickListener(v -> DB_Operations.Queries.deleteQuestion(mainDB));
                 break;
             case "Answers":
-                delete_data_btn.setOnClickListener(v -> DB_Operations.Queries.insertAnswer(mainDB));
+                delete_data_btn.setOnClickListener(v -> DB_Operations.Queries.deleteAnswer(mainDB));
                 break;
             case "Users":
                 delete_data_btn.setOnClickListener(v -> DB_Operations.Queries.deleteUser(mainDB));

@@ -39,7 +39,7 @@ public class UpdateDataActivity extends AppCompatActivity {
 
     private void initViews(String tableName) {
 
-        update_data_btn = findViewById(R.id.add_to_db);
+        update_data_btn = findViewById(R.id.update_to_db);
         cancel_btn = findViewById(R.id.back);
         instructionView = findViewById(R.id.instruction);
 
@@ -51,19 +51,24 @@ public class UpdateDataActivity extends AppCompatActivity {
         switch (tableName)
         {
             case "Themes":
-                instructionView.setText(R.string.instruction_table_theme_add);
-                enterId.setVisibility(View.GONE);
+                instructionView.setText(R.string.instruction_table_theme_update);
                 enterForeignId.setVisibility(View.GONE);
                 enterNumber.setVisibility(View.GONE);
                 break;
+
             case "Questions":
-                instructionView.setText(R.string.instruction_table_question_add);
-                enterId.setVisibility(View.GONE);
+                instructionView.setText(R.string.instruction_table_question_update);
                 enterNumber.setVisibility(View.GONE);
+                enterForeignId.setVisibility(View.GONE);
                 break;
+
             case "Answers":
-                instructionView.setText(R.string.instruction_table_answer_add);
-                enterId.setVisibility(View.GONE);
+                instructionView.setText(R.string.instruction_table_answer_update);
+                break;
+
+            case "Users":
+                instructionView.setText(R.string.instruction_table_user_update);
+                enterForeignId.setVisibility(View.GONE);
                 break;
         }
 

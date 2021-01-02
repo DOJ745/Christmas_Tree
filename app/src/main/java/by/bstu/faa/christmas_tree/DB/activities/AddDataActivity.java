@@ -56,11 +56,13 @@ public class AddDataActivity extends AppCompatActivity {
                 enterForeignId.setVisibility(View.GONE);
                 enterNumber.setVisibility(View.GONE);
                 break;
+
             case "Questions":
                 instructionView.setText(R.string.instruction_table_question_add);
                 enterId.setVisibility(View.GONE);
                 enterNumber.setVisibility(View.GONE);
                 break;
+
             case "Answers":
                 instructionView.setText(R.string.instruction_table_answer_add);
                 enterId.setVisibility(View.GONE);
