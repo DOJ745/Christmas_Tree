@@ -58,16 +58,56 @@
         1) ID ответа<br/></string>
 
 
-    <string name="instruction_table_theme_add"></string>
-    <string name="instruction_table_theme_delete"></string>
-    <string name="instruction_table_theme_update"></string>
+    <string name="instruction_table_theme_add">Работа с таблицей Themes<br/>
+        --- Добавление ---<br/>
+        Обязательно нужно ввести:<br/>
+        1) Текст темы<br/>
+    </string>
 
-    <string name="instruction_table_question_add"></string>
-    <string name="instruction_table_question_update"></string>
-    <string name="instruction_table_question_delete"></string>
+    <string name="instruction_table_theme_update">Работа с таблицей Themes<br/>
+        --- Обновление ---<br/>
+        Обязательно нужно ввести:<br/>
+        1) ID темы<br/>
+        2) Текст темы<br/>
+    </string>
 
-    <string name="instruction_table_user_update"></string>
-    <string name="instruction_table_user_delete"></string>
+    <string name="instruction_table_theme_delete">Работа с таблицей Themes<br/>
+        --- Удаление ---<br/>
+        Обязательно нужно ввести:<br/>
+        1) ID темы<br/>
+    </string>
+
+    <string name="instruction_table_question_add">Работа с таблицей Questions<br/>
+        --- Добавление ---<br/>
+        Обязательно нужно ввести:<br/>
+        1) ID темы (foreign key)<br/>
+        2) Текст вопроса<br/>
+    </string>
+
+    <string name="instruction_table_question_update">Работа с таблицей Questions<br/>
+        --- Обновление ---<br/>
+        Обязательно нужно ввести:<br/>
+        1) ID вопроса<br/>
+        2) Текст вопроса<br/>
+    </string>
+
+    <string name="instruction_table_question_delete">Работа с таблицей Questions<br/>
+        --- Удаление ---<br/>
+        Обязательно нужно ввести:<br/>
+        1) ID вопроса<br/>
+    </string>
+
+    <string name="instruction_table_user_update">Работа с таблицей Users<br/>
+        --- Обновление ---<br/>
+        Обязательно нужно ввести:<br/>
+        1) ID пользователя
+    </string>
+
+    <string name="instruction_table_user_delete">Работа с таблицей Users<br/>
+        --- Удаление ---<br/>
+        Обязательно нужно ввести:<br/>
+        1) ID пользователя
+    </string>
 
     <string name="tutorial_text1">
         С Рождеством и Новым годом!
