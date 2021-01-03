@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -124,19 +125,81 @@ public class DeleteDataActivity extends AppCompatActivity {
 
     private void setAddBtnListener(String tableName) {
         switch (tableName) {
+
             case "Themes":
-                delete_data_btn.setOnClickListener(v -> DB_Operations.Queries.deleteTheme(mainDB));
+                delete_data_btn.setOnClickListener(v -> {
+                    if(checkThemeData())
+                        Toast.makeText(this, "Вы не ввели данные", Toast.LENGTH_SHORT).show();
+                    else {
+                        if( DB_Operations.Queries.deleteTheme(
+                                mainDB,
+                                enterText.getText().toString()) > 0){
+                            updateDataContainer("Themes");
+                            Toast.makeText(this, "Добавление прошло успешно", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
                 break;
+
             case "Questions":
-                delete_data_btn.setOnClickListener(v -> DB_Operations.Queries.deleteQuestion(mainDB));
+                delete_data_btn.setOnClickListener(v -> {
+                    if(checkQuestionData())
+                        Toast.makeText(this, "Вы не ввели данные", Toast.LENGTH_SHORT).show();
+                    else {
+                        if(DB_Operations.Queries.deleteQuestion(
+                                mainDB,
+                                Integer.parseInt(enterForeignId.getText().toString()),
+                                enterText.getText().toString()) > 0){
+                            updateDataContainer("Questions");
+                            Toast.makeText(this, "Добавление прошло успешно", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
                 break;
+
             case "Answers":
-                delete_data_btn.setOnClickListener(v -> DB_Operations.Queries.deleteAnswer(mainDB));
-                break;
-            case "Users":
-                delete_data_btn.setOnClickListener(v -> DB_Operations.Queries.deleteUser(mainDB));
+                delete_data_btn.setOnClickListener(v -> {
+                    if(checkAnswerData())
+                        Toast.makeText(this, "Вы не ввели данные", Toast.LENGTH_SHORT).show();
+                    else {
+                        if(DB_Operations.Queries.deleteAnswer(
+                                mainDB,
+                                Integer.parseInt(enterForeignId.getText().toString()),
+                                enterText.getText().toString(),
+                                Integer.parseInt(enterNumber.getText().toString())) > 0){
+                            Toast.makeText(this, "Добавление прошло успешно", Toast.LENGTH_SHORT).show();
+                            updateDataContainer("Answers");
+                        }
+
+                    }
+                });
                 break;
         }
+    }
 
+    private boolean checkThemeData(){
+        return enterText.getText().toString().equals("");
+    }
+
+    private boolean checkQuestionData(){
+        return enterText.getText().toString().equals("") && enterForeignId.getText().toString().equals("");
+    }
+
+    private boolean checkAnswerData(){
+        return enterText.getText().toString().equals("") &&
+                enterForeignId.getText().toString().equals("") &&
+                enterNumber.getText().toString().equals("");
+    }
+
+    private void updateDataContainer(String tableName){
+
+        ThemeAdapter themeAdapter = new ThemeAdapter(this, DB_Operations.Queries.getTableThemes(mainDB));
+        QuestionAdapter questionAdapter = new QuestionAdapter(this, DB_Operations.Queries.getTableQuestion(mainDB));
+        AnswerAdapter answerAdapter = new AnswerAdapter(this, DB_Operations.Queries.getTableAnswer(mainDB));
+        switch (tableName){
+            case "Themes": data_container.setAdapter(themeAdapter); break;
+            case "Questions": data_container.setAdapter(questionAdapter); break;
+            case "Answers": data_container.setAdapter(answerAdapter); break;
+        }
     }
 }

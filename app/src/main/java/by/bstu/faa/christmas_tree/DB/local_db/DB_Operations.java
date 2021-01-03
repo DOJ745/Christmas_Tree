@@ -499,18 +499,101 @@ public class DB_Operations {
 
                 // ------------------------- UPDATE QUERIES -------------------------
 
-        public static void updateTheme(SQLiteDatabase db){}
-        public static void updateQuestion(SQLiteDatabase db){}
-        public static void updateAnswer(SQLiteDatabase db){}
-        public static void updateUserData(SQLiteDatabase db){}
+        public static int updateTheme(SQLiteDatabase db, int themeId, String themeName){
+            ContentValues contentValues = new ContentValues();
+            int rowId;
+
+            contentValues.put("ID", themeId);
+            contentValues.put("Name", themeName);
+
+            rowId = db.update(
+                    "Themes",
+                    contentValues,
+                    "where ID = ?",
+                    new String[] {String.valueOf(themeId)});
+            return rowId;
+        }
+
+        public static int updateQuestion(
+                SQLiteDatabase db,
+                int questionId,
+                int questionThemeId,
+                String questionText){
+
+            ContentValues contentValues = new ContentValues();
+            int rowId;
+
+            if(questionThemeId != 0) {
+                contentValues.put("Theme_ID", questionThemeId);
+                contentValues.put("ID", questionId);
+                contentValues.put("Q_Text", questionText);
+            }
+            else{
+                contentValues.put("ID", questionId);
+                contentValues.put("Theme_ID", questionThemeId);
+            }
+            rowId = db.update(
+                    "Questions",
+                    contentValues,
+                    "where ID = ?",
+                    new String[] {String.valueOf(questionId)});
+            return rowId;
+        }
+
+        public static int updateAnswer(
+                SQLiteDatabase db,
+                int answerId,
+                int answerQuestionId,
+                String answerText,
+                int answerTrueness) {
+
+            ContentValues contentValues = new ContentValues();
+            int rowId;
+
+            contentValues.put("ID", answerId);
+            contentValues.put("Q_ID", answerQuestionId);
+            contentValues.put("A_Text", answerText);
+            contentValues.put("Trueness", answerTrueness);
+
+            rowId = db.update(
+                    "Answers",
+                    contentValues,
+                    "where ID = ?",
+                    new String[] {String.valueOf(answerId)});
+            return rowId;
+        }
+
+        public static int updateUserData(
+                SQLiteDatabase db,
+                String userId,
+                String username,
+                int treeLevel,
+                int score){
+            ContentValues contentValues = new ContentValues();
+            int rowId = 0;
+            return rowId;
+        }
+
 
 
                 // ------------------------- DELETE QUERIES -------------------------
 
-        public static void deleteTheme(SQLiteDatabase db){}
-        public static void deleteQuestion(SQLiteDatabase db){}
-        public static void deleteAnswer(SQLiteDatabase db){}
-        public static void deleteUser(SQLiteDatabase db){}
+        public static void deleteTheme(SQLiteDatabase db){
+
+        }
+
+        public static void deleteQuestion(SQLiteDatabase db){
+
+        }
+
+        public static void deleteAnswer(SQLiteDatabase db){
+
+        }
+
+        public static void deleteUser(SQLiteDatabase db){
+
+        }
+
 
         public static QuestionContainer getRandomQuestion(SQLiteDatabase db) {
 

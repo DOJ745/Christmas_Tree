@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -52,23 +53,11 @@ public class UpdateDataActivity extends AppCompatActivity {
 
     private void initViews(String tableName) {
 
-        ArrayList<TableThemesContainer> themes_data;
-        themes_data = DB_Operations.Queries.getTableThemes(mainDB);
-
-        ArrayList<TableQuestionContainer> questions_data;
-        questions_data = DB_Operations.Queries.getTableQuestion(mainDB);
-
-        ArrayList<TableAnswerContainer> answers_data;
-        answers_data = DB_Operations.Queries.getTableAnswer(mainDB);
-
-        ArrayList<UserInfo> users_data;
-        users_data = DB_Operations.Queries.getTableUser(mainDB);
-
         data_container = findViewById(R.id.data_update_list);
-        ThemeAdapter themeAdapter = new ThemeAdapter(this, themes_data);
-        QuestionAdapter questionAdapter = new QuestionAdapter(this, questions_data);
-        AnswerAdapter answerAdapter = new AnswerAdapter(this, answers_data);
-        UserAdapter userAdapter = new UserAdapter(this, users_data);
+        ThemeAdapter themeAdapter = new ThemeAdapter(this, DB_Operations.Queries.getTableThemes(mainDB));
+        QuestionAdapter questionAdapter = new QuestionAdapter(this, DB_Operations.Queries.getTableQuestion(mainDB));
+        AnswerAdapter answerAdapter = new AnswerAdapter(this, DB_Operations.Queries.getTableAnswer(mainDB));
+        UserAdapter userAdapter = new UserAdapter(this, DB_Operations.Queries.getTableUser(mainDB));
 
         update_data_btn = findViewById(R.id.update_to_db);
         cancel_btn = findViewById(R.id.back);
@@ -115,19 +104,106 @@ public class UpdateDataActivity extends AppCompatActivity {
 
     private void setAddBtnListener(String tableName) {
         switch (tableName) {
+
             case "Themes":
-                update_data_btn.setOnClickListener(v -> DB_Operations.Queries.updateTheme(mainDB));
+                update_data_btn.setOnClickListener(v -> {
+                    if(checkThemeData())
+                        Toast.makeText(this, "Вы не ввели данные", Toast.LENGTH_SHORT).show();
+                    else {
+                        if( DB_Operations.Queries.updateTheme(
+                                mainDB,
+                                Integer.parseInt(enterId.getText().toString()),
+                                enterText.getText().toString()) > 0){
+                            updateDataContainer("Themes");
+                            Toast.makeText(this, "Обновление прошло успешно", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
                 break;
+
             case "Questions":
-                update_data_btn.setOnClickListener(v -> DB_Operations.Queries.updateQuestion(mainDB));
+                update_data_btn.setOnClickListener(v -> {
+                    if(checkQuestionData())
+                        Toast.makeText(this, "Вы не ввели данные", Toast.LENGTH_SHORT).show();
+                    else {
+                        if(DB_Operations.Queries.updateQuestion(
+                                mainDB,
+                                Integer.parseInt(enterId.getText().toString()),
+                                Integer.parseInt(enterForeignId.getText().toString()),
+                                enterText.getText().toString()) > 0){
+                            updateDataContainer("Questions");
+                            Toast.makeText(this, "Обновление прошло успешно", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
                 break;
+
             case "Answers":
-                update_data_btn.setOnClickListener(v -> DB_Operations.Queries.updateAnswer(mainDB));
+                update_data_btn.setOnClickListener(v -> {
+                    if(checkAnswerData())
+                        Toast.makeText(this, "Вы не ввели данные", Toast.LENGTH_SHORT).show();
+                    else {
+                        if(DB_Operations.Queries.updateAnswer(
+                                mainDB,
+                                Integer.parseInt(enterId.getText().toString()),
+                                Integer.parseInt(enterForeignId.getText().toString()),
+                                enterText.getText().toString(),
+                                Integer.parseInt(enterNumber.getText().toString())) > 0){
+                            Toast.makeText(this, "Обновление прошло успешно", Toast.LENGTH_SHORT).show();
+                            updateDataContainer("Answers");
+                        }
+                    }
+                });
                 break;
+
             case "Users":
-                update_data_btn.setOnClickListener(v -> DB_Operations.Queries.updateUserData(mainDB));
+                update_data_btn.setOnClickListener(v -> {
+                    if(checkUserData())
+                        Toast.makeText(this, "Вы не ввели данные", Toast.LENGTH_SHORT).show();
+                    else {
+                        if(DB_Operations.Queries.updateUserData(
+                                mainDB,
+                                enterId.getText().toString(),
+                                enterText.getText().toString(),
+                                Integer.parseInt(enterForeignId.getText().toString()),
+                                Integer.parseInt(enterNumber.getText().toString())) > 0){
+                            updateDataContainer("Users");
+                            Toast.makeText(this, "Обновление прошло успешно", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
                 break;
         }
+    }
 
+    private boolean checkThemeData(){
+        return enterText.getText().toString().equals("") && enterId.getText().toString().equals("");
+    }
+
+    private boolean checkQuestionData(){
+        return enterId.getText().toString().equals("") && enterText.getText().toString().equals("");
+    }
+
+    private boolean checkAnswerData(){
+        return enterText.getText().toString().equals("") &&
+                enterForeignId.getText().toString().equals("") &&
+                enterNumber.getText().toString().equals("") &&
+                enterId.getText().toString().equals("");
+    }
+
+    private boolean checkUserData(){ return enterId.getText().toString().equals(""); }
+
+    private void updateDataContainer(String tableName){
+
+        ThemeAdapter themeAdapter = new ThemeAdapter(this, DB_Operations.Queries.getTableThemes(mainDB));
+        QuestionAdapter questionAdapter = new QuestionAdapter(this, DB_Operations.Queries.getTableQuestion(mainDB));
+        AnswerAdapter answerAdapter = new AnswerAdapter(this, DB_Operations.Queries.getTableAnswer(mainDB));
+        UserAdapter userAdapter = new UserAdapter(this, DB_Operations.Queries.getTableUser(mainDB));
+        switch (tableName){
+            case "Themes": data_container.setAdapter(themeAdapter); break;
+            case "Questions": data_container.setAdapter(questionAdapter); break;
+            case "Answers": data_container.setAdapter(answerAdapter); break;
+            case "Users": data_container.setAdapter(userAdapter); break;
+        }
     }
 }
