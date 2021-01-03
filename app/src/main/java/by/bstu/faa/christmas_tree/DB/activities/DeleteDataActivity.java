@@ -53,23 +53,11 @@ public class DeleteDataActivity extends AppCompatActivity {
 
     private void initViews(String tableName) {
 
-        ArrayList<TableThemesContainer> themes_data;
-        themes_data = DB_Operations.Queries.getTableThemes(mainDB);
-
-        ArrayList<TableQuestionContainer> questions_data;
-        questions_data = DB_Operations.Queries.getTableQuestion(mainDB);
-
-        ArrayList<TableAnswerContainer> answers_data;
-        answers_data = DB_Operations.Queries.getTableAnswer(mainDB);
-
-        ArrayList<UserInfo> users_data;
-        users_data = DB_Operations.Queries.getTableUser(mainDB);
-
         data_container = findViewById(R.id.data_delete_list);
-        ThemeAdapter themeAdapter = new ThemeAdapter(this, themes_data);
-        QuestionAdapter questionAdapter = new QuestionAdapter(this, questions_data);
-        AnswerAdapter answerAdapter = new AnswerAdapter(this, answers_data);
-        UserAdapter userAdapter = new UserAdapter(this, users_data);
+        ThemeAdapter themeAdapter = new ThemeAdapter(this, DB_Operations.Queries.getTableThemes(mainDB));
+        QuestionAdapter questionAdapter = new QuestionAdapter(this, DB_Operations.Queries.getTableQuestion(mainDB));
+        AnswerAdapter answerAdapter = new AnswerAdapter(this, DB_Operations.Queries.getTableAnswer(mainDB));
+        UserAdapter userAdapter = new UserAdapter(this, DB_Operations.Queries.getTableUser(mainDB));
 
         delete_data_btn = findViewById(R.id.delete_to_db);
         cancel_btn = findViewById(R.id.back);
@@ -97,7 +85,7 @@ public class DeleteDataActivity extends AppCompatActivity {
                 enterText.setVisibility(View.GONE);
                 enterForeignId.setVisibility(View.GONE);
 
-                data_container.setAdapter(answerAdapter);
+                data_container.setAdapter(questionAdapter);
                 break;
 
             case "Answers":
@@ -106,7 +94,7 @@ public class DeleteDataActivity extends AppCompatActivity {
                 enterText.setVisibility(View.GONE);
                 enterForeignId.setVisibility(View.GONE);
 
-                data_container.setAdapter(questionAdapter);
+                data_container.setAdapter(answerAdapter);
                 break;
 
             case "Users":
@@ -199,10 +187,12 @@ public class DeleteDataActivity extends AppCompatActivity {
         ThemeAdapter themeAdapter = new ThemeAdapter(this, DB_Operations.Queries.getTableThemes(mainDB));
         QuestionAdapter questionAdapter = new QuestionAdapter(this, DB_Operations.Queries.getTableQuestion(mainDB));
         AnswerAdapter answerAdapter = new AnswerAdapter(this, DB_Operations.Queries.getTableAnswer(mainDB));
+        UserAdapter userAdapter = new UserAdapter(this, DB_Operations.Queries.getTableUser(mainDB));
         switch (tableName){
             case "Themes": data_container.setAdapter(themeAdapter); break;
             case "Questions": data_container.setAdapter(questionAdapter); break;
             case "Answers": data_container.setAdapter(answerAdapter); break;
+            case "Users": data_container.setAdapter(userAdapter); break;
         }
     }
 }

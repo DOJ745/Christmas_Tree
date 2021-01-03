@@ -54,6 +54,7 @@ public class UpdateDataActivity extends AppCompatActivity {
     private void initViews(String tableName) {
 
         data_container = findViewById(R.id.data_update_list);
+
         ThemeAdapter themeAdapter = new ThemeAdapter(this, DB_Operations.Queries.getTableThemes(mainDB));
         QuestionAdapter questionAdapter = new QuestionAdapter(this, DB_Operations.Queries.getTableQuestion(mainDB));
         AnswerAdapter answerAdapter = new AnswerAdapter(this, DB_Operations.Queries.getTableAnswer(mainDB));
@@ -81,7 +82,6 @@ public class UpdateDataActivity extends AppCompatActivity {
             case "Questions":
                 instructionView.setText(R.string.instruction_table_question_update);
                 enterNumber.setVisibility(View.GONE);
-                enterForeignId.setVisibility(View.GONE);
 
                 data_container.setAdapter(questionAdapter);
                 break;

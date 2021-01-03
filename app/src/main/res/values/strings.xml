@@ -90,6 +90,7 @@
         Обязательно нужно ввести:<br/>
         1) ID вопроса<br/>
         2) Текст вопроса<br/>
+        3) ID вопроса<br/>
     </string>
 
     <string name="instruction_table_question_delete">Работа с таблицей Questions<br/>
