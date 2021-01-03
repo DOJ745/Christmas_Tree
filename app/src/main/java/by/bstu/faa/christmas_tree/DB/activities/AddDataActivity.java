@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -49,24 +50,15 @@ public class AddDataActivity extends AppCompatActivity {
 
     private void initViews(String tableName) {
 
-        ArrayList<TableThemesContainer> themes_data;
-        themes_data = DB_Operations.Queries.getTableThemes(mainDB);
-
-        ArrayList<TableQuestionContainer> questions_data;
-        questions_data = DB_Operations.Queries.getTableQuestion(mainDB);
-
-        ArrayList<TableAnswerContainer> answers_data;
-        answers_data = DB_Operations.Queries.getTableAnswer(mainDB);
-
         add_data_btn = findViewById(R.id.add_to_db);
         cancel_btn = findViewById(R.id.back);
         instructionView = findViewById(R.id.instruction);
 
         data_container = findViewById(R.id.data_add_list);
 
-        ThemeAdapter themeAdapter = new ThemeAdapter(this, themes_data);
-        QuestionAdapter questionAdapter = new QuestionAdapter(this, questions_data);
-        AnswerAdapter answerAdapter = new AnswerAdapter(this, answers_data);
+        ThemeAdapter themeAdapter = new ThemeAdapter(this, DB_Operations.Queries.getTableThemes(mainDB));
+        QuestionAdapter questionAdapter = new QuestionAdapter(this, DB_Operations.Queries.getTableQuestion(mainDB));
+        AnswerAdapter answerAdapter = new AnswerAdapter(this, DB_Operations.Queries.getTableAnswer(mainDB));
 
         enterId = findViewById(R.id.set_id);
         enterForeignId = findViewById(R.id.set_foreign_id);
@@ -106,16 +98,81 @@ public class AddDataActivity extends AppCompatActivity {
 
     private void setAddBtnListener(String tableName) {
         switch (tableName) {
+
             case "Themes":
-                add_data_btn.setOnClickListener(v -> DB_Operations.Queries.insertTheme(mainDB));
+                add_data_btn.setOnClickListener(v -> {
+                    if(checkThemeData())
+                        Toast.makeText(this, "Вы не ввели данные", Toast.LENGTH_SHORT).show();
+                    else {
+                        if( DB_Operations.Queries.insertTheme(
+                                mainDB,
+                                enterText.getText().toString()) > 0){
+                            updateDataContainer("Themes");
+                            Toast.makeText(this, "Добавление прошло успешно", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
                 break;
+
             case "Questions":
-                add_data_btn.setOnClickListener(v -> DB_Operations.Queries.insertQuestion(mainDB));
+                add_data_btn.setOnClickListener(v -> {
+                    if(checkQuestionData())
+                        Toast.makeText(this, "Вы не ввели данные", Toast.LENGTH_SHORT).show();
+                    else {
+                        if(DB_Operations.Queries.insertQuestion(
+                                mainDB,
+                                Integer.parseInt(enterForeignId.getText().toString()),
+                                enterText.getText().toString()) > 0){
+                            updateDataContainer("Questions");
+                            Toast.makeText(this, "Добавление прошло успешно", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
                 break;
+
             case "Answers":
-                add_data_btn.setOnClickListener(v -> DB_Operations.Queries.insertAnswer(mainDB));
+                add_data_btn.setOnClickListener(v -> {
+                    if(checkAnswerData())
+                        Toast.makeText(this, "Вы не ввели данные", Toast.LENGTH_SHORT).show();
+                    else {
+                        if(DB_Operations.Queries.insertAnswer(
+                                mainDB,
+                                Integer.parseInt(enterForeignId.getText().toString()),
+                                enterText.getText().toString(),
+                                Integer.parseInt(enterNumber.getText().toString())) > 0){
+                            Toast.makeText(this, "Добавление прошло успешно", Toast.LENGTH_SHORT).show();
+                            updateDataContainer("Answers");
+                        }
+
+                    }
+                });
                 break;
         }
+    }
 
+    private boolean checkThemeData(){
+        return enterText.getText().toString().equals("");
+    }
+
+    private boolean checkQuestionData(){
+        return enterText.getText().toString().equals("") && enterForeignId.getText().toString().equals("");
+    }
+
+    private boolean checkAnswerData(){
+        return enterText.getText().toString().equals("") &&
+                enterForeignId.getText().toString().equals("") &&
+                enterNumber.getText().toString().equals("");
+    }
+
+    private void updateDataContainer(String tableName){
+
+        ThemeAdapter themeAdapter = new ThemeAdapter(this, DB_Operations.Queries.getTableThemes(mainDB));
+        QuestionAdapter questionAdapter = new QuestionAdapter(this, DB_Operations.Queries.getTableQuestion(mainDB));
+        AnswerAdapter answerAdapter = new AnswerAdapter(this, DB_Operations.Queries.getTableAnswer(mainDB));
+        switch (tableName){
+            case "Themes": data_container.setAdapter(themeAdapter); break;
+            case "Questions": data_container.setAdapter(questionAdapter); break;
+            case "Answers": data_container.setAdapter(answerAdapter); break;
+        }
     }
 }

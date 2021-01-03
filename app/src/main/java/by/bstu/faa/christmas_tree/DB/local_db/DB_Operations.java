@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.strictmode.SqliteObjectLeakedViolation;
 import android.util.Log;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -18,6 +19,8 @@ import by.bstu.faa.christmas_tree.model.query.TableThemesContainer;
 import by.bstu.faa.christmas_tree.model.question.QuestionContainer;
 
 public class DB_Operations {
+
+    private static String TAG = "DB_OPERATIONS";
     public static class MainOperations {
 
         public static void createAllTables(SQLiteDatabase db) {
@@ -459,9 +462,39 @@ public class DB_Operations {
 
                 // ------------------------- INSERT QUERIES -------------------------
 
-        public static void insertTheme(SQLiteDatabase db){}
-        public static void insertQuestion(SQLiteDatabase db){}
-        public static void insertAnswer(SQLiteDatabase db){}
+        public static long insertTheme(SQLiteDatabase db, String themeName){
+
+            ContentValues contentValues = new ContentValues();
+            long rowId;
+
+            contentValues.put("Name", themeName);
+            rowId = db.insert("Themes", null, contentValues);
+
+            return rowId;
+        }
+
+        public static long insertQuestion(SQLiteDatabase db, int themeId, String questionText) {
+            ContentValues contentValues = new ContentValues();
+            long rowId;
+
+            contentValues.put("Theme_ID", themeId);
+            contentValues.put("Q_Text", questionText);
+            rowId = db.insert("Questions", null, contentValues);
+
+            return rowId;
+        }
+
+        public static long insertAnswer(SQLiteDatabase db, int questionId, String answerText, int trueness){
+            ContentValues contentValues = new ContentValues();
+            long rowId;
+
+            contentValues.put("Q_ID", questionId);
+            contentValues.put("A_Text", answerText);
+            contentValues.put("Trueness", trueness);
+            rowId = db.insert("Answers", null, contentValues);
+
+            return rowId;
+        }
 
 
                 // ------------------------- UPDATE QUERIES -------------------------
