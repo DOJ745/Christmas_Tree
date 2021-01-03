@@ -128,14 +128,14 @@ public class DeleteDataActivity extends AppCompatActivity {
 
             case "Themes":
                 delete_data_btn.setOnClickListener(v -> {
-                    if(checkThemeData())
+                    if(checkId())
                         Toast.makeText(this, "Вы не ввели данные", Toast.LENGTH_SHORT).show();
                     else {
                         if( DB_Operations.Queries.deleteTheme(
                                 mainDB,
-                                enterText.getText().toString()) > 0){
+                                Integer.parseInt(enterId.getText().toString())) > 0){
                             updateDataContainer("Themes");
-                            Toast.makeText(this, "Добавление прошло успешно", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(this, "Удаление прошло успешно", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
@@ -143,15 +143,14 @@ public class DeleteDataActivity extends AppCompatActivity {
 
             case "Questions":
                 delete_data_btn.setOnClickListener(v -> {
-                    if(checkQuestionData())
+                    if(checkId())
                         Toast.makeText(this, "Вы не ввели данные", Toast.LENGTH_SHORT).show();
                     else {
                         if(DB_Operations.Queries.deleteQuestion(
                                 mainDB,
-                                Integer.parseInt(enterForeignId.getText().toString()),
-                                enterText.getText().toString()) > 0){
+                                Integer.parseInt(enterId.getText().toString())) > 0){
                             updateDataContainer("Questions");
-                            Toast.makeText(this, "Добавление прошло успешно", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(this, "Удаление прошло успешно", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
@@ -159,16 +158,30 @@ public class DeleteDataActivity extends AppCompatActivity {
 
             case "Answers":
                 delete_data_btn.setOnClickListener(v -> {
-                    if(checkAnswerData())
+                    if(checkId())
                         Toast.makeText(this, "Вы не ввели данные", Toast.LENGTH_SHORT).show();
                     else {
                         if(DB_Operations.Queries.deleteAnswer(
                                 mainDB,
-                                Integer.parseInt(enterForeignId.getText().toString()),
-                                enterText.getText().toString(),
-                                Integer.parseInt(enterNumber.getText().toString())) > 0){
-                            Toast.makeText(this, "Добавление прошло успешно", Toast.LENGTH_SHORT).show();
+                                Integer.parseInt(enterId.getText().toString())) > 0){
+                            Toast.makeText(this, "Удаление прошло успешно", Toast.LENGTH_SHORT).show();
                             updateDataContainer("Answers");
+                        }
+
+                    }
+                });
+                break;
+
+            case "Users":
+                delete_data_btn.setOnClickListener(v -> {
+                    if(checkId())
+                        Toast.makeText(this, "Вы не ввели данные", Toast.LENGTH_SHORT).show();
+                    else {
+                        if(DB_Operations.Queries.deleteUser(
+                                mainDB,
+                                enterId.getText().toString()) > 0){
+                            Toast.makeText(this, "Удаление прошло успешно", Toast.LENGTH_SHORT).show();
+                            updateDataContainer("Users");
                         }
 
                     }
@@ -177,18 +190,8 @@ public class DeleteDataActivity extends AppCompatActivity {
         }
     }
 
-    private boolean checkThemeData(){
-        return enterText.getText().toString().equals("");
-    }
-
-    private boolean checkQuestionData(){
-        return enterText.getText().toString().equals("") && enterForeignId.getText().toString().equals("");
-    }
-
-    private boolean checkAnswerData(){
-        return enterText.getText().toString().equals("") &&
-                enterForeignId.getText().toString().equals("") &&
-                enterNumber.getText().toString().equals("");
+    private boolean checkId(){
+        return enterId.getText().toString().equals("");
     }
 
     private void updateDataContainer(String tableName){

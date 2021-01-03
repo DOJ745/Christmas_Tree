@@ -2,6 +2,7 @@ package by.bstu.faa.christmas_tree.DB.local_db;
 
 import android.content.ContentValues;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteConstraintException;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.strictmode.SqliteObjectLeakedViolation;
 import android.util.Log;
@@ -566,11 +567,23 @@ public class DB_Operations {
         public static int updateUserData(
                 SQLiteDatabase db,
                 String userId,
-                String username,
+                String userName,
                 int treeLevel,
                 int score){
             ContentValues contentValues = new ContentValues();
             int rowId = 0;
+
+            contentValues.put("ID", userId);
+            contentValues.put("Nickname", userName);
+            contentValues.put("Tree_Level", treeLevel);
+            contentValues.put("Score", score);
+
+            rowId = db.update(
+                    "Users",
+                    contentValues,
+                    "where ID like '?'",
+                    new String[] {userId}
+                    );
             return rowId;
         }
 
@@ -578,20 +591,60 @@ public class DB_Operations {
 
                 // ------------------------- DELETE QUERIES -------------------------
 
-        public static void deleteTheme(SQLiteDatabase db){
-
+        public static int deleteTheme(SQLiteDatabase db, int themeId){
+            int rowId = 0;
+            try{
+                rowId = db.delete(
+                        "Themes",
+                        "where ID = ?",
+                        new String[]{String.valueOf(themeId)});
+            }
+            catch (SQLiteConstraintException e){
+                Log.e("SQL_CONSTR", e.getMessage());
+            }
+            return rowId;
         }
 
-        public static void deleteQuestion(SQLiteDatabase db){
-
+        public static int deleteQuestion(SQLiteDatabase db, int questionId){
+            int rowId = 0;
+            try{
+                rowId = db.delete(
+                        "Questions",
+                        "where ID = ?",
+                        new String[]{String.valueOf(questionId)});
+            }
+            catch (SQLiteConstraintException e){
+                Log.e("SQL_CONSTR", e.getMessage());
+            }
+            return rowId;
         }
 
-        public static void deleteAnswer(SQLiteDatabase db){
-
+        public static int deleteAnswer(SQLiteDatabase db, int answerId){
+            int rowId = 0;
+            try{
+                rowId = db.delete(
+                        "Answers",
+                        "where ID = ?",
+                        new String[]{String.valueOf(answerId)});
+            }
+            catch (SQLiteConstraintException e){
+                Log.e("SQL_CONSTR", e.getMessage());
+            }
+            return rowId;
         }
 
-        public static void deleteUser(SQLiteDatabase db){
-
+        public static int deleteUser(SQLiteDatabase db, String userId){
+            int rowId = 0;
+            try{
+                rowId = db.delete(
+                        "Users",
+                        "where ID = ?",
+                        new String[]{userId});
+            }
+            catch (SQLiteConstraintException e){
+                Log.e("SQL_CONSTR", e.getMessage());
+            }
+            return rowId;
         }
 
 
