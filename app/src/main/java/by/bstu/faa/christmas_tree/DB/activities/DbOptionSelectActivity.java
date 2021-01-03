@@ -8,8 +8,10 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -30,11 +32,14 @@ public class DbOptionSelectActivity extends AppCompatActivity {
     private DB_Helper dbHelper;
     private SQLiteDatabase mainDB;
 
+    private static String TAG = "DB_OPTION_SELECT";
+
     Spinner tableList;
     Button add_btn;
     Button update_btn;
     Button delete_btn;
     Button saveJson_btn;
+    Button readJson_btn;
 
     private static String THEMES_JSON = "themes_table.json";
     private static String QUESTIONS_JSON = "questions_table.json";
@@ -65,6 +70,7 @@ public class DbOptionSelectActivity extends AppCompatActivity {
         update_btn = findViewById(R.id.update_button);
         delete_btn = findViewById(R.id.delete_button);
         saveJson_btn = findViewById(R.id.saveToJson_button);
+        readJson_btn = findViewById(R.id.readFromJson_button);
 
         ArrayAdapter<String> tableListAdapter = new ArrayAdapter<>(
                 this,
@@ -204,6 +210,16 @@ public class DbOptionSelectActivity extends AppCompatActivity {
                         catch (IOException e) { e.printStackTrace(); }
                         break;
                 }
+        });
+
+        readJson_btn.setOnClickListener(v -> {
+
+            Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+            Uri uri = Uri.parse(Environment.getExternalStorageDirectory().getPath()
+                    +  File.separator + "myFolder" + File.separator);
+            intent.setDataAndType(uri, "text/csv");
+            startActivity(Intent.createChooser(intent, "Open folder"));
+
         });
     }
 }

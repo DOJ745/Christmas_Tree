@@ -24,6 +24,7 @@
     <string name="enter_number">Введите число</string>
 
     <string name="saveJson">Сохранить таблицу в JSON</string>
+    <string name="readJson">Загрузить таблицу из JSON</string>
 
     <string name="try_answer">Ещё разок</string>
     <string name="choose_answer">Выберите ответ</string>

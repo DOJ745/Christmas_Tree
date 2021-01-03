@@ -50,14 +50,53 @@ public class JsonOperations {
 
     public static ArrayList<TableThemesContainer> readThemesJson(File file){
         ObjectMapper mapper = new ObjectMapper();
-        ArrayList<TableThemesContainer> allContacts = new ArrayList<>();
+        ArrayList<TableThemesContainer> themesContainers = new ArrayList<>();
         try{
-            allContacts = mapper.readValue(file, new TypeReference<ArrayList<TableThemesContainer>>() { });
+            themesContainers = mapper.readValue(file, new TypeReference<ArrayList<TableThemesContainer>>() { });
         }
         catch (IOException e){
             Log.e("Log_e", "Failed to read from file\n" + e.getMessage());
-            return allContacts;
+            return themesContainers;
         }
-        return allContacts;
+        return themesContainers;
+    }
+
+    public static ArrayList<TableQuestionContainer> readQuestionsJson(File file){
+        ObjectMapper mapper = new ObjectMapper();
+        ArrayList<TableQuestionContainer> questionContainers = new ArrayList<>();
+        try{
+            questionContainers = mapper.readValue(file, new TypeReference<ArrayList<TableQuestionContainer>>() { });
+        }
+        catch (IOException e){
+            Log.e("Log_e", "Failed to read from file\n" + e.getMessage());
+            return questionContainers;
+        }
+        return questionContainers;
+    }
+
+    public static ArrayList<TableAnswerContainer> readAnswersJson(File file){
+        ObjectMapper mapper = new ObjectMapper();
+        ArrayList<TableAnswerContainer> answerContainers = new ArrayList<>();
+        try{
+            answerContainers = mapper.readValue(file, new TypeReference<ArrayList<TableAnswerContainer>>() { });
+        }
+        catch (IOException e){
+            Log.e("Log_e", "Failed to read from file\n" + e.getMessage());
+            return answerContainers;
+        }
+        return answerContainers;
+    }
+
+    public static ArrayList<UserInfo> readUsersJson(File file){
+        ObjectMapper mapper = new ObjectMapper();
+        ArrayList<UserInfo> users = new ArrayList<>();
+        try{
+            users = mapper.readValue(file, new TypeReference<ArrayList<UserInfo>>() { });
+        }
+        catch (IOException e){
+            Log.e("Log_e", "Failed to read from file\n" + e.getMessage());
+            return users;
+        }
+        return users;
     }
 }
