@@ -510,7 +510,7 @@ public class DB_Operations {
             rowId = db.update(
                     "Themes",
                     contentValues,
-                    "where ID = ?",
+                    "ID = ?",
                     new String[] {String.valueOf(themeId)});
             return rowId;
         }
@@ -536,7 +536,7 @@ public class DB_Operations {
             rowId = db.update(
                     "Questions",
                     contentValues,
-                    "where ID = ?",
+                    "ID = ?",
                     new String[] {String.valueOf(questionId)});
             return rowId;
         }
@@ -559,7 +559,7 @@ public class DB_Operations {
             rowId = db.update(
                     "Answers",
                     contentValues,
-                    "where ID = ?",
+                    "ID = ?",
                     new String[] {String.valueOf(answerId)});
             return rowId;
         }
@@ -581,7 +581,7 @@ public class DB_Operations {
             rowId = db.update(
                     "Users",
                     contentValues,
-                    "where ID like '?'",
+                    "ID like '?'",
                     new String[] {userId}
                     );
             return rowId;
@@ -596,7 +596,7 @@ public class DB_Operations {
             try{
                 rowId = db.delete(
                         "Themes",
-                        "where ID = ?",
+                        "ID = ?",
                         new String[]{String.valueOf(themeId)});
             }
             catch (SQLiteConstraintException e){
@@ -610,7 +610,7 @@ public class DB_Operations {
             try{
                 rowId = db.delete(
                         "Questions",
-                        "where ID = ?",
+                        "ID = ?",
                         new String[]{String.valueOf(questionId)});
             }
             catch (SQLiteConstraintException e){
@@ -624,7 +624,7 @@ public class DB_Operations {
             try{
                 rowId = db.delete(
                         "Answers",
-                        "where ID = ?",
+                        "ID = ?",
                         new String[]{String.valueOf(answerId)});
             }
             catch (SQLiteConstraintException e){
@@ -638,7 +638,7 @@ public class DB_Operations {
             try{
                 rowId = db.delete(
                         "Users",
-                        "where ID = ?",
+                        "ID = ?",
                         new String[]{userId});
             }
             catch (SQLiteConstraintException e){
