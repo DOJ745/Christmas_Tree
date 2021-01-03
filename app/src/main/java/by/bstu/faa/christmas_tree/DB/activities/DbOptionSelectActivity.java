@@ -8,10 +8,8 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.sqlite.SQLiteDatabase;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -21,11 +19,16 @@ import android.widget.Toast;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import by.bstu.faa.christmas_tree.DB.local_db.DB_Helper;
 import by.bstu.faa.christmas_tree.DB.local_db.DB_Operations;
 import by.bstu.faa.christmas_tree.DB.local_db.JsonOperations;
 import by.bstu.faa.christmas_tree.R;
+import by.bstu.faa.christmas_tree.model.UserInfo;
+import by.bstu.faa.christmas_tree.model.query.TableAnswerContainer;
+import by.bstu.faa.christmas_tree.model.query.TableQuestionContainer;
+import by.bstu.faa.christmas_tree.model.query.TableThemesContainer;
 
 public class DbOptionSelectActivity extends AppCompatActivity {
 
@@ -33,6 +36,9 @@ public class DbOptionSelectActivity extends AppCompatActivity {
     private SQLiteDatabase mainDB;
 
     private static String TAG = "DB_OPTION_SELECT";
+    private static final int PICKFILE_RESULT_CODE = 1;
+    private File loadedJson;
+    private static String chosenTable;
 
     Spinner tableList;
     Button add_btn;
@@ -92,6 +98,8 @@ public class DbOptionSelectActivity extends AppCompatActivity {
                         update_btn.setText("Изменить ответ");
                         delete_btn.setText("Удалить ответ");
                         setListenersButtons("Answers");
+
+                        chosenTable = "Answers";
                         break;
 
                     case "Questions":
@@ -100,6 +108,8 @@ public class DbOptionSelectActivity extends AppCompatActivity {
                         update_btn.setText("Изменить вопрос");
                         delete_btn.setText("Удалить вопрос");
                         setListenersButtons("Questions");
+
+                        chosenTable = "Questions";
                         break;
 
                     case "Themes":
@@ -108,6 +118,8 @@ public class DbOptionSelectActivity extends AppCompatActivity {
                         update_btn.setText("Изменить тему");
                         delete_btn.setText("Удалить тему");
                         setListenersButtons("Themes");
+
+                        chosenTable = "Themes";
                         break;
 
                     case "Users":
@@ -116,6 +128,8 @@ public class DbOptionSelectActivity extends AppCompatActivity {
                         update_btn.setText("Изменить пользователя");
                         delete_btn.setText("Удалить пользователя");
                         setListenersButtons("Users");
+
+                        chosenTable = "Users";
                         break;
                 }
             }
@@ -215,11 +229,36 @@ public class DbOptionSelectActivity extends AppCompatActivity {
         readJson_btn.setOnClickListener(v -> {
 
             Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-            Uri uri = Uri.parse(Environment.getExternalStorageDirectory().getPath()
-                    +  File.separator + "myFolder" + File.separator);
-            intent.setDataAndType(uri, "text/csv");
-            startActivity(Intent.createChooser(intent, "Open folder"));
+            intent.setType("*/*");
+            startActivityForResult(intent,PICKFILE_RESULT_CODE);
 
         });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == PICKFILE_RESULT_CODE) {
+
+            if (resultCode == RESULT_OK) {
+                String FilePath = data.getData().getPath();
+                loadedJson = new File(FilePath);
+
+                switch (chosenTable){
+                    case "Themes":
+                        ArrayList<TableThemesContainer> readed_themes = JsonOperations.readThemesJson(loadedJson);
+                        break;
+                    case "Questions":
+                        ArrayList<TableQuestionContainer> readed_questions = JsonOperations.readQuestionsJson(loadedJson);
+                        break;
+                    case "Answers":
+                        ArrayList<TableAnswerContainer> readed_answers = JsonOperations.readAnswersJson(loadedJson);
+                        break;
+                    case "Users":
+                        ArrayList<UserInfo> readed_users = JsonOperations.readUsersJson(loadedJson);
+                        break;
+                }
+            }
+        }
     }
 }
