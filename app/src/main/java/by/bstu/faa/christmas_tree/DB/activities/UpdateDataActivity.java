@@ -82,12 +82,15 @@ public class UpdateDataActivity extends AppCompatActivity {
             case "Questions":
                 instructionView.setText(R.string.instruction_table_question_update);
                 enterNumber.setVisibility(View.GONE);
+                enterForeignId.setHint(R.string.hint_question_table_foreign_key);
 
                 data_container.setAdapter(questionAdapter);
                 break;
 
             case "Answers":
                 instructionView.setText(R.string.instruction_table_answer_update);
+                enterForeignId.setHint(R.string.hint_answer_table_foreign_key);
+                enterNumber.setHint(R.string.hint_answer_table_number);
                 data_container.setAdapter(answerAdapter);
                 break;
 

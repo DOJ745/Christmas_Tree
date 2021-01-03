@@ -37,6 +37,10 @@
 
     <string name="test_text">test text 123</string>
     <string name="image_descr">IMAGE</string>
+    
+    <string name="hint_question_table_foreign_key">Введите ID темы</string>
+    <string name="hint_answer_table_foreign_key">Введите ID вопроса</string>
+    <string name="hint_answer_table_number">Введите правильность ответа</string>
 
     <string name="instruction_table_answer_add">Работа с таблицей Answers<br/>
         --- Добавление ---<br/>

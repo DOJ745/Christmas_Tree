@@ -80,6 +80,7 @@ public class AddDataActivity extends AppCompatActivity {
                 instructionView.setText(R.string.instruction_table_question_add);
                 enterId.setVisibility(View.GONE);
                 enterNumber.setVisibility(View.GONE);
+                enterForeignId.setHint(R.string.hint_question_table_foreign_key);
 
                 data_container.setAdapter(questionAdapter);
                 break;
@@ -87,6 +88,8 @@ public class AddDataActivity extends AppCompatActivity {
             case "Answers":
                 instructionView.setText(R.string.instruction_table_answer_add);
                 enterId.setVisibility(View.GONE);
+                enterForeignId.setHint(R.string.hint_answer_table_foreign_key);
+                enterNumber.setHint(R.string.hint_answer_table_number);
 
                 data_container.setAdapter(answerAdapter);
                 break;
